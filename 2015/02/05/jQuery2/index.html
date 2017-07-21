@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery2##   scrollTop()、scrollLeft()、scroll()scrollTop()、scrollLeft()是可读写方法，既可以获取值也可以设置值。 12345678910&amp;lt;script&amp;gt;  $(function()&amp;#123;      // 原生JS当中是把事件注册给了window  window.scroll = function()&amp;#123;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery2">
+<meta property="og:url" content="http://yoursite.com/2015/02/05/jQuery2/index.html">
+<meta property="og:site_name" content="Vito">
+<meta property="og:description" content="jQuery2##   scrollTop()、scrollLeft()、scroll()scrollTop()、scrollLeft()是可读写方法，既可以获取值也可以设置值。 12345678910&amp;lt;script&amp;gt;  $(function()&amp;#123;      // 原生JS当中是把事件注册给了window  window.scroll = function()&amp;#123;&amp;#">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-19T14:45:15.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery2">
+<meta name="twitter:description" content="jQuery2##   scrollTop()、scrollLeft()、scroll()scrollTop()、scrollLeft()是可读写方法，既可以获取值也可以设置值。 12345678910&amp;lt;script&amp;gt;  $(function()&amp;#123;      // 原生JS当中是把事件注册给了window  window.scroll = function()&amp;#123;&amp;#">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/02/05/jQuery2/"/>
+
+
+
+
+
+  <title> jQuery2 | Vito </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/02/05/jQuery2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-05T21:30:38+08:00">
+                2015-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="jQuery2"><a href="#jQuery2" class="headerlink" title="jQuery2"></a>jQuery2</h1><p>## </p>
+<ol>
+<li><h3 id="scrollTop-、scrollLeft-、scroll"><a href="#scrollTop-、scrollLeft-、scroll" class="headerlink" title="scrollTop()、scrollLeft()、scroll()"></a>scrollTop()、scrollLeft()、scroll()</h3><p>scrollTop()、scrollLeft()是可读写方法，既可以获取值也可以设置值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">  $(function()&#123;</div><div class="line">      // 原生JS当中是把事件注册给了window  window.scroll = function()&#123;&#125;</div><div class="line">    // scrollLeft()  scrollTop() 封装成了可读写的方法</div><div class="line">     $(window).scroll(function ()&#123;</div><div class="line">          console.log($(window).scrollTop());</div><div class="line">          console.log($(window).scrollLeft());</div><div class="line">     &#125;)</div><div class="line">  &#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="jQuery中的简单事件绑定-事件名称"><a href="#jQuery中的简单事件绑定-事件名称" class="headerlink" title="jQuery中的简单事件绑定 .事件名称"></a>jQuery中的简单事件绑定 .事件名称</h3><p>jQuery中的简单事件绑定相当于把js中的on注册事件分装成了对应的方法，而且进行了优化。对于同一事件源，注册多个相同事件的话，会依次执行事件，不会覆盖原来的事件。</p>
+<ul>
+<li><strong>优点：可以给同一事件源注册多个事件，不会覆盖。</strong></li>
+</ul>
+</li>
+<li><h3 id="（了解）bind注册事件（1-7以后的jQuery全部被on代替）"><a href="#（了解）bind注册事件（1-7以后的jQuery全部被on代替）" class="headerlink" title="（了解）bind注册事件（1.7以后的jQuery全部被on代替）"></a>（了解）bind注册事件（1.7以后的jQuery全部被on代替）</h3><p>好处是可以给同一个事件源绑定多个相同的事件（多个事件的事件处理程序一致），但不能实现事件委托。</p>
+<ul>
+<li><p>缺点：要绑定事件的元素必须存在在文档中;不能实现事件委托。</p>
+<p>// 好处是，可以给同一个事件源，绑定多个相同的事件(多个事件的事件处理程序一致)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(&apos;input&apos;).bind(&apos;click mouseenter&apos;,function ()&#123;</div><div class="line">  alert(&apos;愿岁月静好&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h3 id="（了解）delegate注册事件"><a href="#（了解）delegate注册事件" class="headerlink" title="（了解）delegate注册事件"></a>（了解）delegate注册事件</h3><p>和bind基本一样，但可以实现事件委托。</p>
+<ul>
+<li><p>相对于bind的优点：支持给动态创建的元素注册事件。</p>
+<script>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> $(function()&#123;</div><div class="line"> //$(&apos;input&apos;).bind(&apos;click mouseenter&apos;,function()&#123;&#125;)</div><div class="line"> //$(&apos;ul&apos;).delegate(&apos;li&apos;,&apos;click&apos;,function ()&#123;</div><div class="line"> //  alert(&apos;愿岁月静好&apos;);</div><div class="line"> //&#125;)</div><div class="line">  $(&apos;div&apos;).delegate(&apos;p&apos;,&apos;click mouseenter&apos;,function ()&#123;</div><div class="line">    alert(&apos;愿岁月静好&apos;);</div><div class="line">  &#125;);</div><div class="line">  // 支持给动态创建的元素注册事件</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+
+     </script>
+
+</li>
+</ul>
+<p>delegate 只能通过子元素触发事件，自己本身不能触发</p>
+</li>
+<li><h3 id="了解-bind-和-dalegate-的区别"><a href="#了解-bind-和-dalegate-的区别" class="headerlink" title="(了解)bind 和 dalegate 的区别"></a>(了解)bind 和 dalegate 的区别</h3><p>delegate支持动态创建的元素的时间注册，bind不支持</p>
+</li>
+<li><h3 id="重点-on的方式注册事件"><a href="#重点-on的方式注册事件" class="headerlink" title="(重点)on的方式注册事件"></a>(重点)on的方式注册事件</h3><ul>
+<li><p>on的方式具有前面所有注册事件方式的优点</p>
+<p>jQuery1.7版本后，jQuery用on统一了所有的事件处理的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">作用：给匹配的元素绑定事件，包括了上面所有绑定事件方式的优点</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">语法：</div><div class="line">// 第一个参数：events，绑定事件的名称可以是由空格分隔的多个事件（标准事件或者自定义事件）</div><div class="line">// 第二个参数：selector, 执行事件的后代元素</div><div class="line">// 第三个参数：data，传递给处理函数的数据，事件触发的时候通过event.data来使用</div><div class="line">// 第四个参数：handler，事件处理函数</div><div class="line">$(selector).on(events[,selector][,data],handler);</div><div class="line"></div><div class="line">// 表示给$(selector)绑定事件，当必须是它的内部元素span才能执行这个事件</div><div class="line">$(selector).on(&quot;click&quot;,&quot;span&quot;, function() &#123;&#125;);</div><div class="line"></div><div class="line">// 绑定多个事件</div><div class="line">// 表示给$(selector)匹配的元素绑定单击和鼠标进入事件</div><div class="line">$(selector).on(&quot;click mouseenter&quot;, function()&#123; &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>第三个参数演示：<br>​        </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">			&lt;script&gt;</div><div class="line">        $(function () &#123;</div><div class="line">//            $(&quot;input&quot;).on(&quot;click&quot;, function () &#123;</div><div class="line">//                alert(123);</div><div class="line">//            &#125;)</div><div class="line">			//采用event.date存储注册时传递的数据，不会随变量变化而改变</div><div class="line">//            var num = 10;</div><div class="line">//            $(&quot;input&quot;).on(&quot;click&quot;, num,function (e) &#123;</div><div class="line">//                alert(e.data);</div><div class="line">//            &#125;)</div><div class="line">//            var num = 20;</div><div class="line">//            $(&quot;input&quot;).on(&quot;mouseenter&quot;, num,function () &#123;</div><div class="line">//                alert(num);</div><div class="line">//            &#125;)</div><div class="line">			 //当然，也可以传对象进来</div><div class="line">            var num = &#123;</div><div class="line">                name:&quot;zs&quot;</div><div class="line">            &#125;;</div><div class="line">            $(&quot;input&quot;).on(&quot;click&quot;, num,function (e) &#123;</div><div class="line">                alert(e.data.name);</div><div class="line">            &#125;)</div><div class="line">        &#125;)</div><div class="line">    &lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="事件解绑"><a href="#事件解绑" class="headerlink" title="事件解绑"></a>事件解绑</h3><ul>
+<li><p>unbind() 方式 和 undelegate() 方式</p>
+<p>作用：解绑 bind方式绑定的事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(selector).unbind(); //解绑所有的事件</div><div class="line">$(selector).unbind(&quot;click&quot;); //解绑指定的事件</div><div class="line"></div><div class="line">作用：解绑delegate方式绑定的事件</div><div class="line">$( selector ).undelegate(); //解绑所有的delegate事件</div><div class="line">$( selector).undelegate( &quot;click&quot; ); //解绑所有的click事件</div></pre></td></tr></table></figure>
+</li>
+<li><p>off解绑on方式绑定的事件（重点）</p>
+<p>// 解绑匹配元素的所有事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$(selector).off();</div><div class="line">// 解绑匹配元素的所有click事件</div><div class="line">$(selector).off(&quot;click&quot;);</div><div class="line">// 解绑所有代理的click事件，元素本身的事件不会被解绑 </div><div class="line">$(selector).off( &quot;click&quot;, &quot;**&quot; );</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h3 id="阻止默认行为"><a href="#阻止默认行为" class="headerlink" title="阻止默认行为"></a>阻止默认行为</h3><ul>
+<li>return false;    </li>
+<li>event.preventDefault()</li>
+</ul>
+</li>
+<li><h3 id="阻止冒泡"><a href="#阻止冒泡" class="headerlink" title="阻止冒泡"></a>阻止冒泡</h3><ul>
+<li>e.stopPropagation()</li>
+</ul>
+<p>jQuery中使用这一个即可，没有兼容性，将兼容性的方法都封装在该方法中了</p>
+<p>（e.cancelBubble = true是原生JS中IE浏览器支持的方式）</p>
+</li>
+<li><h3 id="事件对象中的几个属性"><a href="#事件对象中的几个属性" class="headerlink" title="事件对象中的几个属性"></a>事件对象中的几个属性</h3><p>this 始终指代当前对象，正在执行事件处理程序的事件源。</p>
+<p>e.target 始终表示最原始的事件源，没有兼容性问题。</p>
+<p>e.currentTarget 和this一样。</p>
+<p>e.delegateTarget 也和this一样。</p>
+</li>
+<li><h3 id="事件对象中的坐标"><a href="#事件对象中的坐标" class="headerlink" title="事件对象中的坐标"></a>事件对象中的坐标</h3><p>e.screenX / Y（浏览器）</p>
+<p>e.clientX / Y （可视区）</p>
+<p>e.pageX / Y（页面）</p>
+<p>没有兼容性问题</p>
+</li>
+<li><h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><p>$(selector).click(); // 简单事件触发，触发 click事件</p>
+<p>$(selector).trigger(“click”); // trigger方法触发事件</p>
+<p>$(selector).triggerHandler(“focus”); // triggerHandler触发 事件响应方法，不触发浏览器行为 比如:文本框获得焦点的默认行为闪烁光标。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">      $(function()&#123;</div><div class="line">           $(&quot;input:eq(1)&quot;).on(&quot;click&quot;,function ()&#123;</div><div class="line">                  alert(123);</div><div class="line">           &#125;)</div><div class="line">        // 是单击第一个按钮的时候，来触发第二个按钮的单击事件</div><div class="line">        $(&quot;input:eq(0)&quot;).on(&quot;click&quot;,function ()&#123;</div><div class="line">//               $(&quot;input:eq(1)&quot;).click();</div><div class="line">               //$(&quot;input:eq				(1)&quot;).trigger(&quot;click&quot;); // 写上参数对应的事件名称</div><div class="line">//              $(&quot;input:eq(1)&quot;).triggerHandler(&apos;click&apos;);</div><div class="line">          </div><div class="line">//          $(&quot;input:eq(2)&quot;).trigger(&apos;focus&apos;);</div><div class="line">          $(&quot;input:eq(2)&quot;).triggerHandler(&apos;focus&apos;); //  触发事件的时候，不会引发默认行为</div><div class="line">          // 输入框的焦点获取到之后，闪烁的光标是一个默认行为</div><div class="line">        &#125;)</div><div class="line">        </div><div class="line">        $(&quot;input:eq(2)&quot;).on(&apos;focus&apos;,function ()&#123;</div><div class="line">               $(this).next().text(&apos;输入框的焦点获取了&apos;);</div><div class="line">        &#125;)</div><div class="line">      &#125;)</div><div class="line">  &lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="each方法"><a href="#each方法" class="headerlink" title="each方法"></a>each方法</h3><p><strong>each是jQuery中的方法，一定要用jQuery对象来调用！！！</strong></p>
+<p><strong>用来遍历jQuery对象</strong></p>
+<p>（js中的foreach用来遍历数组）</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 有了隐式迭代，为什么还要使用each函数遍历？</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">		大部分情况下是不需要使用each方法的，因为jQuery的隐式迭代特性。</div><div class="line">		如果要对每个元素做不同的处理，这时候就用到了each方法</div><div class="line">		</div><div class="line">		作用：遍历jQuery对象集合，为每个匹配的元素执行一个函数</div><div class="line">		</div><div class="line">		// 参数一表示当前元素在所有匹配元素中的索引号</div><div class="line">		// 参数二表示当前元素（DOM对象）</div><div class="line">		$(selector).each(function(index, element)&#123;&#125;);</div><div class="line">		</div><div class="line">		$.each(object, function(k, v) &#123;&#125;);</div><div class="line"></div><div class="line">**第二种用法，也可以遍历数组和对象**</div><div class="line"></div><div class="line">		 &lt;script&gt;</div><div class="line">	      $(function()&#123;</div><div class="line">	           // 是用来遍历jQuery对象 和数组</div><div class="line">	        // 慢慢变成正常显示的一个效果</div><div class="line">	//        $(&quot;ul li&quot;).css(&quot;opa&quot;)</div><div class="line">	//        $(&quot;ul li&quot;).each(function (index,ele)&#123;</div><div class="line">	//          // ele是DOM对象</div><div class="line">	////               console.log(index+&quot;=====&quot;+ele.innerHTML);</div><div class="line">	//           $(ele).css(&quot;opacity&quot;,(index+1)/10)</div><div class="line">	//        &#125;)</div><div class="line">	        </div><div class="line">	        // forEach   是用来遍历数组的</div><div class="line">	        // each 是jQuery中的方法，一定要用jQuery对象来调用</div><div class="line">	        var nums = [10,20,30,40,50,60,70,80];</div><div class="line">	//        nums.forEach(function (item,index)&#123;</div><div class="line">	//               console.log(index+&quot;====&quot;+item);</div><div class="line">	//        &#125;)</div><div class="line">	        var obj = &#123;</div><div class="line">	          name:&quot;张三&quot;,</div><div class="line">	          age: 20,</div><div class="line">	          sex:&quot;男&quot;</div><div class="line">	        &#125;</div><div class="line">	//        $.each(nums,function (index,ele)&#123;</div><div class="line">	//               console.log(index+&quot;=======&quot;+ele);</div><div class="line">	//        &#125;)</div><div class="line">	        $.each(obj,function (index,ele)&#123;</div><div class="line">	          console.log(index+&quot;=======&quot;+ele);</div><div class="line">	        &#125;)</div><div class="line">	      &#125;)</div><div class="line">	  &lt;/script&gt;</div></pre></td></tr></table></figure>
+<ol>
+<li><h3 id="end-方法"><a href="#end-方法" class="headerlink" title="end()方法"></a>end()方法</h3><p>回到最近的一个”破坏性”操作之前。即，将匹配的元素列表变为前一次的状态。</p>
+<p>如果之前没有破坏性操作，则返回一个空集。所谓的”破坏性”就是指任何改变所匹配的jQuery元素的操作。这包括在 Traversing 中任何返回一个jQuery对象的函数–’add’, ‘andSelf’, ‘children’, ‘filter’, ‘find’, ‘map’, ‘next’, ‘nextAll’, ‘not’, ‘parent’, ‘parents’, ‘prev’, ‘prevAll’, ‘siblings’ and ‘slice’–再加上 Manipulation 中的 ‘clone’。</p>
+</li>
+<li><h3 id="多库共存的解决方式"><a href="#多库共存的解决方式" class="headerlink" title="多库共存的解决方式"></a>多库共存的解决方式</h3><p>此处多库共存指的是：jQuery占用了$ 和jQuery这两个变量。当在同一个页面中引用了jQuery这个js库，<br>并且引用的其他库（或者其他版本的jQuery库）中也用到了$或者jQuery这两个变量，那么，<br>要保证每个库都能正常使用，这时候就有了多库共存的问题。</p>
+<p>$.fn.jquery 测试jquery版本</p>
+<p>$.noConflict() 让出$符号的控制权，有返回值，可以传给其他变量</p>
+<p>var  itcast = $.noConflict(),此时itcast用法和$一模一样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;js/jquery-1.10.2.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;script src=&quot;js/jquery-1.12.2.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;script src=&quot;js/jquery-2.2.2.js&quot;&gt;&lt;/script&gt;</div><div class="line">//如上多库共存，第一次使用$.noConflict()最后一个js库会让出$控制权，再次使用$.noConflict()倒数第二个库会让出$控制权。。。</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//让出$的控制权</div><div class="line">console.log($.fn.jquery);</div><div class="line">var itcast= $.noConflict();</div><div class="line">console.log($.fn.jquery);</div><div class="line"></div><div class="line">//如果想再用$，可以如下使用自调用函数，将让出来的控制权赋给变量itcast后再作为参数传到自调用函数，即可在自调用函数内部使用$</div><div class="line">(function($)&#123;</div><div class="line">  $(&quot;input&quot;).on(&quot;click&quot;,function ()&#123;</div><div class="line">         alert(123456789);</div><div class="line">  &#125;);</div><div class="line">&#125;)(itcast);</div></pre></td></tr></table></figure>
+<ol>
+<li><h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>所谓插件就是依赖于某个库文件，对该库文件其中某些个方法，进行功能的完善。</p>
+<p>简单引用插件的步骤：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1&gt;引入jquery文件包</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2&gt;引入插件文件</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3&gt;调用方法（仍然是jquery方法，插件只是完善某些方法）</div></pre></td></tr></table></figure>
+<p>正常后台取数据调用插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1&gt;引入html静态文件</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2&gt;引入css样式文件</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3&gt;引入jQuery文件</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4&gt;引入插件文件</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">5&gt;调用插件对应方法</div></pre></td></tr></table></figure>
+<ul>
+<li><p>背景插件</p>
+<p>背景颜色最好用十六进制表示</p>
+</li>
+</ul>
+</li>
+<li><h3 id="制作插件"><a href="#制作插件" class="headerlink" title="制作插件"></a>制作插件</h3><p>如何创建jQuery插件：<br><code>http://learn.jquery.com/plugins/basic-plugin-creation/</code></p>
+<p>全局jQuery函数扩展方法</p>
+<p>$.pluginName = function() {};</p>
+<p>$.pluginName();</p>
+<p>jQuery对象扩展方法</p>
+<p>$.fn.pluginName = function() {};</p>
+<p>$(selector).pluginName();</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/03/jQuery/" rel="next" title="jQuery">
+                <i class="fa fa-chevron-left"></i> jQuery
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/02/移动web/" rel="prev" title="移动web">
+                移动web <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery2"><span class="nav-number">1.</span> <span class="nav-text">jQuery2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scrollTop-、scrollLeft-、scroll"><span class="nav-number">1.0.1.</span> <span class="nav-text">scrollTop()、scrollLeft()、scroll()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery中的简单事件绑定-事件名称"><span class="nav-number">1.0.2.</span> <span class="nav-text">jQuery中的简单事件绑定 .事件名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（了解）bind注册事件（1-7以后的jQuery全部被on代替）"><span class="nav-number">1.0.3.</span> <span class="nav-text">（了解）bind注册事件（1.7以后的jQuery全部被on代替）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（了解）delegate注册事件"><span class="nav-number">1.0.4.</span> <span class="nav-text">（了解）delegate注册事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解-bind-和-dalegate-的区别"><span class="nav-number">1.0.5.</span> <span class="nav-text">(了解)bind 和 dalegate 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重点-on的方式注册事件"><span class="nav-number">1.0.6.</span> <span class="nav-text">(重点)on的方式注册事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件解绑"><span class="nav-number">1.0.7.</span> <span class="nav-text">事件解绑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻止默认行为"><span class="nav-number">1.0.8.</span> <span class="nav-text">阻止默认行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻止冒泡"><span class="nav-number">1.0.9.</span> <span class="nav-text">阻止冒泡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件对象中的几个属性"><span class="nav-number">1.0.10.</span> <span class="nav-text">事件对象中的几个属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件对象中的坐标"><span class="nav-number">1.0.11.</span> <span class="nav-text">事件对象中的坐标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#触发器"><span class="nav-number">1.0.12.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#each方法"><span class="nav-number">1.0.13.</span> <span class="nav-text">each方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#end-方法"><span class="nav-number">1.0.14.</span> <span class="nav-text">end()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多库共存的解决方式"><span class="nav-number">1.0.15.</span> <span class="nav-text">多库共存的解决方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件"><span class="nav-number">1.0.16.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#制作插件"><span class="nav-number">1.0.17.</span> <span class="nav-text">制作插件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JS-DOM操作查询标准DOM API document.getElementById document.getElementsByTagName document.getElementsByName document.getElementsByClassName document.querySelector document.querySelectorAll  亲属访问属性获取 getAttri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM操作">
+<meta property="og:url" content="http://yoursite.com/2015/01/13/DOM操作/index.html">
+<meta property="og:site_name" content="Vito">
+<meta property="og:description" content="JS-DOM操作查询标准DOM API document.getElementById document.getElementsByTagName document.getElementsByName document.getElementsByClassName document.querySelector document.querySelectorAll  亲属访问属性获取 getAttri">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://i.imgur.com/ax4YNa0.png">
+<meta property="og:updated_time" content="2017-07-19T14:38:34.803Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DOM操作">
+<meta name="twitter:description" content="JS-DOM操作查询标准DOM API document.getElementById document.getElementsByTagName document.getElementsByName document.getElementsByClassName document.querySelector document.querySelectorAll  亲属访问属性获取 getAttri">
+<meta name="twitter:image" content="http://i.imgur.com/ax4YNa0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/01/13/DOM操作/"/>
+
+
+
+
+
+  <title> DOM操作 | Vito </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/01/13/DOM操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                DOM操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-13T23:38:04+08:00">
+                2015-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="JS-DOM操作"><a href="#JS-DOM操作" class="headerlink" title="JS-DOM操作"></a>JS-DOM操作</h1><h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><h3 id="标准DOM-API"><a href="#标准DOM-API" class="headerlink" title="标准DOM API"></a>标准DOM API</h3><ol>
+<li>document.getElementById</li>
+<li>document.getElementsByTagName</li>
+<li>document.getElementsByName</li>
+<li>document.getElementsByClassName</li>
+<li>document.querySelector</li>
+<li>document.querySelectorAll</li>
+</ol>
+<h3 id="亲属访问"><a href="#亲属访问" class="headerlink" title="亲属访问"></a>亲属访问</h3><h3 id="属性获取"><a href="#属性获取" class="headerlink" title="属性获取"></a>属性获取</h3><ol>
+<li>getAttribute 获取某个属性的值</li>
+<li>getAttibuteNode 获取属性节点</li>
+</ol>
+<h2 id="增"><a href="#增" class="headerlink" title="增"></a>增</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><ol>
+<li>document.createElement 创建元素节点</li>
+<li>document.createTextNode 创建文本节点</li>
+<li>document.createAttribute 创建属性节点</li>
+<li>innerHTML </li>
+<li>innerText </li>
+<li>cloneNode()</li>
+</ol>
+<h3 id="加入"><a href="#加入" class="headerlink" title="加入"></a>加入</h3><ol>
+<li><p>appendChild 追加到结尾处</p>
+</li>
+<li><p>innerHTML</p>
+</li>
+<li><p>insertBefore 将元素插入到某一个元素的前面</p>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">父元素.insertBefore(新元素，旧元素);</div><div class="line">//将新元素插入到旧元素之前。</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><ol>
+<li>style的操作</li>
+<li>setAttribute(属性名，属性值)</li>
+</ol>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ol>
+<li>removeChild 删除元素</li>
+<li>removeAttributeNode 删除属性</li>
+</ol>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><h3 id="修改节点"><a href="#修改节点" class="headerlink" title="修改节点"></a>修改节点</h3><ol>
+<li>删除节点再加入</li>
+</ol>
+<h3 id="修改样式"><a href="#修改样式" class="headerlink" title="修改样式"></a>修改样式</h3><ol>
+<li>style.xxx = vvv;</li>
+<li>setAttribute</li>
+</ol>
+<h3 id="修改文本"><a href="#修改文本" class="headerlink" title="修改文本"></a>修改文本</h3><ol>
+<li>innerHTML</li>
+<li>innerText</li>
+<li>节点操作</li>
+<li>nodeValue</li>
+</ol>
+<h3 id="修改属性"><a href="#修改属性" class="headerlink" title="修改属性"></a>修改属性</h3><ol>
+<li>.XXX=VVV;</li>
+<li>.setAttibute(属性名，属性值)</li>
+</ol>
+<h2 id="节点属性"><a href="#节点属性" class="headerlink" title="节点属性"></a>节点属性</h2><h3 id="常见的节点属性"><a href="#常见的节点属性" class="headerlink" title="常见的节点属性"></a>常见的节点属性</h3><ol>
+<li><p>nodeValue 表示节点的值，任何节点都有该属性，但是一般文本节点才使用。</p>
+<p><img src="http://i.imgur.com/ax4YNa0.png" alt=""></p>
+</li>
+<li><p>nodeName 表示节点的名字，所有节点都有该属性，但是一般元素节点才使用。元素节点打印的元素名均为大写字母。</p>
+</li>
+</ol>
+<ol>
+<li><p>nodeType 节点类型 js 高程dom节点</p>
+<p>1表示元素节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2表示属性节点</div><div class="line">3表示文本节点</div></pre></td></tr></table></figure>
+<p>以下两个写框架时用的着</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">9表示document</div><div class="line">11表示代码片段</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="属性操作"><a href="#属性操作" class="headerlink" title="属性操作"></a>属性操作</h2><p>操作属性节点就是属性的增删查改</p>
+<ol>
+<li><p>添加自定义属性，非标准DOM属性</p>
+<p>div.setAttribute(‘属性名’,’属性值’)</p>
+</li>
+<li><p>.xxx=vvv 添加属性 HTML-DOM</p>
+<p>div.className = ‘c’</p>
+</li>
+</ol>
+<ol>
+<li><p>.removeAttribute(‘’);</p>
+<p>注意删除某些只有一个值的单属性是必须完全删除该属性而不能给空值</p>
+</li>
+<li><p>.removeAttributeNode();</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/12/23/GET和POST请求的区别/" rel="next" title="GET和POST请求的区别">
+                <i class="fa fa-chevron-left"></i> GET和POST请求的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/03/jQuery/" rel="prev" title="jQuery">
+                jQuery <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JS-DOM操作"><span class="nav-number">1.</span> <span class="nav-text">JS-DOM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">1.1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标准DOM-API"><span class="nav-number">1.1.1.</span> <span class="nav-text">标准DOM API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亲属访问"><span class="nav-number">1.1.2.</span> <span class="nav-text">亲属访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性获取"><span class="nav-number">1.1.3.</span> <span class="nav-text">属性获取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增"><span class="nav-number">1.2.</span> <span class="nav-text">增</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建"><span class="nav-number">1.2.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入"><span class="nav-number">1.2.2.</span> <span class="nav-text">加入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他方法"><span class="nav-number">1.2.3.</span> <span class="nav-text">其他方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除"><span class="nav-number">1.3.</span> <span class="nav-text">删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除元素"><span class="nav-number">1.3.1.</span> <span class="nav-text">删除元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改"><span class="nav-number">1.4.</span> <span class="nav-text">修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改节点"><span class="nav-number">1.4.1.</span> <span class="nav-text">修改节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改样式"><span class="nav-number">1.4.2.</span> <span class="nav-text">修改样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改文本"><span class="nav-number">1.4.3.</span> <span class="nav-text">修改文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改属性"><span class="nav-number">1.4.4.</span> <span class="nav-text">修改属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点属性"><span class="nav-number">1.5.</span> <span class="nav-text">节点属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的节点属性"><span class="nav-number">1.5.1.</span> <span class="nav-text">常见的节点属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性操作"><span class="nav-number">1.6.</span> <span class="nav-text">属性操作</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="ＨTML５Ｈ５新元素 HTML5定义了一系列新元素，如新语义标签、智能表单、多媒体标签等，可以帮助开发者创建富互联网应用，还提供了一些Javascript API，如地理定位、重力感应、硬件访问等，可以在浏览器内实现类原生应用，甚至结合Canvas我们可开发网页版游戏。  广义概念：HTML5代表浏览器端技术的一个发展阶段。在这个阶段，浏览器呈现技术得到了一个飞跃发展和广泛支持，它包括：HTML5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML5">
+<meta property="og:url" content="http://yoursite.com/2015/08/19/HTML5/index.html">
+<meta property="og:site_name" content="Vito">
+<meta property="og:description" content="ＨTML５Ｈ５新元素 HTML5定义了一系列新元素，如新语义标签、智能表单、多媒体标签等，可以帮助开发者创建富互联网应用，还提供了一些Javascript API，如地理定位、重力感应、硬件访问等，可以在浏览器内实现类原生应用，甚至结合Canvas我们可开发网页版游戏。  广义概念：HTML5代表浏览器端技术的一个发展阶段。在这个阶段，浏览器呈现技术得到了一个飞跃发展和广泛支持，它包括：HTML5">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-19T14:34:22.541Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML5">
+<meta name="twitter:description" content="ＨTML５Ｈ５新元素 HTML5定义了一系列新元素，如新语义标签、智能表单、多媒体标签等，可以帮助开发者创建富互联网应用，还提供了一些Javascript API，如地理定位、重力感应、硬件访问等，可以在浏览器内实现类原生应用，甚至结合Canvas我们可开发网页版游戏。  广义概念：HTML5代表浏览器端技术的一个发展阶段。在这个阶段，浏览器呈现技术得到了一个飞跃发展和广泛支持，它包括：HTML5">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/08/19/HTML5/"/>
+
+
+
+
+
+  <title> HTML5 | Vito </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/08/19/HTML5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                HTML5
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-19T22:33:25+08:00">
+                2015-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HTML５"><a href="#HTML５" class="headerlink" title="ＨTML５"></a>ＨTML５</h1><h2 id="H５新元素"><a href="#H５新元素" class="headerlink" title="Ｈ５新元素"></a>Ｈ５新元素</h2><ul>
+<li><p>HTML5定义了一系列新元素，如新语义标签、智能表单、多媒体标签等，可以帮助开发者创建富互联网应用，还提供了一些Javascript API，如地理定位、重力感应、硬件访问等，可以在浏览器内实现类原生应用，甚至结合Canvas我们可开发网页版游戏。</p>
+</li>
+<li><p>广义概念：HTML5代表浏览器端技术的一个发展阶段。在这个阶段，浏览器呈现技术得到了一个飞跃发展和广泛支持，它包括：HTML5，CSS3，Javascript，API在内的一套技术组合 。</p>
+</li>
+<li><p>优点：<a href="http://www.intertid.com/school/2014/595568.shtml" target="_blank" rel="external">http://www.intertid.com/school/2014/595568.shtml</a></p>
+<h3 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h3></li>
+<li><p>去除了许多冗余的内容，书写规则更加简洁、清晰。</p>
+</li>
+</ul>
+<h3 id="语义标签"><a href="#语义标签" class="headerlink" title="语义标签"></a>语义标签</h3><ul>
+<li>HTML5增加了大量更有意义的语义标签，更有利于搜索引擎或辅助设备理解HTML页面内容。<ul>
+<li>统的做法我们或许通过增加类名如class=”header”、class=”footer”，使HTML页面具有语义性，但是<strong>不具有通用性</strong>。</li>
+<li>HTML5则是通过新增语义标签的形式来解决这个问题，例如<code>&lt;header&gt;&lt;/header&gt;、&lt;footer&gt;&lt;/footer&gt;</code>等，这样就可以使其<strong>具有通用性</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="新增只能表单元素"><a href="#新增只能表单元素" class="headerlink" title="新增只能表单元素"></a>新增只能表单元素</h3><p>伴随着互联网富应用以及移动开发的兴起，传统的Web表单已经越来越不能满足开发的需求，所以HTML5在Web表单方向也做了很大的改进，如拾色器、日期/时间组件等，使表单处理更加高效。</p>
+<ul>
+<li>email url search(搜索框，更具语义化) range（自由拖动滑块） date（日期）</li>
+<li>表单属性<ul>
+<li>placeholder 占位符</li>
+<li>autofocus 自动获得焦点</li>
+<li>required 必须填入内容</li>
+<li>pattern 自定义验证</li>
+</ul>
+</li>
+<li><strong>部分类型是针对移动设备生效的，且具有一定的兼容性，在实际应用当中应选择性的使用</strong></li>
+</ul>
+<h3 id="多媒体"><a href="#多媒体" class="headerlink" title="多媒体"></a>多媒体</h3><ul>
+<li><p>HTML5通过<code>&lt;audio&gt;</code>标签来解决音频播放的问题。</p>
+<ul>
+<li>autoplay 自动播放</li>
+<li>controls 是否显不默认播放控件</li>
+<li>loop 循环播放</li>
+<li>preload 预加载 同时设置autoplay时此属性失效</li>
+</ul>
+</li>
+<li><p>多浏览器支持的方案：通过soutce标签指定多格式音频文件</p>
+<audio controls>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">	&lt;source src=&quot;see.mp3&quot;&gt;</div><div class="line">	&lt;source src=&quot;see.wav&quot;&gt;</div><div class="line">	&lt;source src=&quot;see.ogg&quot;&gt;</div><div class="line">	您的浏览器不支持HTML音频播放功能</div><div class="line">&lt;/audio&gt;</div></pre></td></tr></table></figure>
+</audio></li>
+<li><p>HTML5通过<code>&lt;video&gt;</code>标签来解决音频播放的问题。</p>
+<ul>
+<li>autoplay 自动播放</li>
+<li>controls 是否显示默认播放控件</li>
+<li>loop 循环播放</li>
+<li>preload 预加载，同时设置了    </li>
+<li>autoplay，此属性将失效</li>
+<li>width 设置播放窗口宽度</li>
+<li>height 设置播放窗口的高度</li>
+</ul>
+</li>
+<li><p>多浏览器支持的方案：通过soutce标签指定多格式音频文件</p>
+<video controls>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	&lt;source src=&quot;see.ogg&quot;&gt;</div><div class="line">	&lt;source src=&quot;see.mp4&quot;&gt;</div><div class="line">	您的浏览器不支持HTML视频播放功能</div><div class="line">&lt;/video&gt;</div></pre></td></tr></table></figure>
+</video></li>
+</ul>
+<h3 id="dom扩展"><a href="#dom扩展" class="headerlink" title="dom扩展"></a>dom扩展</h3><ul>
+<li>获取元素<ul>
+<li>document.querySelector(‘div’)</li>
+<li>document.querySelectorAll(‘selector’)</li>
+</ul>
+</li>
+<li>类名操作<ul>
+<li>1、Node.classList.add(‘class’) 添加class</li>
+<li>2、Node.classList.remove(‘class’) 移除class</li>
+<li>3、Node.classList.toggle(‘class’) 切换class，有则移除，无则添加</li>
+<li>4、Node.classList.contains(‘class’) 检测是否存在class</li>
+<li>Node指一个有效的DOM节点，是一个统称。</li>
+</ul>
+</li>
+<li>自定义属性<ul>
+<li>在HTML5中我们可以自定义属性，其格式如下data-*=””，例如<br>data-info=”我是自定义属性”，通过Node.dataset[‘info’] 我们便可以获取到自定义的属性值。</li>
+<li>Node.dataset是以类对象形式存在的</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络状态"><a href="#网络状态" class="headerlink" title="网络状态"></a>网络状态</h3><ul>
+<li><p>网络状态：navigator.online;返回一个boolean类型</p>
+<ul>
+<li>用来检测用户是否联网，不仅仅指的是链接外网，连接了局域网也算，甚至本机和虚拟机的网卡链接起来，也算是一个网络连接状态</li>
+<li>注意：返回true不一定就是说一定能访问互联网，因为有可能连接的是局域网。但是返回false则表示一定连不上网。</li>
+</ul>
+</li>
+<li><p>监听网络状态</p>
+<ul>
+<li><p>为了更好的确定网络是否连接，HTML5还定义了两个事件，用于监听网络状态的变化。</p>
+<p>//网络连接时会被调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> window.addEventListener(&quot;online&quot;, function () &#123; </div><div class="line">alert(&quot;online&quot;); </div><div class="line">&#125;); </div><div class="line">//网络断开时会被调用</div><div class="line">window.addEventListener(&quot;offline&quot;, function () &#123;</div><div class="line"> alert(&quot;offline&quot;);</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="地理位置"><a href="#地理位置" class="headerlink" title="地理位置"></a>地理位置</h3><ul>
+<li><p>在HTML规范中，增加了获取用户地理信息的API，这样使得我们可以基于用户位置开发互联网应用，即基于位置服务LBS(Location Base Service)</p>
+<ul>
+<li><p>HTML5规范提供了一套保护用户隐私的机制。必须先得到用户明确许可，才能获取用户的位置信息。在获取地理位置之前，会询问用户，只有在获得许可之后，才能获取到用户的位置信息。</p>
+<p>javascript </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//successCallback:获取成功后会调用,并返回一个position对象，里面包含了地理位置信息 </div><div class="line">//获取失败了会调用，并返回error对象，里面包含了错误信息。 </div><div class="line">//获取当前的地理位置信息 navigator.geolocation.getCurrentPosition(successCallback, errorCallback) </div><div class="line">//重复的获取当前的地理位置信息 navigator.geolocation.watchPosition(successCallback, errorCallback)</div></pre></td></tr></table></figure>
+</li>
+<li><p>实例</p>
+<script>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">navigator.geolocation.getCurrentPosition(function(position) &#123;</div><div class="line">    // 定位成功会调用该方法 </div><div class="line">    var latitude = position.coords.latitude; //纬度 </div><div class="line">    var longitude = position.coords.longitude; //经度 </div><div class="line">    var accuracy = position.coords.accuracy; //精度 </div><div class="line">    var altitude = position.coords.altitude //海拔高度 </div><div class="line">    console.log(latitude, longitude, accuracy, altitude);</div><div class="line">&#125;,</div><div class="line">function(error) &#123;</div><div class="line">    // 定位失败会调用该方法 </div><div class="line">    // error 是错误信息 4</div><div class="line">    alert(&apos;错误&apos;);</div><div class="line">&#125;);</div><div class="line">  &lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在iOS 10中，苹果对webkit定位权限进行了修改，所有定位请求的页面必须是https协议的。</p>
+</li>
+<li><p>百度地图的用法：</p>
+</li>
+<li><p>官网：<a href="http://lbsyun.baidu.com/">http://lbsyun.baidu.com/</a></p>
+<ol>
+<li>进入官网 直接找到javascript API</li>
+<li>直接找到示例DEMO，复制源代码</li>
+<li>需要获取密钥 （自己申请，需要一到两个工作日）</li>
+<li>创建应用（填写浏览器端）</li>
+<li>利用密钥去替换script标签里面的“你的密钥”</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="web存储"><a href="#web存储" class="headerlink" title="web存储"></a>web存储</h3><ul>
+<li><p>cookie</p>
+<ul>
+<li>传统方式，我们以document.cookie进行存储，但是存储起来特别麻烦，并且，存储大小只有4k，常用来做自动登录，即存储用户的账号和密码信息。每次请求都会带上cookie</li>
+<li>在获取cookie内容时，一般需要通过正则或者字符串的方法进行处理，转换成对象，最终得到数据</li>
+<li>大小只有4k左右</li>
+</ul>
+</li>
+<li><p>window.sessionStorage</p>
+<ol>
+<li><p>生命周期为关闭浏览器窗口</p>
+</li>
+<li><p>不能多窗口下数据可以共享</p>
+</li>
+<li><p>大小为5M</p>
+</li>
+<li><p>补充：通过跳转可以多窗口共享</p>
+<p>运用场景：在一些单页面（spa）的运用中，进行页面传值的时候比较有用</p>
+</li>
+</ol>
+</li>
+<li><p>window.localStorage</p>
+<ol>
+<li><p>永久生效，除非手动删除或用代码删除</p>
+</li>
+<li><p>可以多窗口共享</p>
+</li>
+<li><p>大小为20M</p>
+<p>运用场景：一些不涉及到安全的一些数据（不要太过庞大）都可以存储到本地</p>
+</li>
+</ol>
+</li>
+<li><p>差异性：（面试经常问）</p>
+<ul>
+<li><p>相同点：都是存储数据，存储在web端，并且都是同源</p>
+</li>
+<li><p>不同点：<br>​<br>（1）cookie 只有4K 小 并且每一次请求都会带上cookie 体验不好，浪费带宽</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">（2）session和local直接存储在本地，请求不会携带，并且容量比cookie要大的多</div><div class="line">（3）session 是临时会话，当窗口被关闭的时候就清除掉 ，而 local永久存在，cookie有过期时间</div><div class="line">（4）作用域不同，sessionStorage不能在不同的浏览器窗口中共享，即使是同一个页面；localStorage 在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="全屏"><a href="#全屏" class="headerlink" title="全屏"></a>全屏</h3><p>HTML5规范允许用户自定义网页上任一元素全屏显示。</p>
+<ul>
+<li>requestFullScreen() 开启全屏显示</li>
+<li>cancelFullScreen() 关闭全屏显示</li>
+</ul>
+<h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><ul>
+<li><p>通过FileReader对象我们可以读取本地存储的文件，</p>
+</li>
+<li><p>由于HTML5中我们可以通过为表单元素添加multiple属性，就可以上传多个文件；因此我们通过<code>&lt;input&gt;</code>上传文件后得到的是一个FileList对象（伪数组形式）。</p>
+</li>
+<li><p>FileReader是一个HTML5新增的对象，用于读取文件。</p>
+<p>var file = document.getElementById(“file”); var box = document.getElementById(“box”);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">file.addEventListener(&quot;change&quot;, function () &#123;</div><div class="line">console.dir(file);</div><div class="line"></div><div class="line">//files:里面存储了所有上传的文件</div><div class="line">//这个data就是我们上传的那个文件</div><div class="line">var data = file.files[0]</div><div class="line"></div><div class="line">//1. 创建一个文件读取器</div><div class="line">var fr = new FileReader();</div><div class="line"></div><div class="line">//2. 让文件读取器读取整个文件</div><div class="line">fr.readAsDataURL(data);</div><div class="line"></div><div class="line">//3. 等待文件读取完</div><div class="line">//onload：文件读取完成后，就会触发</div><div class="line">fr.onload = function () &#123;</div><div class="line">    var img = document.createElement(&quot;img&quot;);</div><div class="line">    img.src = fr.result;</div><div class="line">    box.innerHTML = &quot;&quot;;</div><div class="line">    box.appendChild(img);</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="拖拽"><a href="#拖拽" class="headerlink" title="拖拽"></a>拖拽</h2><ul>
+<li>在HTML5的规范中，我们可以通过为元素增加draggable=”true”来设置此元素是否可以进行拖拽操作，其中图片、链接默认是开启的。</li>
+<li>根据元素类型不同，需要设置不同的事件监听 <ul>
+<li>1、拖拽元素 ondrag 应用于拖拽元素，整个拖拽过程都会调用 ondragstart应用于拖拽元素，当拖拽开始时调用 ondragend    应用于拖拽元素，当拖拽结束时调用 //<ul>
+<li>2、目标元素 ondragover应用于目标元素，当停留在目标元素上时调用 ondrop应用于目标元素，当在目标元素上松开鼠标时调用(浏览器默认不让拖拽，需要组织dragover的默认行为。)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</script></li></ul></li></ul>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/01/Ajax/" rel="next" title="Ajax">
+                <i class="fa fa-chevron-left"></i> Ajax
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/20/Cookie的弊端/" rel="prev" title="Cookie的弊端">
+                Cookie的弊端 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML５"><span class="nav-number">1.</span> <span class="nav-text">ＨTML５</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#H５新元素"><span class="nav-number">1.1.</span> <span class="nav-text">Ｈ５新元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法规则"><span class="nav-number">1.1.1.</span> <span class="nav-text">语法规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义标签"><span class="nav-number">1.1.2.</span> <span class="nav-text">语义标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增只能表单元素"><span class="nav-number">1.1.3.</span> <span class="nav-text">新增只能表单元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多媒体"><span class="nav-number">1.1.4.</span> <span class="nav-text">多媒体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dom扩展"><span class="nav-number">1.1.5.</span> <span class="nav-text">dom扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络状态"><span class="nav-number">1.1.6.</span> <span class="nav-text">网络状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地理位置"><span class="nav-number">1.1.7.</span> <span class="nav-text">地理位置</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

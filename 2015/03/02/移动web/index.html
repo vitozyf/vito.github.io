@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="移动web点击事件注意点 移动web页面如果不设置视口能不能显示？  1早期的移动站并没有专门的技术，基本都是桌面站缩放到移动端显示；可以使用手指捏合缩放也可以使用双击缩放； 双击的时候可能会点到了a标签input按钮。 1为了判断用户是双击缩放还是真要点击对应的dom元素，就有了一个延迟300毫秒；如果两次点击时间在300毫秒之内 --双击缩放反之，认为我们是点击dom元素。 1click的延迟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动web">
+<meta property="og:url" content="http://yoursite.com/2015/03/02/移动web/index.html">
+<meta property="og:site_name" content="Vito">
+<meta property="og:description" content="移动web点击事件注意点 移动web页面如果不设置视口能不能显示？  1早期的移动站并没有专门的技术，基本都是桌面站缩放到移动端显示；可以使用手指捏合缩放也可以使用双击缩放； 双击的时候可能会点到了a标签input按钮。 1为了判断用户是双击缩放还是真要点击对应的dom元素，就有了一个延迟300毫秒；如果两次点击时间在300毫秒之内 --双击缩放反之，认为我们是点击dom元素。 1click的延迟">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-19T15:00:18.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动web">
+<meta name="twitter:description" content="移动web点击事件注意点 移动web页面如果不设置视口能不能显示？  1早期的移动站并没有专门的技术，基本都是桌面站缩放到移动端显示；可以使用手指捏合缩放也可以使用双击缩放； 双击的时候可能会点到了a标签input按钮。 1为了判断用户是双击缩放还是真要点击对应的dom元素，就有了一个延迟300毫秒；如果两次点击时间在300毫秒之内 --双击缩放反之，认为我们是点击dom元素。 1click的延迟">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/03/02/移动web/"/>
+
+
+
+
+
+  <title> 移动web | Vito </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/03/02/移动web/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                移动web
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-02T22:57:12+08:00">
+                2015-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="移动web"><a href="#移动web" class="headerlink" title="移动web"></a>移动web</h1><h2 id="点击事件注意点"><a href="#点击事件注意点" class="headerlink" title="点击事件注意点"></a>点击事件注意点</h2><ol>
+<li>移动web页面如果不设置视口能不能显示？</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">早期的移动站并没有专门的技术，基本都是桌面站缩放到移动端显示；可以使用手指捏合缩放也可以使用双击缩放； 双击的时候可能会点到了a标签input按钮。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">为了判断用户是双击缩放还是真要点击对应的dom元素，就有了一个延迟300毫秒；如果两次点击时间在300毫秒之内 --双击缩放反之，认为我们是点击dom元素。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">click的延迟问题是历史遗留问题，只在不设置视口的时候会出现；设置了视口属性之后由于 浏览器就知道了这是专门的移动站，那么click的延迟就没有那么久了。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">虽然还是比touch晚了50毫秒左右，但是这个延迟是完全可以接受的。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">所以移动端开发时设置了视口之后，click的延迟问题就可以忽略不计了</div></pre></td></tr></table></figure>
+<h2 id="swipe插件"><a href="#swipe插件" class="headerlink" title="swipe插件"></a>swipe插件</h2><ol>
+<li>实现上下自由滚动</li>
+<li>为了只有滚动，<strong>容器的尺寸要比slide的尺寸要小</strong>，并且<strong>设置slide height:auto</strong>;</li>
+</ol>
+<h2 id="touch事件"><a href="#touch事件" class="headerlink" title="touch事件"></a>touch事件</h2><ol>
+<li><p>touchstart</p>
+</li>
+<li><p>touchmove</p>
+</li>
+<li><p>touchend ; 注意该事件中不能获取到位置</p>
+</li>
+<li><p>获取位置：</p>
+<p>event.touches[0].clientX；<br>​    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">event.touches[0].clientY;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"> 	</div><div class="line">	&lt;!DOCTYPE html&gt;</div><div class="line">	&lt;html lang=&quot;en&quot;&gt;</div><div class="line"></div><div class="line">	&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</div><div class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;</div><div class="line">    &lt;title&gt;Document&lt;/title&gt;</div><div class="line">    &lt;style&gt;</div><div class="line">        html,</div><div class="line">        body &#123;</div><div class="line">            height: 100%;</div><div class="line">            margin: 0;</div><div class="line">            padding: 0;</div><div class="line">            background-color: yellowgreen;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        img &#123;</div><div class="line">            transition: all 1s;</div><div class="line">        &#125;</div><div class="line">    &lt;/style&gt;</div><div class="line">	&lt;/head&gt;</div><div class="line"></div><div class="line">	&lt;body&gt;</div><div class="line">    &lt;img src=&quot;images/my.gif&quot; alt=&quot;&quot;&gt;</div><div class="line">    &lt;script&gt;</div><div class="line">        window.onload = function() &#123;</div><div class="line">            document.body.ontouchstart = function(e) &#123;</div><div class="line">                // console.log(e);</div><div class="line">                // console.log(e.touches[0].pageX);</div><div class="line">                var moveX = e.touches[0].pageX - document.querySelector(&quot;img&quot;).offsetWidth / 2;</div><div class="line">                var moveY = e.touches[0].pageY - document.querySelector(&quot;img&quot;).offsetHeight / 2;</div><div class="line">                document.querySelector(&quot;img&quot;).style.transform = &quot;translate(&quot; + moveX + &quot;px,&quot; + moveY + &quot;px)&quot;;</div><div class="line">            &#125;</div><div class="line">            document.body.ontouchmove = function(e) &#123;</div><div class="line">                document.querySelector(&quot;img&quot;).style.transition = &quot;none&quot;;</div><div class="line">                var moveX = e.touches[0].pageX - document.querySelector(&quot;img&quot;).offsetWidth / 2;</div><div class="line">                var moveY = e.touches[0].pageY - document.querySelector(&quot;img&quot;).offsetHeight / 2;</div><div class="line">                document.querySelector(&quot;img&quot;).style.transform = &quot;translate(&quot; + moveX + &quot;px,&quot; + moveY + &quot;px)&quot;;</div><div class="line">            &#125;</div><div class="line">            document.body.ontouchend = function(e) &#123;</div><div class="line">                document.querySelector(&quot;img&quot;).style.transition = &quot;all 1s&quot;;</div><div class="line">                var moveX = 0;</div><div class="line">                var moveY = 0;</div><div class="line">                document.querySelector(&quot;img&quot;).style.transform = &quot;translate(&quot; + moveX + &quot;px,&quot; + moveY + &quot;px)&quot;;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line"></div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>注意：在移动端，touch事件原生没有左滑，右滑等，需要自己封装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zepto已经封装好。</div></pre></td></tr></table></figure>
+<h2 id="左右，长按滑动事件原理"><a href="#左右，长按滑动事件原理" class="headerlink" title="左右，长按滑动事件原理"></a>左右，长按滑动事件原理</h2><ol>
+<li>左滑：判断 滑动结束时 移动的 x是 还是负</li>
+<li>长按：<ol>
+<li>判断 按的时间</li>
+<li>如果移动了 就失效</li>
+</ol>
+</li>
+</ol>
+<h2 id="rem单位"><a href="#rem单位" class="headerlink" title="rem单位"></a>rem单位</h2><ol>
+<li><p>em:默认的大小是继承而来的字体大小,修改自己的font-size即可.</p>
+<p>.em-box{</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">  /*  160px 160px</div><div class="line">    em = 16px 默认的 font-size</div><div class="line">    em 如果自己设置了 font-size 那么会使用自己的大小</div><div class="line">    如果 页面中的所有元素 都没有设置 font-size  那么 em的值 都是一样的 只需要调整 页面中的字体大小 就能够实现</div><div class="line">   */</div><div class="line">  width: 10em;</div><div class="line">  height: 10em;</div><div class="line">  font-size:20px;</div><div class="line">  background-color: hotpink;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<ol>
+<li><p>rem:默认的大小是html的font-size字体大小,修改html的font-size即可.使用rem实现了适配多种不同的屏幕.</p>
+<p>.rem-box{<br>  /* rem这里的值是 16px</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> 页面的 默认字体大小 是 16px</div><div class="line"> 使用rem作为单位 自己的 字体大小 是可以 随意更改的 并不会影响 rem的值</div><div class="line"> rem的值 是 哪里来的</div><div class="line">  r rootelement 取决于 html的 font-size</div><div class="line">页面中的元素 使用 rem作为单位 我们只需要调整 谁的大小</div><div class="line">  html的font-size</div><div class="line">  页面中的 尺寸 需要使用 rem </div><div class="line">     */</div><div class="line">  width: 10rem;</div><div class="line">  height: 10rem;</div><div class="line">  background-color: skyblue;</div><div class="line">  font-size:100px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+<h2 id="js动态设置html的font-size改变rem"><a href="#js动态设置html的font-size改变rem" class="headerlink" title="js动态设置html的font-size改变rem"></a>js动态设置html的font-size改变rem</h2><p>这一段js需要放在引用文件之前，在载入任何资源之前,保证执行速度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">  //  屏幕宽度</div><div class="line">  // 浏览器中 可视的区域</div><div class="line">  // console.log(window.screen.availWidth);</div><div class="line">  // 设备的 屏幕宽度 </div><div class="line">  // 这两个值 大小不一 桌面端需要注意 移动端 用哪个都可以</div><div class="line">  // console.log(window.screen.width);</div><div class="line">  // 页面打开时执行</div><div class="line">  document.querySelector(&apos;html&apos;).style.fontSize = window.screen.width / 20 + &apos;px&apos;;</div><div class="line">  // 尺寸发生更改   重新计算</div><div class="line">  window.onresize = function () &#123;</div><div class="line">    document.querySelector(&apos;html&apos;).style.fontSize = window.screen.width / 20 + &apos;px&apos;;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/05/jQuery2/" rel="next" title="jQuery2">
+                <i class="fa fa-chevron-left"></i> jQuery2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/10/swiper嵌套问题/" rel="prev" title="swiper嵌套问题">
+                swiper嵌套问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#移动web"><span class="nav-number">1.</span> <span class="nav-text">移动web</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#点击事件注意点"><span class="nav-number">1.1.</span> <span class="nav-text">点击事件注意点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swipe插件"><span class="nav-number">1.2.</span> <span class="nav-text">swipe插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#touch事件"><span class="nav-number">1.3.</span> <span class="nav-text">touch事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#左右，长按滑动事件原理"><span class="nav-number">1.4.</span> <span class="nav-text">左右，长按滑动事件原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rem单位"><span class="nav-number">1.5.</span> <span class="nav-text">rem单位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js动态设置html的font-size改变rem"><span class="nav-number">1.6.</span> <span class="nav-text">js动态设置html的font-size改变rem</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Ajax过程(1)创建XMLHttpRequest对象,也就是创建一个异步调用对象. (2)创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息. (3)设置响应HTTP请求状态变化的函数. (4)发送HTTP请求. (5)获取异步调用返回的数据. (6)使用JavaScript和DOM实现局部刷新. 原生的ajax请求的数据格式 get: QueryString  post:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ajax">
+<meta property="og:url" content="http://yoursite.com/2015/08/01/Ajax/index.html">
+<meta property="og:site_name" content="Vito">
+<meta property="og:description" content="Ajax过程(1)创建XMLHttpRequest对象,也就是创建一个异步调用对象. (2)创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息. (3)设置响应HTTP请求状态变化的函数. (4)发送HTTP请求. (5)获取异步调用返回的数据. (6)使用JavaScript和DOM实现局部刷新. 原生的ajax请求的数据格式 get: QueryString  post:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-19T14:21:42.161Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ajax">
+<meta name="twitter:description" content="Ajax过程(1)创建XMLHttpRequest对象,也就是创建一个异步调用对象. (2)创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息. (3)设置响应HTTP请求状态变化的函数. (4)发送HTTP请求. (5)获取异步调用返回的数据. (6)使用JavaScript和DOM实现局部刷新. 原生的ajax请求的数据格式 get: QueryString  post:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/08/01/Ajax/"/>
+
+
+
+
+
+  <title> Ajax | Vito </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/08/01/Ajax/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Ajax
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-01T22:20:35+08:00">
+                2015-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Ajax过程"><a href="#Ajax过程" class="headerlink" title="Ajax过程"></a>Ajax过程</h2><p>(1)创建XMLHttpRequest对象,也就是创建一个异步调用对象.</p>
+<p>(2)创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息.</p>
+<p>(3)设置响应HTTP请求状态变化的函数.</p>
+<p>(4)发送HTTP请求.</p>
+<p>(5)获取异步调用返回的数据.</p>
+<p>(6)使用JavaScript和DOM实现局部刷新.</p>
+<h2 id="原生的ajax请求的数据格式"><a href="#原生的ajax请求的数据格式" class="headerlink" title="原生的ajax请求的数据格式"></a>原生的ajax请求的数据格式</h2><ul>
+<li><p>get: QueryString</p>
+</li>
+<li><p>post: </p>
+<ul>
+<li><p>Request Payload 默认</p>
+<ul>
+<li><p>Form Data</p>
+<p>通过<br>xhr.setRequestHeader(“Content-Type”,”application/x-www-form-urlencoded”);<br>可以把格式修改为Form Data</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="异步加载和延迟加载"><a href="#异步加载和延迟加载" class="headerlink" title="异步加载和延迟加载"></a>异步加载和延迟加载</h2><p>1.异步加载的方案： 动态插入script标签</p>
+<p>2.通过ajax去获取js代码，然后通过eval执行</p>
+<p>3.script标签上添加defer或者async属性</p>
+<p>4.创建并插入iframe，让它异步执行js</p>
+<p>5.延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的。</p>
+<h2 id="请解释一下-JavaScript-的同源策略。"><a href="#请解释一下-JavaScript-的同源策略。" class="headerlink" title="请解释一下 JavaScript 的同源策略。"></a>请解释一下 JavaScript 的同源策略。</h2><p>概念:同源策略是客户端脚本（尤其是Javascript）的重要的安全度量标准。它最早出自Netscape Navigator2.0，其目的是防止某个文档或脚本从多个不同源装载。</p>
+<p>这里的同源策略指的是：协议，域名，端口相同，同源策略是一种安全协议。 指一段脚本只能读取来自同一来源的窗口和文档的属性。</p>
+<p>为什么要有同源限制？</p>
+<p>我们举例说明：比如一个黑客程序，他利用Iframe把真正的银行登录页面嵌到他的页面上，当你使用真实的用户名，密码登录时，他的页面就可以通过Javascript读取到你的表单中input中的内容，这样用户名，密码就轻松到手了。</p>
+<h2 id="GET和POST的区别，何时使用POST？"><a href="#GET和POST的区别，何时使用POST？" class="headerlink" title="GET和POST的区别，何时使用POST？"></a>GET和POST的区别，何时使用POST？</h2><p>GET：一般用于信息获取，使用URL传递参数，对所发送信息的数量也有限制，一般在2000个字符</p>
+<p>POST：一般用于修改服务器上的资源，对所发送的信息没有限制。</p>
+<p>GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值，也就是说Get是通过地址栏来传值，而Post是通过提交表单来传值。</p>
+<p>然而，在以下情况中，请使用 POST 请求：<br>无法使用缓存文件（更新服务器上的文件或数据库）<br>向服务器发送大量数据（POST 没有数据量限制）<br>发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠</p>
+<h2 id="eval是做什么的？"><a href="#eval是做什么的？" class="headerlink" title="eval是做什么的？"></a>eval是做什么的？</h2><p>它的功能是把对应的字符串解析成JS代码并运行；<br>应该避免使用eval，不安全，非常耗性能（2次，一次解析成js语句，一次执行）。</p>
+<h2 id="ajax-是什么-ajax-的交互模型-同步和异步的区别-如何解决跨域问题"><a href="#ajax-是什么-ajax-的交互模型-同步和异步的区别-如何解决跨域问题" class="headerlink" title="ajax 是什么?ajax 的交互模型?同步和异步的区别?如何解决跨域问题?"></a>ajax 是什么?ajax 的交互模型?同步和异步的区别?如何解决跨域问题?</h2><ol>
+<li>通过异步模式，提升了用户体验</li>
+<li>优化了浏览器和服务器之间的传输，减少不必要的数据往返，减少了带宽占用</li>
+<li>Ajax在客户端运行，承担了一部分本来由服务器承担的工作，减少了大用户量下的服务器负载。</li>
+</ol>
+<h2 id="Ajax的最大的特点是什么。"><a href="#Ajax的最大的特点是什么。" class="headerlink" title="Ajax的最大的特点是什么。"></a>Ajax的最大的特点是什么。</h2><ul>
+<li>Ajax可以实现动态不刷新（局部刷新）</li>
+<li>readyState属性 状态 有5个可取值： 0=未初始化 ，1=启动 2=发送，3=接收，4=完成</li>
+</ul>
+<h2 id="ajax的缺点"><a href="#ajax的缺点" class="headerlink" title="ajax的缺点"></a>ajax的缺点</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1、ajax不支持浏览器back按钮。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2、安全问题 AJAX暴露了与服务器交互的细节。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3、对搜索引擎的支持比较弱。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4、破坏了程序的异常机制。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">5、不容易调试。</div></pre></td></tr></table></figure>
+<h2 id="AMD和CMD-规范的区别"><a href="#AMD和CMD-规范的区别" class="headerlink" title="AMD和CMD 规范的区别"></a>AMD和CMD 规范的区别</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1、对于依赖的模块，AMD 是提前执行，CMD 是延迟执行</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2、CMD 推崇依赖就近，AMD 推崇依赖前置</div></pre></td></tr></table></figure>
+<h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 100 ?Continue ?继续，一般在发送post请求时，已发送了http header之后服务端将返回此信息，表示确认，之后发送具体参数信息</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 200 ?OK ? 正常返回信息</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 201 ?Created ?请求成功并且服务器创建了新的资源</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 202 ?Accepted ?服务器已接受请求，但尚未处理</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 301 ?Moved Permanently ?请求的网页已永久移动到新位置。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 302 Found ?临时性重定向。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 303 See Other ?临时性重定向，且总是使用 GET 请求新的 URI。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 304 ?Not Modified ?自从上次请求后，请求的网页未修改过。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 400 Bad Request ?服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 401 Unauthorized ?请求未授权。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 403 Forbidden ?禁止访问。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 404 Not Found ?找不到如何与 URI 相匹配的资源。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 500 Internal Server Error ?最常见的服务器端错误。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 503 Service Unavailable 服务器端暂时无法处理请求（可能是过载或维护）。</div></pre></td></tr></table></figure>
+<h2 id="栈和队列的区别"><a href="#栈和队列的区别" class="headerlink" title="栈和队列的区别?"></a>栈和队列的区别?</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 栈的插入和删除操作都是在一端进行的，而队列的操作却是在两端进行的。队列先进先出，栈先进后出。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 栈只允许在表尾一端进行插入和删除，而队列只允许在表尾一端进行插入，在表头一端进行删除</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 栈和堆的区别？</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- 栈区（stack）—   由编译器自动分配释放   ，存放函数的参数值，局部变量的值等。</div><div class="line">- 堆区（heap）   —   一般由程序员分配释放，   若程序员不释放，程序结束时可能由OS回收。</div><div class="line"></div><div class="line">- 堆（数据结构）：堆可以被看成是一棵树，如：堆排序；</div><div class="line"></div><div class="line">- 栈（数据结构）：一种先进后出的数据结构。</div></pre></td></tr></table></figure>
+<h2 id="XML和JSON的区别？"><a href="#XML和JSON的区别？" class="headerlink" title="XML和JSON的区别？"></a>XML和JSON的区别？</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (1).数据体积方面。</div><div class="line">	JSON相对于XML来讲，数据的体积小，传递的速度更快些。</div><div class="line">- (2).数据交互方面。</div><div class="line">	JSON与JavaScript的交互更加方便，更容易解析处理，更好的数据交互。</div><div class="line">- (3).数据描述方面。</div><div class="line">	JSON对数据的描述性比XML较差。</div><div class="line">- (4).传输速度方面。</div><div class="line">	JSON的速度要远远快于XML。</div></pre></td></tr></table></figure>
+<h2 id="一个页面从输入-URL-到页面加载显示完成，这个过程中都发生了什么？"><a href="#一个页面从输入-URL-到页面加载显示完成，这个过程中都发生了什么？" class="headerlink" title="一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？"></a>一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">分为4个步骤：</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">（1），当发送一个URL请求时，不管这个URL是Web页面的URL还是Web页面上每个资源的URL，浏览器都会开启一个线程来处理这个请求，同时在远程DNS服务器上启动一个DNS查询。这能使浏览器获得请求对应的IP地址。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">（2）， 浏览器与远程Web服务器通过TCP三次握手协商来建立一个TCP/IP连接。该握手包括一个同步报文，一个同步-应答报文和一个应答报文，这三个报文在 浏览器和服务器之间传递。该握手首先由客户端尝试建立起通信，而后服务器应答并接受客户端的请求，最后由客户端发出该请求已经被接受的报文。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">（3），一旦TCP/IP连接建立，浏览器会通过该连接向远程服务器发送HTTP的GET请求。远程服务器找到资源并使用HTTP响应返回该资源，值为200的HTTP响应状态表示一个正确的响应。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">（4），此时，Web服务器提供资源服务，客户端开始下载资源。</div><div class="line">请求返回后，便进入了我们关注的前端模块</div><div class="line">简单来说，浏览器会解析HTML生成DOM Tree，其次会根据CSS生成CSS Rule Tree，而javascript又可以根据DOM API操作DOM</div></pre></td></tr></table></figure>
+<h2 id="ajax加载的页面，跳转到另外一个页面再跳转回来，内容相同，如何节约读取请求"><a href="#ajax加载的页面，跳转到另外一个页面再跳转回来，内容相同，如何节约读取请求" class="headerlink" title="ajax加载的页面，跳转到另外一个页面再跳转回来，内容相同，如何节约读取请求?"></a>ajax加载的页面，跳转到另外一个页面再跳转回来，内容相同，如何节约读取请求?</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">答：后台做缓存，读取缓存里面的数据。CDN</div></pre></td></tr></table></figure>
+<h2 id="跨域访问"><a href="#跨域访问" class="headerlink" title="跨域访问"></a>跨域访问</h2><ol>
+<li><p>跨域访问.<br>​<br>以ajax发起跨域请求,浏览器是不允许的. ajax只能向同源资源发起请求.</p>
+</li>
+<li><p>如何实现跨域请求.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- ajax无论如何是不行的.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- script标签.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CDN. 内容分发网络.</div><div class="line">网站引入的js文件是很多的.</div><div class="line">大多数都是一些第三方库.</div><div class="line">jq</div><div class="line">bots</div><div class="line">ang</div><div class="line">如果把这些文件都放在自己的服务器上 无疑会增大服务器的压力.</div><div class="line"></div><div class="line">怎么办？</div><div class="line">有一些好心的机构。</div><div class="line">他们自己搭建搭建了一些服务器. 在他们的服务器上放了一些常用的库.</div><div class="line">CDN.</div></pre></td></tr></table></figure>
+<ul>
+<li>script的src属性是天然支持跨域的.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ol>
+<li>script标签将src指向的js文件请求过来以后 他会将其执行一次.</li>
+<li>src属性可以请求任意格式的文件.<br>无论是什么文件 请求过来的数据 都会当做js代码执行一次.</li>
+<li>利用script的src属性来实现跨域请求 - jsonp<ul>
+<li>3.1 准备1个函数 这个函数至少带1个参数.</li>
+<li>3.2 创建1个script标签.<br>利用src属性发起跨域请求.将函数名称发给服务器.</li>
+<li>3.3 服务器:<br>处理数据.<br>去除浏览器发给我的函数的名称.<br>返回: 函数名称(真正的数据)</li>
+<li>3.4 浏览器拿到返回的数据 就当做js代码执行.<br>我们事先准备的函数就被执行了.<br>函数的参数就是服务器真正给我的数据.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"> //封装jsonP</div><div class="line">  function jsonP(opts) &#123;</div><div class="line">      opts.url += &quot;?&quot;;</div><div class="line">      for (var key in opts.data) &#123;</div><div class="line">          opts.url += key + &quot;=&quot; + opts.data[key] + &quot;&amp;&quot;;</div><div class="line">      &#125;;</div><div class="line">      var callbackName = &quot;jsonP&quot; + Math.random().toString().slice(2);</div><div class="line">      window[callbackName] = opts.success;</div><div class="line">      opts.url += &quot;callback=&quot; + callbackName;</div><div class="line">      var script = document.createElement(&apos;script&apos;);</div><div class="line">      script.src = opts.url;</div><div class="line">      document.body.appendChild(script);</div><div class="line">  &#125;</div><div class="line">//使用</div><div class="line"> window.onload = function() &#123;</div><div class="line">      jsonP(&#123;</div><div class="line">          url: &quot;http://api.map.baidu.com/telematics/v3/weather&quot;,</div><div class="line">          data: &#123;</div><div class="line">              ak: &quot;0A5bc3c4fb543c8f9bc54b77bc155724&quot;,</div><div class="line">              location: &quot;深圳&quot;,</div><div class="line">              output: &quot;json&quot;</div><div class="line">          &#125;,</div><div class="line">          success: function(res) &#123;</div><div class="line">              console.log(res);</div><div class="line">          &#125;</div><div class="line">      &#125;)</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/19/数组方法/" rel="next" title="数组方法">
+                <i class="fa fa-chevron-left"></i> 数组方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/19/HTML5/" rel="prev" title="HTML5">
+                HTML5 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax过程"><span class="nav-number">1.</span> <span class="nav-text">Ajax过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原生的ajax请求的数据格式"><span class="nav-number">2.</span> <span class="nav-text">原生的ajax请求的数据格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步加载和延迟加载"><span class="nav-number">3.</span> <span class="nav-text">异步加载和延迟加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请解释一下-JavaScript-的同源策略。"><span class="nav-number">4.</span> <span class="nav-text">请解释一下 JavaScript 的同源策略。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET和POST的区别，何时使用POST？"><span class="nav-number">5.</span> <span class="nav-text">GET和POST的区别，何时使用POST？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eval是做什么的？"><span class="nav-number">6.</span> <span class="nav-text">eval是做什么的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ajax-是什么-ajax-的交互模型-同步和异步的区别-如何解决跨域问题"><span class="nav-number">7.</span> <span class="nav-text">ajax 是什么?ajax 的交互模型?同步和异步的区别?如何解决跨域问题?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax的最大的特点是什么。"><span class="nav-number">8.</span> <span class="nav-text">Ajax的最大的特点是什么。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ajax的缺点"><span class="nav-number">9.</span> <span class="nav-text">ajax的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD和CMD-规范的区别"><span class="nav-number">10.</span> <span class="nav-text">AMD和CMD 规范的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">11.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈和队列的区别"><span class="nav-number">12.</span> <span class="nav-text">栈和队列的区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML和JSON的区别？"><span class="nav-number">13.</span> <span class="nav-text">XML和JSON的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个页面从输入-URL-到页面加载显示完成，这个过程中都发生了什么？"><span class="nav-number">14.</span> <span class="nav-text">一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ajax加载的页面，跳转到另外一个页面再跳转回来，内容相同，如何节约读取请求"><span class="nav-number">15.</span> <span class="nav-text">ajax加载的页面，跳转到另外一个页面再跳转回来，内容相同，如何节约读取请求?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域访问"><span class="nav-number">16.</span> <span class="nav-text">跨域访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">16.1.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

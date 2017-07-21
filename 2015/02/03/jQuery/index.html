@@ -1,0 +1,846 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery操作1  mouseenter mouseleave事件mouseenter mouseleave事件从大盒子到小盒子或小盒子到大盒子过程中屏蔽了事件冒泡（并没有取消冒泡，事件冒泡还是存在）。​     `$(&quot;ul li&quot;).mouseenter(function (){  12  $(this).css(&amp;quot;backgroundColor&amp;quot;,&amp;quot;red&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery">
+<meta property="og:url" content="http://yoursite.com/2015/02/03/jQuery/index.html">
+<meta property="og:site_name" content="Vito">
+<meta property="og:description" content="jQuery操作1  mouseenter mouseleave事件mouseenter mouseleave事件从大盒子到小盒子或小盒子到大盒子过程中屏蔽了事件冒泡（并没有取消冒泡，事件冒泡还是存在）。​     `$(&quot;ul li&quot;).mouseenter(function (){  12  $(this).css(&amp;quot;backgroundColor&amp;quot;,&amp;quot;red&amp;q">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-19T14:43:17.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery">
+<meta name="twitter:description" content="jQuery操作1  mouseenter mouseleave事件mouseenter mouseleave事件从大盒子到小盒子或小盒子到大盒子过程中屏蔽了事件冒泡（并没有取消冒泡，事件冒泡还是存在）。​     `$(&quot;ul li&quot;).mouseenter(function (){  12  $(this).css(&amp;quot;backgroundColor&amp;quot;,&amp;quot;red&amp;q">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/02/03/jQuery/"/>
+
+
+
+
+
+  <title> jQuery | Vito </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/02/03/jQuery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-03T22:42:06+08:00">
+                2015-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="jQuery操作1"><a href="#jQuery操作1" class="headerlink" title="jQuery操作1"></a>jQuery操作1</h1><hr>
+<ol>
+<li><h3 id="mouseenter-mouseleave事件"><a href="#mouseenter-mouseleave事件" class="headerlink" title="mouseenter mouseleave事件"></a>mouseenter mouseleave事件</h3><p>mouseenter mouseleave事件从大盒子到小盒子或小盒子到大盒子过程中屏蔽了事件冒泡（并没有取消冒泡，事件冒泡还是存在）。<br>​    </p>
+<pre>`$("ul li").mouseenter(function (){
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  $(this).css(&quot;backgroundColor&quot;,&quot;red&quot;).siblings().css(&quot;backgroundColor&quot;,&quot;&quot;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+
+          $("ul").mouseleave(function (){
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">   $(this).children().css(&quot;backgroundColor&quot;,&apos;&apos;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+
+        }) `</pre>
+
+
+</li>
+</ol>
+<ol>
+<li><h3 id="hover事件"><a href="#hover事件" class="headerlink" title="hover事件"></a>hover事件</h3><p><br><br>hover(fn1,fn2)有两个参数，都是回调函数;fn1为鼠标移入时执行的代码，fn2为鼠标移出时执行的代码，在<strong>一定程度上</strong>可以替换mouseenter和mouseleave(<em>并不是完全可以代替</em>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$(&apos;div&apos;).hover(function ()&#123;</div><div class="line">    $(this).css(&quot;backgroundColor&quot;,&quot;red&quot;);</div><div class="line">  &#125;,function()&#123;</div><div class="line">    $(this).css(&quot;backgroundColor&quot;,&apos;blue&apos;);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h2 id="动画函数-jQuery中所有动画都支持时间和回调函数"><a href="#动画函数-jQuery中所有动画都支持时间和回调函数" class="headerlink" title="动画函数(jQuery中所有动画都支持时间和回调函数)"></a>动画函数(jQuery中所有动画都支持时间和回调函数)</h2><ol>
+<li><h3 id="show-hide-toggle"><a href="#show-hide-toggle" class="headerlink" title="show() hide() toggle()"></a>show() hide() toggle()</h3></li>
+<li><h3 id="滑入滑出-slide-（改变的是height这个属性值）"><a href="#滑入滑出-slide-（改变的是height这个属性值）" class="headerlink" title="滑入滑出 slide()（改变的是height这个属性值）"></a>滑入滑出 slide()（改变的是height这个属性值）</h3><p>slideDown()    滑入,<br>slideUp()    滑出，<br>slideToggle()    切换;</p>
+<p><pre>` var $div = $(“div”);// 变量本地化<br> $(“input”).eq(0).click(function (){</pre></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  $div.slideDown(2000);</div><div class="line">&#125;);`&lt;/pre&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="淡入淡出-fade（改变的是opacity这个属性值）"><a href="#淡入淡出-fade（改变的是opacity这个属性值）" class="headerlink" title="淡入淡出 fade（改变的是opacity这个属性值）"></a>淡入淡出 fade（改变的是opacity这个属性值）</h3><p>fadeIn()淡入,fadeOut()淡出，fadeTo()淡到，fadeToggle()淡入淡出切换;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">`$(function () &#123;</div><div class="line">      $(&quot;#btn&quot;).on(&quot;click&quot;, function () &#123;</div><div class="line">          $(&quot;div&quot;).fadeIn(2000);</div><div class="line">      &#125;)</div><div class="line">      $(&quot;#btn1&quot;).on(&quot;click&quot;, function () &#123;</div><div class="line">          $(&quot;div&quot;).fadeOut(2000);</div><div class="line">      &#125;)</div><div class="line">      $(&quot;#btn2&quot;).on(&quot;click&quot;, function () &#123;</div><div class="line">          $(&quot;div&quot;).fadeToggle(2000);</div><div class="line">      &#125;)</div><div class="line">      $(&quot;#btn3&quot;).hover(function () &#123;</div><div class="line">          $(&quot;div&quot;).fadeToggle();</div><div class="line">      &#125;)</div><div class="line">      $(&quot;#btn3&quot;).click(function () &#123;</div><div class="line">          $(&quot;div&quot;).fadeTo(1000,0.5);</div><div class="line">      &#125;)</div><div class="line">  &#125;)`</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="animate动画函数"><a href="#animate动画函数" class="headerlink" title="animate动画函数"></a>animate动画函数</h3><p>支持四个参数：<br>params:对象，一组包含作为动画属性和终值的样式属性和及其值的集合</p>
+<p>speed:时间，三种预定速度之一的字符串(“slow”,”normal”, or “fast”)或表示动画时长的毫秒数值(如：1000)</p>
+<p>easing:运动曲线（不常用）要使用的擦除效果的名称(需要插件支持).默认jQuery提供”linear”（匀速） 和 “swing”.</p>
+<p>fn:回调函数，在动画完成时执行的函数，每个元素执行一次。</p>
+<pre>    `// 在一个动画中同时应用三种类型的效果
+$("#go").click(function(){
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(&quot;#block&quot;).animate(&#123;</div></pre></td></tr></table></figure>
+
+              width: "90%",
+              height: "100%",     
+              fontSize: "10em", 
+              borderWidth: 10
+     }, 1000 );
+});`</pre>
+
+
+</li>
+</ol>
+<ol>
+<li><h3 id="所有的jQuery动画都需要注意，如果想执行当前动画的话，必须先将之前的动画队列清除"><a href="#所有的jQuery动画都需要注意，如果想执行当前动画的话，必须先将之前的动画队列清除" class="headerlink" title="所有的jQuery动画都需要注意，如果想执行当前动画的话，必须先将之前的动画队列清除"></a>所有的jQuery动画都需要注意，如果想执行当前动画的话，必须先将之前的动画队列清除</h3><p>stop()</p>
+<p>作用：停止当前正在执行的动画<br>// 第一个参数表示是否清空所有的后续动画<br>// 第二个参数表示是否立即执行完当前正在执行的动画</p>
+<p><code>$(selector).stop(clearQueue, jumpToEnd);</code></p>
+<ul>
+<li><p>解释</p>
+<p><strong>stop(true, true)   后续动画不会执行，当前动画立即跳到结束的位置</strong></p>
+<p><strong>stop(true, false)  后续动画不会执行，当前动画立即停止</strong></p>
+<p><strong>stop(false, true)  立即执行后续动画，当前动画立即跳到结束的位置</strong></p>
+<p><strong>stop(false, false) 立即执行后续动画，当前动画立即停止</strong></p>
+</li>
+</ul>
+</li>
+<li><h3 id="动态创建元素"><a href="#动态创建元素" class="headerlink" title="动态创建元素"></a>动态创建元素</h3><ul>
+<li>通过$创建<ul>
+<li>append()在父元素中的最后面追加（会将括号中的元素剪切追加进前面的元素）</li>
+<li>prepend()在父元素中的最前面追加</li>
+<li>after()在该元素的后面添加</li>
+<li>before()在该元素的前面添加</li>
+</ul>
+</li>
+<li>通过.html创建<ul>
+<li>就是讲原来的innerHTML封装成了html()</li>
+<li>没有参数的时候，表示获取标签间的文本内容</li>
+<li>有参数的时候表示给标签设置内容</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h3 id="克隆节点"><a href="#克隆节点" class="headerlink" title="克隆节点"></a>克隆节点</h3><ul>
+<li><p>jQuery中的clone()无论参数是true还是false都表示深度克隆，不但克隆标签本身，还克隆一切子节点。</p>
+</li>
+<li><p>其参数默认是false，即不克隆时间 </p>
+</li>
+<li><p><em>不同点：如果是ture则克隆原来的事件，如果是false则不克隆事件</em> </p>
+<p>console.log($(“p”).clone());</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(&quot;#btn&quot;).on(&quot;click&quot;, function () &#123;</div><div class="line">    $(&quot;div&quot;).append($(&quot;p&quot;).clone(false));</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>由于字符串具有不可变性，在频繁进行字符串拼接的时候最好将字符串放进数组里，最后再统一用join拼成字符串</p>
+</li>
+</ul>
+</li>
+<li><h3 id="清空节点"><a href="#清空节点" class="headerlink" title="清空节点"></a>清空节点</h3><ul>
+<li>$(“#div”).empty()方法，空的   内容没有了，但是DIV标签本身还存在</li>
+<li>$(“#div”).html(“”),DIV仍然存在</li>
+<li><strong>$(“#div”).remove();  (最常用)删除的最彻底，连本身标签都不存在了</strong></li>
+</ul>
+</li>
+<li><h3 id="获取或设置表单的值"><a href="#获取或设置表单的值" class="headerlink" title="获取或设置表单的值"></a>获取或设置表单的值</h3><p>.val();</p>
+<p>没有参数时表示获取表单的值，有参数表示设置表单的值为该参数值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  //输入表单值获取焦点和失去焦点时</div><div class="line">$(&quot;input[type=&apos;text&apos;]&quot;).on(&quot;focus&quot;, function () &#123;</div><div class="line">         if($(this).val() == &quot;请输入内容...&quot;)&#123;</div><div class="line">             $(this).val(&quot;&quot;);</div><div class="line">         &#125;else&#123;</div><div class="line">             $(this).val( $(this).val());</div><div class="line">         &#125;</div><div class="line">     &#125;).on(&quot;blur&quot;, function () &#123;</div><div class="line">         if($(this).val() == &quot;&quot;)&#123;</div><div class="line">             $(this).val(&quot;请输入内容...&quot;);</div><div class="line">         &#125;else&#123;</div><div class="line">             $(this).val( $(this).val());</div><div class="line">         &#125;</div><div class="line">     &#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="for-in"><a href="#for-in" class="headerlink" title="for in"></a>for in</h3><p>可以发现，循环输出的属性并不是按照创建的属性进行排列的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Chrome Opera 的 JavaScript 解析引擎遵循的是新版 ECMA-262 第五版规范。</div><div class="line">因此，使用 for-in 语句遍历对象属性时遍历书序并非属性构建顺序。</div><div class="line">而 IE6 IE7 IE8 Firefox Safari 的 JavaScript 解析引擎遵循的是较老的 ECMA-262 </div><div class="line">第三版规范，属性遍历顺序由属性构建的顺序决定。</div><div class="line"></div><div class="line">for-in 语句无法保证遍历顺序，应尽量避免编写依赖对象属性顺序的代码。</div><div class="line">如果想顺序遍历一组数据，请使用数组并使用 for 语句遍历。 </div><div class="line">如果想按照定义的次序遍历对象属性，请参考本文针对各浏览器编写特殊代码。</div></pre></td></tr></table></figure>
+</li>
+<li><h3 id="属性操作相关"><a href="#属性操作相关" class="headerlink" title="属性操作相关"></a>属性操作相关</h3><p>.attr() //两个参数时设置属性，一个参数时获取属性</p>
+<p>.removeAttr() //移除属性</p>
+<p><strong>对于单属性checked\selected\disable等等最好使用.prop()</strong></p>
+<p>.prop() 原型属性;</p>
+</li>
+<li><h3 id="offset"><a href="#offset" class="headerlink" title="offset"></a>offset</h3><ul>
+<li>jQuery将offset封装成了一个方法，此方法返回一个对象，<strong>用法和原生js不一样</strong></li>
+<li>offse()方法返回值有两个属性 left 和 top ，<strong>该值是相对于文档左上角的值（和原生JS的区别），始终是以页面或是body为准，与父元素有无定位 没有关系</strong>。如果要获取离自己最近的定位父元素的距离则用下面的position方法。</li>
+<li>offsetParent() 找到最近的定位父级元素</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>其返回值的属性left top 是一个可读写的属性。在设置值的时候，如果元素本身有定位，则以本身设置；如果设置的元素原来没有定位，则会加上一个相对定位。</strong></li>
+</ul>
+<ol>
+<li><h3 id="position-方法"><a href="#position-方法" class="headerlink" title="position()方法"></a>position()方法</h3><ul>
+<li>返回值为只读属性（不能用该方法设置left top等值）</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>position()方法<strong>不是以边框计算，而是以自身的margin</strong>到里自己最近的定位的父元素的距离，<strong>这是和原生js中offset的区别</strong>。</li>
+</ul>
+<ol>
+<li><h3 id="width-、height-方法"><a href="#width-、height-方法" class="headerlink" title="width()、height()方法"></a>width()、height()方法</h3><ul>
+<li><p>用于获取浏览器可视区的宽度、高度，number类型</p>
+<p>$(window).width();</p>
+<p>$(window).height();</p>
+</li>
+</ul>
+</li>
+<li><h3 id="On的方式注册事件"><a href="#On的方式注册事件" class="headerlink" title="On的方式注册事件"></a>On的方式注册事件</h3></li>
+</ol>
+<ol>
+<li><h3 id="函数参数组成的伪数组arguments"><a href="#函数参数组成的伪数组arguments" class="headerlink" title="函数参数组成的伪数组arguments"></a>函数参数组成的伪数组arguments</h3></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/13/DOM操作/" rel="next" title="DOM操作">
+                <i class="fa fa-chevron-left"></i> DOM操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/05/jQuery2/" rel="prev" title="jQuery2">
+                jQuery2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery操作1"><span class="nav-number">1.</span> <span class="nav-text">jQuery操作1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mouseenter-mouseleave事件"><span class="nav-number">1.0.1.</span> <span class="nav-text">mouseenter mouseleave事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hover事件"><span class="nav-number">1.0.2.</span> <span class="nav-text">hover事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画函数-jQuery中所有动画都支持时间和回调函数"><span class="nav-number">1.1.</span> <span class="nav-text">动画函数(jQuery中所有动画都支持时间和回调函数)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#show-hide-toggle"><span class="nav-number">1.1.1.</span> <span class="nav-text">show() hide() toggle()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑入滑出-slide-（改变的是height这个属性值）"><span class="nav-number">1.1.2.</span> <span class="nav-text">滑入滑出 slide()（改变的是height这个属性值）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#淡入淡出-fade（改变的是opacity这个属性值）"><span class="nav-number">1.1.3.</span> <span class="nav-text">淡入淡出 fade（改变的是opacity这个属性值）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#animate动画函数"><span class="nav-number">1.1.4.</span> <span class="nav-text">animate动画函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所有的jQuery动画都需要注意，如果想执行当前动画的话，必须先将之前的动画队列清除"><span class="nav-number">1.1.5.</span> <span class="nav-text">所有的jQuery动画都需要注意，如果想执行当前动画的话，必须先将之前的动画队列清除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态创建元素"><span class="nav-number">1.1.6.</span> <span class="nav-text">动态创建元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#克隆节点"><span class="nav-number">1.1.7.</span> <span class="nav-text">克隆节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空节点"><span class="nav-number">1.1.8.</span> <span class="nav-text">清空节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取或设置表单的值"><span class="nav-number">1.1.9.</span> <span class="nav-text">获取或设置表单的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-in"><span class="nav-number">1.1.10.</span> <span class="nav-text">for in</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性操作相关"><span class="nav-number">1.1.11.</span> <span class="nav-text">属性操作相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offset"><span class="nav-number">1.1.12.</span> <span class="nav-text">offset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#position-方法"><span class="nav-number">1.1.13.</span> <span class="nav-text">position()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#width-、height-方法"><span class="nav-number">1.1.14.</span> <span class="nav-text">width()、height()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#On的方式注册事件"><span class="nav-number">1.1.15.</span> <span class="nav-text">On的方式注册事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数参数组成的伪数组arguments"><span class="nav-number">1.1.16.</span> <span class="nav-text">函数参数组成的伪数组arguments</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
