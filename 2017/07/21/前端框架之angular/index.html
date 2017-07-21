@@ -1,0 +1,961 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="js,angular," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="angularJS 定义应用：ng-app指令 指令：就是angularJS扩展的html属性 功能：指定ng管理的范围 一般情况下，ng-app指定给body标签，一个页面最多只能写一个ng-app指令，写在body表示body被angularJS管理。 相当于定义了一个应用，名字叫做ng-app属性的值。 创建模块来管理ng-app指定的内容；   定义模块： AngularJS提供了一个全局">
+<meta name="keywords" content="js,angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端框架之angular-1">
+<meta property="og:url" content="http://yoursite.com/2017/07/21/前端框架之angular/index.html">
+<meta property="og:site_name" content="Vito的小栈">
+<meta property="og:description" content="angularJS 定义应用：ng-app指令 指令：就是angularJS扩展的html属性 功能：指定ng管理的范围 一般情况下，ng-app指定给body标签，一个页面最多只能写一个ng-app指令，写在body表示body被angularJS管理。 相当于定义了一个应用，名字叫做ng-app属性的值。 创建模块来管理ng-app指定的内容；   定义模块： AngularJS提供了一个全局">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-21T06:25:07.735Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端框架之angular-1">
+<meta name="twitter:description" content="angularJS 定义应用：ng-app指令 指令：就是angularJS扩展的html属性 功能：指定ng管理的范围 一般情况下，ng-app指定给body标签，一个页面最多只能写一个ng-app指令，写在body表示body被angularJS管理。 相当于定义了一个应用，名字叫做ng-app属性的值。 创建模块来管理ng-app指定的内容；   定义模块： AngularJS提供了一个全局">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/21/前端框架之angular/"/>
+
+
+
+
+
+  <title> 前端框架之angular-1 | Vito的小栈 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito的小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/21/前端框架之angular/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito的小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端框架之angular-1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-21T14:12:39+08:00">
+                2017-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frame/" itemprop="url" rel="index">
+                    <span itemprop="name">frame</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frame/angular/" itemprop="url" rel="index">
+                    <span itemprop="name">angular</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,399
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="angularJS"><a href="#angularJS" class="headerlink" title="angularJS"></a>angularJS</h1><ol>
+<li>定义应用：ng-app指令<ul>
+<li>指令：就是angularJS扩展的html属性</li>
+<li>功能：指定ng管理的范围</li>
+<li>一般情况下，ng-app指定给body标签，一个页面最多只能写一个ng-app指令，写在body表示body被angularJS管理。</li>
+<li>相当于定义了一个应用，名字叫做ng-app属性的值。</li>
+<li>创建模块来管理ng-app指定的内容；</li>
+</ul>
+</li>
+<li>定义模块：<ul>
+<li>AngularJS提供了一个全局对象angular,调用该全局对象的module()方法可以创建一个模块.该方法返回一个模块对象.这个模块对象就是AngularJS用来管理应用的对象.</li>
+<li>module()</li>
+</ul>
+</li>
+<li>定义控制器<ul>
+<li>接下来我们可以通过app模块对象来创建控制器.</li>
+<li>调用app模块对象的controller方法，就可以创建控制器.</li>
+<li>为html元素指定1个ng-controller属性.值为创建controller的第1个参数的值.</li>
+</ul>
+</li>
+<li>数据模型<ul>
+<li>控制器负责处理制造模型数据.</li>
+<li>视图负责显示控制器制造的模型数据.</li>
+</ul>
+</li>
+</ol>
+<h2 id="常用内置指令"><a href="#常用内置指令" class="headerlink" title="常用内置指令"></a>常用内置指令</h2><ul>
+<li>html的最大的不足 功能单一.ng扩展了一些html属性和标签弥补这个不足.</li>
+<li>指令：本质就是ng扩展的html属性；ng的属性都是以ng-开头</li>
+<li>ng-app:指定ng管理的范围<ul>
+<li>注意的地方</li>
+<li>ng-app 什么时候给值什么时候不给</li>
+<li>如果需要创建MVC那么必须有值，如果不需要用到MVC，那么不用给值。</li>
+</ul>
+</li>
+<li>ng-controller:指定与控制器关联的视图</li>
+<li>ng-show:指定的元素是否显示，<ul>
+<li>取值可以是bool类型，true代表显示，false代表隐藏。</li>
+<li>取值还可以表达式</li>
+</ul>
+</li>
+<li>ng-hide:指定的元素是否隐藏，true隐藏，原理同上</li>
+<li>ng-if:决定是否要将元素创建在DOM树上<ul>
+<li>取值 ：bool值</li>
+<li>用法同上</li>
+</ul>
+</li>
+<li>ng-src:增强路径</li>
+<li>ng-href:增强路径</li>
+<li>ng-class:决定指令的css类样式是否作用在标签身上<ul>
+<li>值是对象 {类名：bool值/变量/表达式}</li>
+</ul>
+</li>
+<li>ng-include:将另外一个文件的内容包含进来，可以将页面公共部分写在单独的文件中，用ng-include将其包含进来</li>
+<li>ng-disabled 是否禁用表单<ul>
+<li>bool值，true表示禁用，false不禁用</li>
+</ul>
+</li>
+<li>ng-readonly 原理同上</li>
+<li>ng-checked 原理同上</li>
+<li>ng-selected 原理同上</li>
+<li>ng-init<ul>
+<li>以指令的方式去初始化一个变量的值.而不用放在控制器中.</li>
+<li>它只适合去初始化一些简单的数据.</li>
+<li>一些复杂的数据放在控制器中初始化更方便一些.</li>
+</ul>
+</li>
+</ul>
+<h2 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h2><ul>
+<li><p>调用模块对象的directive指令，就可以自定义指令</p>
+<ul>
+<li><p>参数1：指令名</p>
+<ul>
+<li>注意：<strong>在为自定义属性取名的时候，如果使用的是驼峰命名法（hmTag），那么在使用的时候中间应该加-（hm-tag）</strong></li>
+</ul>
+</li>
+<li><p>参数2：回调函数</p>
+<ul>
+<li><p>当解析这个自定义指令的时候,就会执行这个回调函数.这个回调函数要按照规范返回1个对象.在对象中通过键值对的方式来指定自定义指令的作用</p>
+</li>
+<li><p>restrict: 代表自定义指令的类型.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> E: Element 自定义标签.</div><div class="line"> C: Class CSS类</div><div class="line"> M: 注释</div><div class="line"> A: 属性.</div><div class="line"></div><div class="line">取值可以是其中的任意<span class="number">1</span>个 或者多个的组合.</div></pre></td></tr></table></figure>
+</li>
+<li><p>template: 模板.</p>
+</li>
+<li><p>replace: bool值 指定是否替换原有的标签.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据的单向绑定"><a href="#数据的单向绑定" class="headerlink" title="数据的单向绑定"></a>数据的单向绑定</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> 数据的单向绑定. 在控制器中制造数据.并把数据存储到$scope中. 视图中可以通过&#123;&#123;&#125;&#125;去显示绑定数据.</div><div class="line"><span class="number">2.</span> &#123;&#123;&#125;&#125; 如果你要在原生的html中显示或者替换数据模型的数据 就必须要加双大括弧. 包括原生的html属性取值.</div><div class="line">   如果属性是ng提供的指令.绝大多数情况下直接写就可以了. ng-src是例外 其它的指令直接写就行.</div><div class="line"><span class="number">3.</span> &#123;&#123;&#125;&#125;是数据绑定符号. &#123;&#123;&#125;&#125;符号就是ng-bind指令的简写形式.</div></pre></td></tr></table></figure>
+<h2 id="数据双向绑定"><a href="#数据双向绑定" class="headerlink" title="数据双向绑定"></a>数据双向绑定</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> ng-model指令</div><div class="line">   - 只能作用在表单上</div><div class="line">   - 取值：直接写<span class="number">1</span>个变量名.就代表声明了这个变量.这个变量的值和这个表单元素的值是一个双向绑定的关系.</div><div class="line"><span class="number">2.</span> 一旦表单元素的值发生了变化,这个变量的值也会跟着一起变化.这个变量的值如果发生了变化.表单元素的值也会跟着一起变化.</div></pre></td></tr></table></figure>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><ol>
+<li>AngularJS的事件机制.<ul>
+<li>原生的事件处理机制.ng认为会存在全局污染.</li>
+</ul>
+</li>
+<li>ng通过指令的方式为元素绑定事件.<ul>
+<li>要绑定点击事件:那么就为元素设置一个指令: ng-click</li>
+<li>指定ng-clcik调用的函数. ng-click=”demo()”</li>
+<li>而demo()函数是定义在$scope中的. 在控制器</li>
+</ul>
+</li>
+<li>其它的事件的套路是一样的.<ul>
+<li>onmouseover</li>
+<li>ng-mouseover</li>
+</ul>
+</li>
+</ol>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><ol>
+<li>ng-repeat<ul>
+<li>作用：重复生成HTML标签</li>
+<li>可以遍历数组，数组中有重复元素会报错</li>
+<li>还可以遍历对象，拿到的是对象每一个属性的值，如果需要拿到属性名，可以写 （key,value） in stu;key代表属性名，value代表属性值</li>
+</ul>
+</li>
+<li>ng-switch<ul>
+<li>判断一个变量或表达式的值，匹配一个选择，匹配上的值会被选上，匹配不上则不选</li>
+<li>一般用法：</li>
+<li>ng-switch=”判断的变量”</li>
+<li>ng-switch-when=”值1”</li>
+<li>ng-switch-when=”值2”</li>
+<li>ng-switch-defalut</li>
+</ul>
+</li>
+<li>数据模型一旦发生变化，angular会自动刷新dom</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	<div>
+		
+		﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	</div>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/angular/" rel="tag"># angular</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/20/简单性能优化/" rel="next" title="简单性能优化">
+                <i class="fa fa-chevron-left"></i> 简单性能优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#angularJS"><span class="nav-number">1.</span> <span class="nav-text">angularJS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用内置指令"><span class="nav-number">1.1.</span> <span class="nav-text">常用内置指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义指令"><span class="nav-number">1.2.</span> <span class="nav-text">自定义指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据的单向绑定"><span class="nav-number">1.3.</span> <span class="nav-text">数据的单向绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据双向绑定"><span class="nav-number">1.4.</span> <span class="nav-text">数据双向绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件处理"><span class="nav-number">1.5.</span> <span class="nav-text">事件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据处理"><span class="nav-number">1.6.</span> <span class="nav-text">数据处理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共17.9k字</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
