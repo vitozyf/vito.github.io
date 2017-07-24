@@ -384,7 +384,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  920
+                  933
                 </span>
               
 
@@ -421,7 +421,10 @@
       
         
           
-          JS兼容节点相关nextSibiling和childNodes的兼容性12345678910111213141516function getNextSibiling(ele) &#123;if (ele &amp;&amp; ele.nextElementSibling) &#123;    ret
+          H5新标签兼容
+在不支持HTML5新标签的浏览器里，会将这些新的标签解析成行内元素(inline)对待，所以我们只需要将其转换成块元素(block)即可使用，
+
+但是在IE9版本以下，并不能正常解析这些新标签，但是却可以识别通过document.createElement(‘tagName’)创建的
           ...
           <!--noindex-->
           <div class="post-button text-center">
