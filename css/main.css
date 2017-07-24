@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e345ff;
+  background: #619479;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2864,8 +2864,8 @@ body {
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
 .my_image {
-  width: 170px;
-  height: 170px;
+  width: 280px;
+  height: 200px;
   display: block;
   float: left;
   border: 1px solid #ccc;
@@ -2879,7 +2879,7 @@ body {
   -ms-transform: translateY(-5px);
   -o-transform: translateY(-5px);
   transform: translateY(-5px);
-  box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 10px #ccc;
 }
 .my_image_one {
   display: none;
