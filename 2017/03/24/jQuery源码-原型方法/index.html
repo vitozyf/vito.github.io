@@ -1,0 +1,874 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jquery," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery源码-1(原型方法)类数组判断：isArrayLike123456789101112131415//这个方法很好骗 不过也还好function isArrayLike(obj)&amp;#123;  //1.判断是否是空值  //2.判断对象是否有length属性  //3.赋值  var length=!! obj &amp;amp;&amp;amp; &quot;length&quot; in obj &amp;amp;&amp;amp;">
+<meta name="keywords" content="jquery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery源码-原型方法">
+<meta property="og:url" content="http://yoursite.com/2017/03/24/jQuery源码-原型方法/index.html">
+<meta property="og:site_name" content="Vito的小栈">
+<meta property="og:description" content="jQuery源码-1(原型方法)类数组判断：isArrayLike123456789101112131415//这个方法很好骗 不过也还好function isArrayLike(obj)&amp;#123;  //1.判断是否是空值  //2.判断对象是否有length属性  //3.赋值  var length=!! obj &amp;amp;&amp;amp; &quot;length&quot; in obj &amp;amp;&amp;amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-24T09:43:19.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery源码-原型方法">
+<meta name="twitter:description" content="jQuery源码-1(原型方法)类数组判断：isArrayLike123456789101112131415//这个方法很好骗 不过也还好function isArrayLike(obj)&amp;#123;  //1.判断是否是空值  //2.判断对象是否有length属性  //3.赋值  var length=!! obj &amp;amp;&amp;amp; &quot;length&quot; in obj &amp;amp;&amp;amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/24/jQuery源码-原型方法/"/>
+
+
+
+
+
+  <title> jQuery源码-原型方法 | Vito的小栈 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito的小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photo" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/24/jQuery源码-原型方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito的小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery源码-原型方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-24T22:41:28+08:00">
+                2017-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,002
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="jQuery源码-1-原型方法"><a href="#jQuery源码-1-原型方法" class="headerlink" title="jQuery源码-1(原型方法)"></a>jQuery源码-1(原型方法)</h1><h4 id="类数组判断：isArrayLike"><a href="#类数组判断：isArrayLike" class="headerlink" title="类数组判断：isArrayLike"></a>类数组判断：isArrayLike</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这个方法很好骗 不过也还好</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isArrayLike</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="comment">//1.判断是否是空值</span></div><div class="line">  <span class="comment">//2.判断对象是否有length属性</span></div><div class="line">  <span class="comment">//3.赋值</span></div><div class="line">  <span class="keyword">var</span> length=!! obj &amp;&amp; <span class="string">"length"</span> <span class="keyword">in</span> obj &amp;&amp; obj.length;</div><div class="line">  <span class="comment">//如果是函数或者全局对象 返回false</span></div><div class="line">  <span class="keyword">if</span>(type===<span class="string">"function"</span>||jQuery.isWindow(obj))&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//由于&amp;&amp;优先级较高 添加括号理解 两个条件</span></div><div class="line">  <span class="comment">//1.类型是数组、length===0</span></div><div class="line">  <span class="comment">//2.length为数字、长度大于0、length-1也是obj的属性(若存在a[1]=="...",那么a[0]也要有意义)</span></div><div class="line">  <span class="keyword">return</span> (type===<span class="string">"array"</span> || length===<span class="number">0</span>) || (<span class="keyword">typeof</span> length===<span class="string">"number"</span> &amp;&amp; length&gt;<span class="number">0</span> &amp;&amp; (length<span class="number">-1</span>) <span class="keyword">in</span> obj)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="自定义的变量"><a href="#自定义的变量" class="headerlink" title="自定义的变量"></a>自定义的变量</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr=[];	<span class="comment">//空数组对象</span></div><div class="line"><span class="keyword">var</span> <span class="built_in">document</span>=<span class="built_in">window</span>.document,</div><div class="line">    getProto=<span class="built_in">Object</span>.getPrototypeOf,	<span class="comment">//取得对象的原型对象</span></div><div class="line">    slice=arr.slice,				<span class="comment">//截取数组</span></div><div class="line">    concat=arr.concat,				<span class="comment">//拼接数组</span></div><div class="line">    push=arr.push,					<span class="comment">//弹入元素</span></div><div class="line">    indexOf=arr.indexOf,			<span class="comment">//查询字符串</span></div><div class="line">    </div><div class="line"><span class="keyword">var</span> class2type=&#123;&#125;;	<span class="comment">//空对象 空你妈 后面偷偷做处理 日了狗</span></div><div class="line"><span class="comment">//特殊处理函数</span></div><div class="line"><span class="comment">//第一个参数输出[Boolean,Number,...,Symbol]</span></div><div class="line"><span class="comment">//回调函数参数中 i对应索引 name对应数组元素</span></div><div class="line">jQuery.each( <span class="string">"Boolean Number String FuncArray Date RegExp Object Error Symbol"</span>.split( <span class="string">" "</span> ),<span class="function"><span class="keyword">function</span>(<span class="params">i,name</span>)</span>&#123;</div><div class="line">  <span class="comment">//给class2type添加对应属性</span></div><div class="line">  <span class="comment">//class2type = &#123;</span></div><div class="line">  <span class="comment">//	[object Boolean] : "boolean",</span></div><div class="line">  <span class="comment">//	[object Number] : "number",</span></div><div class="line">  <span class="comment">//	...</span></div><div class="line">  <span class="comment">//	[object Symbol] : "symbol"</span></div><div class="line">  <span class="comment">//&#125;</span></div><div class="line">  class2type[<span class="string">"[object"</span>+name+<span class="string">"]"</span>] = name.toLowerCase();</div><div class="line">&#125;)</div><div class="line"><span class="keyword">var</span> toString=class2type.toString,		<span class="comment">//略</span></div><div class="line">    hasOwn=class2type.hasOwnProperty,	<span class="comment">//本身是否有该属性</span></div><div class="line">    fnToString=hasOwn.toString,			<span class="comment">//true或false的字符串</span></div><div class="line">    ObjectFunctionString=fnToString.call(<span class="built_in">Object</span>);	<span class="comment">//略</span></div><div class="line"></div><div class="line"><span class="comment">//这个东西是用来做兼容 已经被弃用</span></div><div class="line"><span class="keyword">var</span> support=&#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">//创建script标签 内容为code</span></div><div class="line"><span class="comment">//添加到head标签再移除 仅执行一次的脚本</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">DOMEval</span>(<span class="params">code,doc</span>)</span>&#123;</div><div class="line">  doc = doc || <span class="built_in">document</span>;</div><div class="line">  <span class="keyword">var</span> script = doc.createElement(<span class="string">'script'</span>);</div><div class="line">  script.text = code;</div><div class="line">  doc.head.appendChild(script).parentNode.removeChild(script);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rtrim = <span class="regexp">/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g</span>,	<span class="comment">//匹配头尾各种空格</span></div><div class="line">    rmsPrefix = <span class="regexp">/^-ms-/</span>,							<span class="comment">//除-ms-以外的字符</span></div><div class="line">	rdashAlpha = <span class="regexp">/-([a-z])/g</span>;						<span class="comment">//横杠与小写字母</span></div><div class="line"><span class="comment">//驼峰转换函数</span></div><div class="line"><span class="keyword">var</span> fcamelCase = <span class="function"><span class="keyword">function</span>(<span class="params">all,letter</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> letter.toUpperCase();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="原型方法-jQuery-prototype"><a href="#原型方法-jQuery-prototype" class="headerlink" title="原型方法 jQuery.prototype"></a>原型方法 jQuery.prototype</h4><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> jQuery.fn = jQuery.prototype = &#123;</div><div class="line">  <span class="comment">//版本</span></div><div class="line">  jquery : version,</div><div class="line">  <span class="comment">//更改constructor指向</span></div><div class="line">  <span class="keyword">constructor</span>:jQuery</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="end"><a href="#end" class="headerlink" title="end"></a>end</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回上一个操作点 可以进行链式操作</span></div><div class="line">end: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.prevObject||<span class="keyword">this</span>.constructor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//堆栈弹入第i个元素并返回 </span></div><div class="line">eq: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> len = <span class="keyword">this</span>.length,</div><div class="line">      j = +i+(i&lt;<span class="number">0</span>?len:<span class="number">0</span>);</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.pushStack(j&gt;<span class="number">0</span>&amp;&amp;j&lt;len?[<span class="keyword">this</span>[j]]:[]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="get"><a href="#get" class="headerlink" title="get"></a>get</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//取出jQuery对象数组中指定项</span></div><div class="line">get: <span class="function"><span class="keyword">function</span>(<span class="params">num</span>)</span>&#123;</div><div class="line">  <span class="comment">//不传入参数返回所有的数组</span></div><div class="line">  <span class="keyword">if</span>(num==<span class="literal">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> slice.call(<span class="keyword">this</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//返回数组第num项 负数倒着取</span></div><div class="line">  <span class="keyword">return</span> num&lt;<span class="number">0</span> ? <span class="keyword">this</span>[num+<span class="keyword">this</span>.length] : <span class="keyword">this</span>[num];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="pushStack"><a href="#pushStack" class="headerlink" title="pushStack"></a>pushStack</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置回溯属性</span></div><div class="line"><span class="comment">//堆栈弹入新的jQuery对象elems</span></div><div class="line"><span class="comment">//并设置elems对象的prevObject属性值为调用对象</span></div><div class="line"><span class="comment">//this.constructor()是一个空jQuery对象</span></div><div class="line"><span class="comment">//example:</span></div><div class="line"><span class="comment">//var div=$('div'),span=$('span'),div.pushStack(span)	</span></div><div class="line"><span class="comment">//输出为span且div.pushStack(span).prevObject属性为div 不设置prevObject默认为document.</span></div><div class="line">pushStack: <span class="function"><span class="keyword">function</span>(<span class="params">elems</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> ret = jQuery.merge(<span class="keyword">this</span>.constructor(),elems);</div><div class="line">  ret.prevObject = <span class="keyword">this</span>;</div><div class="line">  <span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="toArray"><a href="#toArray" class="headerlink" title="toArray"></a>toArray</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回一个jQuery对象组成的数组</span></div><div class="line">toArray: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> slice.call(<span class="keyword">this</span>);	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="jQuery-extend方法"><a href="#jQuery-extend方法" class="headerlink" title="jQuery.extend方法"></a>jQuery.extend方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//jQuery扩展函数参数配置与一些方法</span></div><div class="line"><span class="keyword">var</span> jQuery.extend (&#123;</div><div class="line">  <span class="comment">//确保唯一</span></div><div class="line">  expando: <span class="string">"jQuery"</span> + (version + <span class="built_in">Math</span>.random()).replace(<span class="regexp">/\D/g</span>,<span class="string">""</span>),</div><div class="line">  <span class="comment">//此配置不需要$().ready()</span></div><div class="line">  isReady:<span class="literal">true</span>,  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="camelCase"><a href="#camelCase" class="headerlink" title="camelCase"></a>camelCase</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//驼峰命名</span></div><div class="line"><span class="comment">//$.camelCase('show-me') --&gt; showMe</span></div><div class="line">camelCase: <span class="function"><span class="keyword">function</span>(<span class="params">string</span>)</span>&#123;</div><div class="line">  <span class="comment">//var rmsPrefix = /^-ms-/;					//-ms-开头的文本</span></div><div class="line">  <span class="comment">//var rdashAlpha = /-([a-z])/g;				//匹配(-)与小写字母</span></div><div class="line">  <span class="comment">//关于fcamelCase函数详情见上面</span></div><div class="line">  <span class="comment">//该方法接受2个参数 第一个参数为匹配到的文本 第二个参数为()中匹配的文本</span></div><div class="line">  <span class="comment">//例如：匹配到-a 第二个参数为小写字母 将其转化为大写实现驼峰命名</span></div><div class="line">  <span class="keyword">return</span> string.replace( rmsPrefix,<span class="string">"ms-"</span> ).replace( rdashAlpha,fcamelCase );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="each"><a href="#each" class="headerlink" title="each"></a>each</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//遍历类数组或对象的元素 </span></div><div class="line"><span class="comment">//第一个参数为对象 第二个参数为回调函数</span></div><div class="line"><span class="comment">//回调函数第一个参数为索引 第二个为索引对应的值</span></div><div class="line">each: <span class="function"><span class="keyword">function</span>(<span class="params">obj,callback</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> length, i = <span class="number">0</span>;</div><div class="line">  <span class="comment">//类数组</span></div><div class="line">  <span class="keyword">if</span>(isArrayLike(obj))&#123;</div><div class="line">    length = obj.length;</div><div class="line">    <span class="comment">//将索引和对应的值作为参数传入回调函数callback</span></div><div class="line">    <span class="keyword">for</span>(; i &lt; length ; i++ )&#123;</div><div class="line">      <span class="keyword">if</span>( callback.call( obj[i], i, obj[i] ) === <span class="literal">false</span> )&#123;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//对象</span></div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">for</span>( i <span class="keyword">in</span> obj )&#123;</div><div class="line">      <span class="keyword">if</span>( callback.call( obj[i], i, obj[i]) === <span class="literal">false</span> )&#123;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125; </div><div class="line">  &#125; </div><div class="line">  <span class="keyword">return</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="error"><a href="#error" class="headerlink" title="error"></a>error</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//抛出对应错误</span></div><div class="line">error: <span class="function"><span class="keyword">function</span> (<span class="params">msg</span>)</span>&#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(msg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="globalEval"><a href="#globalEval" class="headerlink" title="globalEval"></a>globalEval</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//相当于eval() 全局调用</span></div><div class="line">globalEval: <span class="function"><span class="keyword">function</span>(<span class="params">code</span>)</span>&#123;</div><div class="line">  DOMEval(code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//过滤</span></div><div class="line"><span class="comment">//第一个参数为待过滤数组 第二个为过滤函数 第三个参数选择返回条件</span></div><div class="line">grep: <span class="function"><span class="keyword">function</span>(<span class="params"> elems, callback, invert</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> callbackInverse,</div><div class="line">      matches = [],</div><div class="line">      i = <span class="number">0</span>,</div><div class="line">      length = elems.length,</div><div class="line">      callbackExpect = !invert;</div><div class="line">  <span class="keyword">for</span>( ; i &lt; length; i++)&#123;</div><div class="line">    <span class="comment">//满足条件的元素</span></div><div class="line">    callbackInverse = !!callback( elem[i], i);</div><div class="line">    <span class="comment">//如果第三个参数为false 返回被过滤的元素</span></div><div class="line">    <span class="keyword">if</span>( callbackInverse == callbackExpect )&#123;</div><div class="line">      matches.push( elems[i] );</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> matches;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="guid"><a href="#guid" class="headerlink" title="guid"></a>guid</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//全局变量</span></div><div class="line">guid: <span class="number">1</span></div></pre></td></tr></table></figure>
+<hr>
+<h5 id="inArray"><a href="#inArray" class="headerlink" title="inArray"></a>inArray</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查询数组元素</span></div><div class="line"><span class="comment">//第一个参数为要查询的 第二个为数组 第三个为开始查找的索引</span></div><div class="line">inArray: <span class="function"><span class="keyword">function</span>(<span class="params">elem,arr,i</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> arr == <span class="literal">null</span> ? <span class="number">-1</span> : indexOf.call( arr, elem, i);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="isEmptyObject"><a href="#isEmptyObject" class="headerlink" title="isEmptyObject"></a>isEmptyObject</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//判断是否空对象</span></div><div class="line"><span class="comment">//可以用Object.defineProperty()设定enumerable:false骗过检测</span></div><div class="line">isEmptyObject: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> name;</div><div class="line">  <span class="comment">//对象存在可枚举属性 返回false</span></div><div class="line">  <span class="keyword">for</span>( name <span class="keyword">in</span> obj )&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="isFunction"><a href="#isFunction" class="headerlink" title="isFunction"></a>isFunction</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">isFunction: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> jQuery.type(obj) === <span class="string">"function"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="isNumeric"><a href="#isNumeric" class="headerlink" title="isNumeric"></a>isNumeric</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//判断是否是数字</span></div><div class="line">isNumeric: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> type = jQuery.type(obj);</div><div class="line">  <span class="comment">//如果是字符串 判断是否能转换成数字</span></div><div class="line">  <span class="keyword">return</span> ( type === <span class="string">"number"</span> || type === <span class="string">"string"</span> ) &amp;&amp; </div><div class="line">    !<span class="built_in">isNaN</span>( obj - <span class="built_in">parseFloat</span>(obj) );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="isPlainObject"><a href="#isPlainObject" class="headerlink" title="isPlainObject"></a>isPlainObject</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//判断是否是纯粹对象 即通过&#123;&#125;或new Object()创建</span></div><div class="line">isPlainObject: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> proto,Ctor;</div><div class="line">  <span class="comment">//不是对象返回false</span></div><div class="line">  <span class="keyword">if</span>( !obj || toString.call(obj) !== <span class="string">"[object Object]"</span> )&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//获取原型对象</span></div><div class="line">  proto = getProto(obj);</div><div class="line">  <span class="comment">//如果没对象没有原型 返回true</span></div><div class="line">  <span class="comment">//例如：var obj = Object.create(null)</span></div><div class="line">  <span class="keyword">if</span>( !proto )&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//先判断原型对象是否有constructor属性</span></div><div class="line">  <span class="comment">//并将Ctor设置为obj的构造函数</span></div><div class="line">  <span class="comment">//严格来讲 是设置为原型对象的constructor属性值</span></div><div class="line">  Ctor = hasOwn.call( proro,<span class="string">"constructor"</span> ) &amp;&amp; proto.constructor;</div><div class="line">  <span class="comment">//如果Ctor是函数且为Object构造函数</span></div><div class="line">  <span class="comment">//fnToString.call(Ctor) 输出原型构造函数</span></div><div class="line">  <span class="comment">//ObjectFunctionString  输出Object构造函数</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> Ctor === <span class="string">"function"</span> &amp;&amp; </div><div class="line">    fnToString.call(Ctor) === ObjectFunctionString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="isWindow"><a href="#isWindow" class="headerlink" title="isWindow"></a>isWindow</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//判断是否是window对象</span></div><div class="line"><span class="comment">//因为window对象的window属性指向自身 即window === window.window</span></div><div class="line">isWindow: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> obj != <span class="literal">null</span> &amp;&amp; obj === obj.window;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="nodeName"><a href="#nodeName" class="headerlink" title="nodeName"></a>nodeName</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//判断节点名是否是name</span></div><div class="line">nodeName: <span class="function"><span class="keyword">function</span>(<span class="params">elem,name</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> elem.nodeName &amp;&amp; elem.nodeName.toLowerCase() === name.toLowerCase();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="makeArray"><a href="#makeArray" class="headerlink" title="makeArray"></a>makeArray</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//拼接返回新数组[results,arr]</span></div><div class="line">makeArray: <span class="function"><span class="keyword">function</span>(<span class="params">arr,results</span>)</span>&#123;</div><div class="line">  <span class="comment">//第二个参数给ret</span></div><div class="line">  <span class="keyword">var</span> ret = results || [];</div><div class="line">  <span class="keyword">if</span>( arr != <span class="literal">null</span> )&#123;</div><div class="line">    <span class="comment">//Object()方法包装arr对象</span></div><div class="line">    <span class="comment">//例如：arr="jimmy" 调用Object(arr)</span></div><div class="line">    <span class="comment">//包装后为一个String对象 String=&#123;0:"j",...,4:"y"&#125;</span></div><div class="line">    <span class="keyword">if</span>( isArrayLike( <span class="built_in">Object</span>(arr) ))&#123;</div><div class="line">      <span class="comment">//如果是字符串 包装成数组合并到ret</span></div><div class="line">      jQuery.merge(ret,<span class="keyword">typeof</span> arr === <span class="string">"string"</span> ? [arr] : arr);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果不是类数组 强行推入ret</span></div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">      push.call( ret, arr);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="map"><a href="#map" class="headerlink" title="map"></a>map</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//遍历并调用回调函数处理每一个元素</span></div><div class="line"><span class="comment">//返回一个处理后元素的数组</span></div><div class="line"><span class="comment">//基本类似于each 多了一个value值与ret数组</span></div><div class="line">map: <span class="function"><span class="keyword">function</span>(<span class="params"> elems, callback, arg</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> length, value,</div><div class="line">      i = <span class="number">0</span>,</div><div class="line">      ret = [];</div><div class="line">  <span class="keyword">if</span>( isArrayLike( elems ))&#123;</div><div class="line">    length = elems.length;</div><div class="line">    <span class="keyword">for</span>( ; i&lt;length; i++)&#123;</div><div class="line">      value = callback( elems[i], i, arg);</div><div class="line">      <span class="keyword">if</span>(value != <span class="literal">null</span>)&#123;</div><div class="line">        ret.push( value );</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">for</span>( i <span class="keyword">in</span> elems )&#123;</div><div class="line">      value = callback( elems[i], i, arg );</div><div class="line">      <span class="keyword">if</span>(value != <span class="literal">null</span>)&#123;</div><div class="line">        ret.push( value );</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> concat.apply([],ret);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//传入2个数组 第二个数组拼接到第一个</span></div><div class="line">merge: <span class="function"><span class="keyword">function</span>(<span class="params">first,second</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> len = +second.length,</div><div class="line">      j = <span class="number">0</span>,</div><div class="line">      i = first.length;</div><div class="line">  <span class="keyword">for</span>(;j&lt;len;j++)&#123;</div><div class="line">    first[i++] = second[j];</div><div class="line">  &#125;</div><div class="line">  first.length = i;</div><div class="line">  <span class="keyword">return</span> first;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="noop"><a href="#noop" class="headerlink" title="noop"></a>noop</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//空函数</span></div><div class="line">noop: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="now"><a href="#now" class="headerlink" title="now"></a>now</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">now: <span class="built_in">Date</span>.now</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//硬绑定?显式绑定?</span></div><div class="line">proxy: <span class="function"><span class="keyword">function</span>(<span class="params"> fn, context </span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> tmp, args, proxy;</div><div class="line">  <span class="comment">//第二个参数为字符串时 反转两个参数</span></div><div class="line">  <span class="keyword">if</span>( <span class="keyword">typeof</span> context === <span class="string">"string"</span> )&#123;</div><div class="line">    tmp = fn[ context ];</div><div class="line">    context = fn;</div><div class="line">    fn = tmp;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//判断fn能否调用call方法(即是否是函数)</span></div><div class="line">  <span class="keyword">if</span>( !jQuery.isFunction(fn))&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//第二个开始后面所有的参数</span></div><div class="line">  args = slice.call( <span class="built_in">arguments</span>,<span class="number">2</span> );</div><div class="line">  <span class="comment">//执行后将fn的this指向强制绑定到context</span></div><div class="line">  proxy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> fn.apply( context || <span class="keyword">this</span>, args.concat( slice.call(<span class="built_in">arguments</span>)));</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//计数?</span></div><div class="line">  proxy.guid = fn.guid = fn.guid || jQuery.guid++;</div><div class="line">  <span class="keyword">return</span> proxy;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="support"><a href="#support" class="headerlink" title="support"></a>support</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//jQuery.support内部已弃用 某些依赖的框架可能需要 所以写一下</span></div><div class="line">support: support;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//去除首尾空格</span></div><div class="line"><span class="comment">//rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g	匹配头尾所有空格  </span></div><div class="line">trim: <span class="function"><span class="keyword">function</span>(<span class="params">text</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> text == <span class="literal">null</span> ? <span class="string">""</span> : (text + <span class="string">""</span>).replace(rtrim,<span class="string">""</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="type"><a href="#type" class="headerlink" title="type"></a>type</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//类型判断</span></div><div class="line">type: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">  <span class="comment">//如果是null或undefined 返回这两个的字符串</span></div><div class="line">  <span class="keyword">if</span>( obj == <span class="literal">null</span> )&#123;</div><div class="line">    <span class="keyword">return</span> obj + <span class="string">""</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//1.先判断是否是基本数据类型 如果是直接返回typeof obj</span></div><div class="line">  <span class="comment">//2.否则返回&#123;&#125;.toString.call(obj) 或 "object"</span></div><div class="line">  <span class="comment">//然而什么东西不吃&#123;&#125;.toString.call()?</span></div><div class="line">  <span class="comment">//这个class2type做了特殊处理 不是空对象 对应方法见顶部</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> obj === <span class="string">"object"</span> || </div><div class="line">    <span class="keyword">typeof</span> obj === <span class="string">"function"</span> ? </div><div class="line">    class2type[ toString.call(obj) ] || <span class="string">"object"</span>: <span class="keyword">typeof</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	<div>
+		
+		﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	</div>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jquery/" rel="tag"># jquery</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/05/浏览器部分兼容性处理/" rel="next" title="浏览器部分兼容性处理">
+                <i class="fa fa-chevron-left"></i> 浏览器部分兼容性处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery源码-1-原型方法"><span class="nav-number">1.</span> <span class="nav-text">jQuery源码-1(原型方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类数组判断：isArrayLike"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">类数组判断：isArrayLike</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义的变量"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">自定义的变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则表达式"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型方法-jQuery-prototype"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">原型方法 jQuery.prototype</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#end"><span class="nav-number">1.0.0.4.1.</span> <span class="nav-text">end</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#eq"><span class="nav-number">1.0.0.4.2.</span> <span class="nav-text">eq</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#get"><span class="nav-number">1.0.0.4.3.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pushStack"><span class="nav-number">1.0.0.4.4.</span> <span class="nav-text">pushStack</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#toArray"><span class="nav-number">1.0.0.4.5.</span> <span class="nav-text">toArray</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jQuery-extend方法"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">jQuery.extend方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#camelCase"><span class="nav-number">1.0.0.5.1.</span> <span class="nav-text">camelCase</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#each"><span class="nav-number">1.0.0.5.2.</span> <span class="nav-text">each</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#error"><span class="nav-number">1.0.0.5.3.</span> <span class="nav-text">error</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#globalEval"><span class="nav-number">1.0.0.5.4.</span> <span class="nav-text">globalEval</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#grep"><span class="nav-number">1.0.0.5.5.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#guid"><span class="nav-number">1.0.0.5.6.</span> <span class="nav-text">guid</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#inArray"><span class="nav-number">1.0.0.5.7.</span> <span class="nav-text">inArray</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#isEmptyObject"><span class="nav-number">1.0.0.5.8.</span> <span class="nav-text">isEmptyObject</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#isFunction"><span class="nav-number">1.0.0.5.9.</span> <span class="nav-text">isFunction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#isNumeric"><span class="nav-number">1.0.0.5.10.</span> <span class="nav-text">isNumeric</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#isPlainObject"><span class="nav-number">1.0.0.5.11.</span> <span class="nav-text">isPlainObject</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#isWindow"><span class="nav-number">1.0.0.5.12.</span> <span class="nav-text">isWindow</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nodeName"><span class="nav-number">1.0.0.5.13.</span> <span class="nav-text">nodeName</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#makeArray"><span class="nav-number">1.0.0.5.14.</span> <span class="nav-text">makeArray</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#map"><span class="nav-number">1.0.0.5.15.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#merge"><span class="nav-number">1.0.0.5.16.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#noop"><span class="nav-number">1.0.0.5.17.</span> <span class="nav-text">noop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#now"><span class="nav-number">1.0.0.5.18.</span> <span class="nav-text">now</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#proxy"><span class="nav-number">1.0.0.5.19.</span> <span class="nav-text">proxy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#support"><span class="nav-number">1.0.0.5.20.</span> <span class="nav-text">support</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#trim"><span class="nav-number">1.0.0.5.21.</span> <span class="nav-text">trim</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#type"><span class="nav-number">1.0.0.5.22.</span> <span class="nav-text">type</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共26.4k字</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
