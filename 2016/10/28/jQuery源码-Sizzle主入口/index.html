@@ -1,0 +1,847 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jquery," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery源码-Sizzle正文变量声明1234567891011121314151617181920212223242526272829303132333435var i,    support,    Expr,    getText,    isXML,    tokenize,    compile,    select,    outermostContext,    sortInpu">
+<meta name="keywords" content="jquery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery源码-Sizzle主入口">
+<meta property="og:url" content="http://yoursite.com/2016/10/28/jQuery源码-Sizzle主入口/index.html">
+<meta property="og:site_name" content="Vito的小栈">
+<meta property="og:description" content="jQuery源码-Sizzle正文变量声明1234567891011121314151617181920212223242526272829303132333435var i,    support,    Expr,    getText,    isXML,    tokenize,    compile,    select,    outermostContext,    sortInpu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-25T00:44:35.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery源码-Sizzle主入口">
+<meta name="twitter:description" content="jQuery源码-Sizzle正文变量声明1234567891011121314151617181920212223242526272829303132333435var i,    support,    Expr,    getText,    isXML,    tokenize,    compile,    select,    outermostContext,    sortInpu">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/28/jQuery源码-Sizzle主入口/"/>
+
+
+
+
+
+  <title> jQuery源码-Sizzle主入口 | Vito的小栈 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito的小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photo" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/28/jQuery源码-Sizzle主入口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito的小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery源码-Sizzle主入口
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-28T22:41:28+08:00">
+                2016-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,436
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="jQuery源码-Sizzle正文"><a href="#jQuery源码-Sizzle正文" class="headerlink" title="jQuery源码-Sizzle正文"></a>jQuery源码-Sizzle正文</h1><h4 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> i,</div><div class="line">    support,</div><div class="line">    Expr,</div><div class="line">    getText,</div><div class="line">    isXML,</div><div class="line">    tokenize,</div><div class="line">    compile,</div><div class="line">    select,</div><div class="line">    outermostContext,</div><div class="line">    sortInput,</div><div class="line">    hasDuplicate,</div><div class="line">    setDocument,</div><div class="line">    <span class="built_in">document</span>,</div><div class="line">    docElem,</div><div class="line">    documentIsHTML,</div><div class="line">    rbuggyQSA,	</div><div class="line">    rbuggyMatches,	</div><div class="line">    matches,</div><div class="line">    contains,</div><div class="line">    expando = <span class="string">"Sizzle"</span> + <span class="number">1</span> * <span class="keyword">new</span> <span class="built_in">Date</span>(),</div><div class="line">    preferredDoc = <span class="built_in">window</span>.document,</div><div class="line">    dirruns = <span class="number">0</span>,</div><div class="line">    done = <span class="number">0</span>,</div><div class="line">    classCache = createCache(),</div><div class="line">    tokenCache = createCache(),</div><div class="line">    compilerCache = createCache(),</div><div class="line">    sortOrder,</div><div class="line">    hasOwn,</div><div class="line">    arr,</div><div class="line">    pop,</div><div class="line">    push_native,</div><div class="line">    push,</div><div class="line">    slice,</div><div class="line">    indexOf,</div><div class="line">    booleans;</div></pre></td></tr></table></figure>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这个地方为什么要用字符串形式的正则啊...</span></div><div class="line"><span class="comment">//原来是当变量插入 后面不抄了 意思意思</span></div><div class="line"><span class="comment">//改成正则字面量</span></div><div class="line"></div><div class="line"><span class="comment">//匹配空字 制表符 回车符 换行符 换页符</span></div><div class="line"><span class="keyword">var</span> whitespace = <span class="regexp">/\x20\t\r\n\f/</span>,</div><div class="line">    <span class="comment">//?:.是非捕获分组 匹配.或(字符-)或0-160的ASCII字符组</span></div><div class="line">    <span class="comment">//这个正则匹配变量名</span></div><div class="line">    <span class="comment">//\0:The NUL character (\u0000)</span></div><div class="line">    identifier = <span class="regexp">/(?:\.|[\w-]|[^\0-\xa0])+/</span>,</div><div class="line">    <span class="comment">//匹配属性 </span></div><div class="line">    <span class="comment">//正则写法</span></div><div class="line">    attributes = <span class="regexp">/^\[[\x20\t\r\n\f]*((?:\\.|[\w-]|[^-\xa0])+)(?:[\x20\t\r\n\f]*([*^$|!~]?=)[\x20\t\r\n\f]*(?:'((?:\\.|[^\\'])*)'|"((?:\\.|[^\\"])*)"|((?:\\.|[\w-]|[^-\xa0])+))|)[\x20\t\r\n\f]*\]/</span>,</div><div class="line">    <span class="comment">//原写法</span></div><div class="line">    attributes = <span class="string">"\\["</span> + whitespace + <span class="string">"*("</span> + identifier + <span class="string">")(?:"</span> + whitespace + <span class="string">"*([*^$|!~]?=)"</span> + whitespace + <span class="string">"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("</span> + identifier + <span class="string">"))|)"</span> + whitespace + <span class="string">"*\\]"</span>,</div><div class="line">    <span class="comment">//伪类 </span></div><div class="line">    <span class="comment">//正则写法</span></div><div class="line">    pseudos = <span class="regexp">/:((?:\\.|[\w-]|[^-\xa0])+)(?:\((('((?:\\.|[^\\'])*)'|"((?:\\.|[^\\"])*)")|((?:\\.|[^\\()[\]]|\[[\x20\t\r\n\f]*((?:\\.|[\w-]|[^-\xa0])+)(?:[\x20\t\r\n\f]*([*^$|!~]?=)[\x20\t\r\n\f]*(?:'((?:\\.|[^\\'])*)'|"((?:\\.|[^\\"])*)"|((?:\\.|[\w-]|[^-\xa0])+))|)[\x20\t\r\n\f]*\])*)|.*)\)|)/</span>,</div><div class="line">    <span class="comment">//原写法</span></div><div class="line">    pseudos = <span class="string">":("</span> + identifier + <span class="string">")(?:\\(("</span> + <span class="string">"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|"</span> + <span class="string">"((?:\\\\.|[^\\\\()[\\]]|"</span> + attributes + <span class="string">")*)|"</span> + <span class="string">".*"</span> + <span class="string">")\\)|)"</span>,</div><div class="line">    <span class="keyword">var</span> rtrim = <span class="regexp">/^[\x20\t\r\n\f]+|((?:^|[^\\])(?:\\.)*)[\x20\t\r\n\f]+$/g</span>,</div><div class="line">    <span class="comment">//匹配关系符</span></div><div class="line">    rcombinators = <span class="regexp">/^[\x20\t\r\n\f]*([&gt;+~]|[\x20\t\r\n\f])[\x20\t\r\n\f]*/</span>,</div><div class="line">    <span class="comment">//正则集合 大概写写就行了</span></div><div class="line">    <span class="comment">//whitespace=空格</span></div><div class="line">    <span class="comment">//identifier=变量</span></div><div class="line">    matchExpr = &#123;</div><div class="line">      <span class="string">"ID"</span>: <span class="regexp">/^#((?:\\.|[\w-]|[^-\xa0])+)/</span>,	<span class="comment">//ID 	  #* #slide	</span></div><div class="line">      <span class="string">"CLASS"</span>: <span class="regexp">/^\.((?:\\.|[\w-]|[^-\xa0])+)/</span>,	<span class="comment">//CLASS   .*  .content</span></div><div class="line">      <span class="string">"TAG"</span>: <span class="regexp">/^((?:\\.|[\w-]|[^-\xa0])+|[*])/</span>,	<span class="comment">//标签	(div),(span)</span></div><div class="line">      <span class="string">"ATTR"</span>: <span class="regexp">/^attributes/</span>,	  <span class="comment">//属性	   "href","src"</span></div><div class="line">      <span class="string">"PSEUDO"</span>: <span class="regexp">/^pseudos/</span>,		  <span class="comment">//伪元素	  :first</span></div><div class="line">      <span class="comment">//子元素</span></div><div class="line">      <span class="string">"CHILD"</span>: <span class="regexp">/^:(only|first|last|nth|nth-last)-(child|of-type)(?:\([\x20\t\r\n\f]*(even|odd|(([+-]|)(\d*)n|)[\x20\t\r\n\f]*(?:([+-]|)[\x20\t\r\n\f]*(\d+)|))[\x20\t\r\n\f]*\)|)/i</span>,</div><div class="line">      <span class="string">"bool"</span>: <span class="regexp">/^(?:booleans)$,i/</span>,	  <span class="comment">//值为布尔的属性 例如checked</span></div><div class="line">      <span class="string">"needsContext"</span>: <span class="regexp">/^[\x20\t\r\n\f]*[&gt;+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\([\x20\t\r\n\f]*((?:-\d)?\d*)[\x20\t\r\n\f]*\)|)(?=[^-]|$)/i</span>  <span class="comment">//需要内容的属性</span></div><div class="line">    &#125;,</div><div class="line">    <span class="comment">//input标签</span></div><div class="line">    rinput = <span class="regexp">/^(?:input|select|textarea|button)$/i</span>,</div><div class="line">    <span class="comment">//h1-h6</span></div><div class="line">    rheader = <span class="regexp">/^h\d$/i</span>,</div><div class="line">    <span class="comment">//匹配本地方法</span></div><div class="line">    rnative = <span class="regexp">/^[^&#123;]+\&#123;\s*\[native \w/</span>,</div><div class="line">    <span class="comment">//快速匹配单个ID,TAG,CLASS</span></div><div class="line">    rquickExpr = <span class="regexp">/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/</span>,</div><div class="line">    <span class="comment">//模糊选择</span></div><div class="line">    rsibling = <span class="regexp">/[+~]/</span>,</div><div class="line"></div><div class="line">    <span class="comment">/*------------------------------奇怪的函数------------------------------*/</span>   </div><div class="line"></div><div class="line">    <span class="comment">//匹配1-6个16进制数字</span></div><div class="line">    runescape = <span class="regexp">/\([\da-f]&#123;1,6&#125;空格?|(空格)|.)/ig</span>,</div><div class="line">    <span class="comment">//</span></div><div class="line">    funescape = <span class="function"><span class="keyword">function</span>(<span class="params"> _, escaped, escapedWhitespace</span>)</span>&#123;</div><div class="line">      <span class="keyword">var</span> high = <span class="string">"0x"</span> + escaped - <span class="number">0x10000</span>;</div><div class="line">      <span class="comment">//high是NaN 表达式high !== high才返回true</span></div><div class="line">      <span class="comment">//这个return真是吃了屎 让老子理一理</span></div><div class="line">      <span class="keyword">return</span> high !== high || escapedWhitespace ? escaped : high &lt; <span class="number">0</span> ? <span class="built_in">String</span>.fromCharCode(high + <span class="number">0x10000</span>) : <span class="built_in">String</span>.fromCharCode(high &gt;&gt; <span class="number">10</span> | <span class="number">0xD800</span>, high &amp; <span class="number">0x3FF</span> | <span class="number">0xDC00</span>);</div><div class="line">      <span class="comment">//重写后</span></div><div class="line">      <span class="comment">//应该是这样</span></div><div class="line">      <span class="keyword">if</span>( <span class="built_in">isNaN</span>(high) || escapedWhitespace )&#123;</div><div class="line">        <span class="keyword">return</span> escaped;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span> <span class="keyword">if</span>(high &lt; <span class="number">0</span>)&#123;</div><div class="line">        <span class="comment">//fromCharCode()接受一个Unicode值返回字符串</span></div><div class="line">        <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(high + <span class="number">0x10000</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span>&#123;</div><div class="line">        <span class="comment">//&gt;&gt;运算符位右移 64(1000000)&gt;&gt;5 == 2(10)</span></div><div class="line">        <span class="comment">//&amp;运算符二进制取与 2(10)&amp;1(01) == 0(00)</span></div><div class="line">        <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(high &gt;&gt; <span class="number">10</span> | <span class="number">0xD800</span>, high &amp; <span class="number">0x3FF</span> | <span class="number">0xDC00</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">//(\0-\x1f或\x7f选一个)或(-(0,1)+数字)或(-)或(非\0-\x1f加\x7f-\uFFFF加字符-)</span></div><div class="line">    rcssescape = <span class="regexp">/([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g</span>,    </div><div class="line">    <span class="comment">//完全不懂干啥用的</span></div><div class="line">    fcssescape = <span class="function"><span class="keyword">function</span>(<span class="params"> ch, asCodePoint</span>)</span>&#123;</div><div class="line">      <span class="keyword">if</span>( asCodePoint )&#123;</div><div class="line">        <span class="comment">//ch是个空字符?</span></div><div class="line">        <span class="keyword">if</span>( ch === <span class="string">"\0"</span> )&#123;</div><div class="line">          <span class="comment">//这个return是个问号</span></div><div class="line">          <span class="keyword">return</span> <span class="string">"\uFFFD"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//ch+"\"+ch最后一位的Unicode值再转成16位</span></div><div class="line">        <span class="keyword">return</span> ch.slice(<span class="number">0</span>,<span class="number">-1</span>) + <span class="string">"\\"</span> + ch.charCodeAt( ch.length - <span class="number">1</span> ).toString( <span class="number">16</span> ) + <span class="string">" "</span>;</div><div class="line">      &#125; </div><div class="line">      <span class="comment">//返回字符串 "\""+ch</span></div><div class="line">      <span class="keyword">return</span> <span class="string">"\\"</span> + ch;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="Sizzle主函数"><a href="#Sizzle主函数" class="headerlink" title="Sizzle主函数"></a>Sizzle主函数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//selector:css选择器 context:上下文或document results:结果 seed:初始集合</span></div><div class="line"><span class="comment">//主函数优先调用浏览器默认解析方法 否则返回select方法继续解析</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sizzle</span>(<span class="params"> selector, context, results, seed</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> m, i, elem, nid, match, groups, newSelector,</div><div class="line">      newContext = context &amp;&amp; context.ownerDocument,</div><div class="line">      nodeType = context ? context.nodeType : <span class="number">9</span>;</div><div class="line">  </div><div class="line">  <span class="comment">//初始化结果集</span></div><div class="line">  results = results || [];</div><div class="line">  </div><div class="line">  <span class="comment">//如果selector是非法字符 直接返回结果</span></div><div class="line">  <span class="keyword">if</span>( <span class="keyword">typeof</span> selector !== <span class="string">"string"</span> || </div><div class="line">     !selector || nodeType !== <span class="number">1</span> &amp;&amp; </div><div class="line">     nodeType !==<span class="number">9</span> &amp;&amp; nodeType !== <span class="number">11</span>)&#123;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">//seed是啥参数啊...</span></div><div class="line">  <span class="keyword">if</span>( !seed )&#123;</div><div class="line">    <span class="keyword">if</span>( (context ? context.ownerDocument || </div><div class="line">         context : preferredDoc ) !== <span class="built_in">document</span> )&#123;</div><div class="line">      setDocument( context );</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//上下文不设定就设置为全局</span></div><div class="line">    context = context || <span class="built_in">document</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//documentIsHTML = !isXML(document)</span></div><div class="line">  <span class="keyword">if</span>( documentIsHTML )&#123;</div><div class="line">    <span class="comment">//requickExpr为快速匹配简单ID/CLASS/TAG选择器的正则</span></div><div class="line">    <span class="comment">///^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/</span></div><div class="line">    <span class="comment">//1：ID 2：TAG 3：CLASS</span></div><div class="line">    <span class="keyword">if</span>( nodeType !== <span class="number">11</span> &amp;&amp; (match = requickExpr.exec( selector )) )&#123;</div><div class="line">      <span class="comment">//匹配到#()*</span></div><div class="line">      <span class="keyword">if</span>( m = match[<span class="number">1</span>] )&#123;</div><div class="line">        <span class="comment">//节点类型为document对象</span></div><div class="line">        <span class="keyword">if</span>( nodeType === <span class="number">9</span> )&#123;</div><div class="line">          <span class="comment">//</span></div><div class="line">          <span class="keyword">if</span>( (elem = context.getElementById(m)) )&#123;</div><div class="line">            <span class="comment">//elem是标签 m是对应标签的ID 相等说明匹配成功</span></div><div class="line">            <span class="keyword">if</span>( elem.id === m )&#123;</div><div class="line">              results.push( elem );</div><div class="line">              <span class="keyword">return</span> results;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">              <span class="keyword">return</span> results;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果传入的context不是document</span></div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">          <span class="keyword">if</span>( newContext &amp;&amp; </div><div class="line">             ( elem = newContext.getElementById( m )) &amp;&amp; </div><div class="line">             contains( context, elem ) &amp;&amp; elem.id === m )&#123;</div><div class="line">            results.push( elem );</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;---<span class="comment">/* match[1] */</span></div><div class="line">        <span class="comment">//匹配到标签div,span等等</span></div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( match[<span class="number">2</span>] )&#123;</div><div class="line">          push.apply( results, context.getElementsByTagName( selector ) );</div><div class="line">          <span class="keyword">return</span> results;</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//匹配到.*</span></div><div class="line">      <span class="keyword">else</span> <span class="keyword">if</span>( (m = match[<span class="number">3</span>]) &amp;&amp; support.getElementByClassName &amp;&amp; context.getElementByClassName )&#123;</div><div class="line">        push.apply( results, context.getElementByClassName( m ) );</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果支持高级查询querySelectorAll</span></div><div class="line">    <span class="keyword">if</span>( support.qsa &amp;&amp; </div><div class="line">       <span class="comment">//且缓存中没有</span></div><div class="line">       !compilerCache[ selector + <span class="string">" "</span> ] &amp;&amp; </div><div class="line">       <span class="comment">//rbuggQSA = /:enabled|:disabled/</span></div><div class="line">       (!rbuggQSA || !rbuggyQSA.test( selector )) )&#123;</div><div class="line">      <span class="keyword">if</span>( nodeType !==<span class="number">1</span> )&#123;</div><div class="line">        newContext = context;</div><div class="line">        newSelector = selector;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">//上下文不是document的情况 没见过</span></div><div class="line">      <span class="keyword">else</span> <span class="keyword">if</span>( context.nodeName.toLowerCase() !== <span class="string">"object"</span> )&#123;</div><div class="line">        <span class="keyword">if</span>( (nid = context.getAttribute(<span class="string">"id"</span>)) )&#123;</div><div class="line">          nid = nid.replace( rcessescape, fcssescape );</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">          context.setAttribute(<span class="string">"id"</span>, (nid = expando));</div><div class="line">        &#125;</div><div class="line">        groups = tokenize( selector );</div><div class="line">        i = groups.length;</div><div class="line">        <span class="keyword">while</span>( i-- )&#123;</div><div class="line">          <span class="comment">//toSelector</span></div><div class="line">          group[i] = <span class="string">"#"</span> + nid + <span class="string">" "</span> + toSelector( groups[i] );</div><div class="line">        &#125;</div><div class="line">        newSelector = groups.join(<span class="string">","</span>);</div><div class="line">        <span class="comment">//扩展context为下一个选择器?</span></div><div class="line">        newContext = rsibling.test( selector ) &amp;&amp; </div><div class="line">          testContext( context.parentNode ) || context;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>( newSelector )&#123;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">          <span class="comment">//这个方法好叼啊</span></div><div class="line">          push.apply( results, newContext.querySelectorAll( newSelector ));</div><div class="line">          <span class="comment">//返回jQuery对象</span></div><div class="line">          <span class="keyword">return</span> results;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span>( qsaError )&#123;&#125;</div><div class="line">        <span class="comment">//这个是应付上面的else</span></div><div class="line">        <span class="keyword">finally</span>&#123;</div><div class="line">          <span class="keyword">if</span>( nid === expando )&#123;</div><div class="line">            context.removeAttribute(<span class="string">"id"</span>);</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;--!seed</div><div class="line">  <span class="comment">//原生方法搞不定 进入select函数</span></div><div class="line">  <span class="comment">//正则替换(" div ") --&gt; ("div")</span></div><div class="line">  <span class="keyword">return</span> select( selector.replace( rtrim, <span class="string">"$1"</span> ), context, results, seed );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Sizzle补充函数"><a href="#Sizzle补充函数" class="headerlink" title="Sizzle补充函数"></a>Sizzle补充函数</h4><h5 id="Sizzle-matches"><a href="#Sizzle-matches" class="headerlink" title="Sizzle.matches"></a>Sizzle.matches</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Sizzle.matches = <span class="function"><span class="keyword">function</span>(<span class="params">expr,elements</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> Sizzle(expr,<span class="literal">null</span>,<span class="literal">null</span>,elements);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="Sizzle-matchesSelector"><a href="#Sizzle-matchesSelector" class="headerlink" title="Sizzle.matchesSelector"></a>Sizzle.matchesSelector</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Sizzle.matchesSelector = <span class="function"><span class="keyword">function</span>(<span class="params">elem,expr</span>)</span>&#123;</div><div class="line">  <span class="comment">//设置document文档</span></div><div class="line">  <span class="keyword">if</span>((elem.ownerDocument || elem) !== <span class="built_in">document</span>)&#123;</div><div class="line">    setDocument(elem);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//确保属性选择器已经被引用</span></div><div class="line">  expr = expr.replace(rattributeQuotes,<span class="string">"='$1']"</span>);</div><div class="line">  <span class="keyword">if</span>(support.matchesSelector &amp;&amp; documentIsHTML &amp;&amp; </div><div class="line">     !compilerCache[expr + <span class="string">" "</span>] &amp;&amp; </div><div class="line">     (!rbuggyMatches || !rubggyMatches.test(expr)) &amp;&amp; </div><div class="line">     (!rubggyQSA || !rbuggyQSA.test(expr)))&#123;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">      <span class="keyword">var</span> ret = matches.call(elem,expr);</div><div class="line">      <span class="keyword">if</span>(ret || support.disconnectedMatch || </div><div class="line">         elem.document &amp;&amp; elem.document.nodeType !== <span class="number">11</span>)&#123;</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">      &#125;</div><div class="line">    &#125; </div><div class="line">    <span class="keyword">catch</span>(e)&#123;&#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> Sizzle(expr,<span class="built_in">document</span>,<span class="literal">null</span>,[elem]).length &gt; <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="Sizzle-contains"><a href="#Sizzle-contains" class="headerlink" title="Sizzle.contains"></a>Sizzle.contains</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Sizzle.contains = <span class="function"><span class="keyword">function</span>(<span class="params">context,elem</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>((context.ownerDocument || context) !== <span class="built_in">document</span>)&#123;</div><div class="line">    setDocument(context);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> contains(context,elem);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="Sizzle-attr"><a href="#Sizzle-attr" class="headerlink" title="Sizzle.attr"></a>Sizzle.attr</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Sizzle.attr = <span class="function"><span class="keyword">function</span>(<span class="params">elem,name</span>)</span>&#123;</div><div class="line">  <span class="comment">//这种代码的意思就是是否设置了document</span></div><div class="line">  <span class="keyword">if</span>(elem.ownerDocument || elem) !== <span class="built_in">document</span>)&#123;</div><div class="line">    setDocument(elem);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> fn = Expr.attrHandle[name.toLowerCase()],</div><div class="line">      val = fn &amp;&amp; hasOwn.call(Expr.attrHandle,name.toLowerCase()) ? fn(elem,name,!documentIsHTML) : <span class="literal">undefined</span>;</div><div class="line">  <span class="keyword">if</span>(val !== <span class="literal">undefined</span>)&#123;</div><div class="line">    <span class="keyword">return</span> val;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(support.attributes || !documentIsHTML)&#123;</div><div class="line">    <span class="keyword">return</span> elem.getAttribute(name);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>((val = elem.getAttributeNode(name)) &amp;&amp; val.specified)&#123;</div><div class="line">    <span class="keyword">return</span> val.value;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="Sizzle-escape"><a href="#Sizzle-escape" class="headerlink" title="Sizzle.escape"></a>Sizzle.escape</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Sizzle.escape = <span class="function"><span class="keyword">function</span>(<span class="params">sel</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> (sel + <span class="string">""</span>).replace(rcssescape,fcssescape);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="Sizzle-error"><a href="#Sizzle-error" class="headerlink" title="Sizzle.error"></a>Sizzle.error</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Sizzle.error = <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>)</span>&#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Syntax error,unrecognized expression: "</span> + msg);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="Sizzle-uniqueSort"><a href="#Sizzle-uniqueSort" class="headerlink" title="Sizzle.uniqueSort"></a>Sizzle.uniqueSort</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">Sizzle.uniqueSort = <span class="function"><span class="keyword">function</span>(<span class="params">results</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> elem,</div><div class="line">      duplicates = [],</div><div class="line">      j = <span class="number">0</span>,</div><div class="line">      i = <span class="number">0</span>;</div><div class="line">	</div><div class="line">  <span class="comment">//先假设有重复</span></div><div class="line">  hasDuplicate = !support.detechDuplicates;</div><div class="line">  sortInput = !support.sortStable &amp;&amp; results.slice(<span class="number">0</span>);</div><div class="line">  <span class="comment">//按元素在文档中顺序排序</span></div><div class="line">  results.sort(sortOrder);</div><div class="line">	</div><div class="line">  <span class="comment">//去重</span></div><div class="line">  <span class="keyword">if</span>(hasDuplicate)&#123;</div><div class="line">    <span class="keyword">while</span>(elem = results[i++])&#123;</div><div class="line">      <span class="keyword">if</span>(elem === results[i])&#123;</div><div class="line">        <span class="comment">//j代表重复项数量</span></div><div class="line">        <span class="comment">//duplicates数组保存重复项索引</span></div><div class="line">        j = duplicates.push[i];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//依次删除</span></div><div class="line">    <span class="keyword">while</span>(j--)&#123;</div><div class="line">      results.splice(duplicates[j],<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  sortInput = <span class="literal">null</span>;</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="Sizzle内部函数"><a href="#Sizzle内部函数" class="headerlink" title="Sizzle内部函数"></a>Sizzle内部函数</h4><h5 id="addCombinator"><a href="#addCombinator" class="headerlink" title="addCombinator"></a>addCombinator</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">addCombinator</span>(<span class="params">match,combinator,base</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> dir = combinator.dir,</div><div class="line">      skip = combinator.next,</div><div class="line">      key = skip || dir,</div><div class="line">      checkNonElements = base &amp;&amp; key === <span class="string">"parentNode"</span>,</div><div class="line">      doneName = done++;</div><div class="line">  <span class="keyword">if</span>(combinator.first)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> elem, context, xml</span>)</span>&#123;</div><div class="line">      <span class="keyword">while</span>((elem = elem[dir]))&#123;</div><div class="line">        <span class="keyword">if</span>(elem.nodeType === <span class="number">1</span> || checkNonElements)&#123;</div><div class="line">          <span class="keyword">return</span> matcher(elem,context,xml);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">elem,context,xml</span>)</span>&#123;</div><div class="line">      <span class="keyword">var</span> oldCache,uniqueCache,outerCache,</div><div class="line">          newCache = [dirruns,doneName];</div><div class="line">      <span class="comment">//又是xml</span></div><div class="line">      <span class="keyword">if</span>(xml)&#123;</div><div class="line">        <span class="keyword">while</span>((elem = elem[dir]))&#123;</div><div class="line">          <span class="keyword">if</span>(elem.nodeType === <span class="number">1</span> || checkNonElements)&#123;</div><div class="line">            <span class="keyword">if</span>(matcher(elem,context,xml))&#123;</div><div class="line">              <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">while</span>((elem = elem[dir]))&#123;</div><div class="line">          <span class="keyword">if</span>(elem.nodeType === <span class="number">1</span> || checkNonElements)&#123;</div><div class="line">            outerCache = elem[expando] || (elem[expando] = &#123;&#125;);</div><div class="line">          &#125;</div><div class="line">          <span class="comment">//IE&lt;9 不写了</span></div><div class="line">          <span class="comment">//...</span></div><div class="line">          <span class="keyword">if</span>(skip &amp;&amp; skip === elem.nodeName.toLowerCase())&#123;</div><div class="line">            elem = elem[dir] || elem;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">else</span> <span class="keyword">if</span>((oldCache = uniqueCache[key]) &amp;&amp; </div><div class="line">                 oldCache[<span class="number">0</span>] === dirruns &amp;&amp; oldCache[<span class="number">1</span>] === doneName)&#123;</div><div class="line">                   <span class="keyword">return</span> (newCache[<span class="number">2</span>] === oldCache[<span class="number">2</span>]);  </div><div class="line">                 &#125;</div><div class="line">          <span class="keyword">else</span>&#123;</div><div class="line">            uniqueCache[key] = newCache;</div><div class="line">            <span class="keyword">if</span>((newCache[<span class="number">2</span>] = matcher(elem,context,xml)))&#123;</div><div class="line">              <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="addHandle"><a href="#addHandle" class="headerlink" title="addHandle"></a>addHandle</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//attrs是一个字符串</span></div><div class="line"><span class="comment">//给所有属性添加处理程序</span></div><div class="line"><span class="comment">//attrs = "a|b|c|d"	--&gt;	arr = [a,b,c,d] </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">addHandle</span>(<span class="params"> attrs, handler</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> arr = attrs.split(<span class="string">"|"</span>),</div><div class="line">      i = arr.length;</div><div class="line">  <span class="keyword">while</span>( i-- )&#123;</div><div class="line">    Expr.attrHandle[arr[i]] = handler;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="assert"><a href="#assert" class="headerlink" title="assert"></a>assert</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//好像是用这个标签元素测试什么东西</span></div><div class="line"><span class="comment">//据查是做特征测试 比如是否支持某个API</span></div><div class="line"><span class="comment">//测试fn传入fieldset的返回值</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">assert</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(<span class="string">"fieldset"</span>);</div><div class="line">  <span class="keyword">try</span>&#123;</div><div class="line">    <span class="keyword">return</span> !!fn(el);</div><div class="line">  &#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">  &#125;<span class="keyword">finally</span>&#123;</div><div class="line">    <span class="comment">//删掉</span></div><div class="line">    <span class="keyword">if</span>(el.parentNode)&#123;</div><div class="line">      el.parentNode.removeChild(el);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//兼容IE</span></div><div class="line">    el = <span class="literal">null</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="condense"><a href="#condense" class="headerlink" title="condense"></a>condense</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">condense</span>(<span class="params">unmatched,map,filter,context,xml</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> elem,</div><div class="line">      newUnmatched = [],</div><div class="line">      i = <span class="number">0</span>,</div><div class="line">      len = unmatched.length,</div><div class="line">      mapped = map != <span class="literal">null</span>;</div><div class="line">  <span class="keyword">for</span>(;i &lt; len;i++)&#123;</div><div class="line">    <span class="keyword">if</span>((elem = unmatched[i]))&#123;</div><div class="line">      <span class="keyword">if</span>(!filter || filter(elem,context,xml))&#123;</div><div class="line">        newUnmatched.push(elem);</div><div class="line">        <span class="keyword">if</span>(mapped)&#123;</div><div class="line">          map.push(i);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> newUnmatched;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="createInputPseudo"><a href="#createInputPseudo" class="headerlink" title="createInputPseudo"></a>createInputPseudo</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回input指定type原子函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createInputPseudo</span>(<span class="params"> type </span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> elem </span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> name = elem.nodeName.toLowerCase();</div><div class="line">    <span class="keyword">return</span> name === <span class="string">"input"</span> &amp;&amp; elem.type === type;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="createButtonPseudo"><a href="#createButtonPseudo" class="headerlink" title="createButtonPseudo"></a>createButtonPseudo</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建按钮标签伪类</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createButtonPseudo</span>(<span class="params"> type </span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> elem </span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> name = elem.nodeName.toLowerCase();</div><div class="line">    <span class="keyword">return</span> (name === <span class="string">"input"</span> || name === <span class="string">"button"</span>) &amp;&amp; elem.type ===type;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="createDisabledPseudo"><a href="#createDisabledPseudo" class="headerlink" title="createDisabledPseudo"></a>createDisabledPseudo</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建有disabled属性标签伪类</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createDisabledPseudo</span>(<span class="params"> disabled </span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> elem </span>)</span>&#123;</div><div class="line">    <span class="comment">//表单元素</span></div><div class="line">    <span class="keyword">if</span>( <span class="string">"form"</span> <span class="keyword">in</span> elem )&#123;</div><div class="line">      <span class="keyword">if</span>( elem.parentNode &amp;&amp; elem.disabled === <span class="literal">false</span> )&#123;</div><div class="line">        <span class="keyword">if</span>( <span class="string">"label"</span> <span class="keyword">in</span> elem )&#123;</div><div class="line">          <span class="keyword">return</span> elem.parentNode.disbaled === disabled;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">          <span class="keyword">return</span> elem.disabled === disabled;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>( <span class="string">"label"</span> <span class="keyword">in</span> elem )&#123;</div><div class="line">      <span class="keyword">return</span> elem.disabled === disabled;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="createPositionalPseudo"><a href="#createPositionalPseudo" class="headerlink" title="createPositionalPseudo"></a>createPositionalPseudo</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//...</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPositionalPseudo</span>(<span class="params"> fn </span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> markFunction( <span class="function"><span class="keyword">function</span>(<span class="params">argument</span>)</span>&#123;</div><div class="line">    argument = +argument;</div><div class="line">    <span class="keyword">return</span> markFunction( <span class="function"><span class="keyword">function</span>(<span class="params">seed,matches</span>)</span>&#123;</div><div class="line">      <span class="keyword">var</span> j,</div><div class="line">          matchIndexs = fn([],seed.length,argument),</div><div class="line">          i = matchIndexs.length;</div><div class="line">      <span class="keyword">while</span>(i--)&#123;</div><div class="line">        <span class="keyword">if</span>( seed[j = matchIndex[i]] )&#123;</div><div class="line">          seed[j] = !(matches[j] = seed[j]);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<hr>
+<h5 id="testContext"><a href="#testContext" class="headerlink" title="testContext"></a>testContext</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">testContext</span>(<span class="params"> context </span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> context &amp;&amp; <span class="keyword">typeof</span> context.getElementsByTagName !== <span class="string">"undefined"</span> &amp;&amp; context;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="toSelector"><a href="#toSelector" class="headerlink" title="toSelector"></a>toSelector</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">toSelector</span>(<span class="params">tokens</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> i = <span class="number">0</span>,</div><div class="line">      len = tokens.length,</div><div class="line">      selector = <span class="string">""</span>;</div><div class="line">  <span class="keyword">for</span>(;i &lt; len;i++)&#123;</div><div class="line">    selector += tokens[i].value;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> selector;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="markFunction"><a href="#markFunction" class="headerlink" title="markFunction"></a>markFunction</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//伪类标记函数专供Sizzle使用</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">markFunction</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">  fn[ expando ] = <span class="literal">true</span>;</div><div class="line">  <span class="keyword">return</span> fn;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="multipleContexts"><a href="#multipleContexts" class="headerlink" title="multipleContexts"></a>multipleContexts</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">multipleContexts</span>(<span class="params">selector,contexts,results</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> i = <span class="number">0</span>,</div><div class="line">      len = contexts.length;</div><div class="line">  <span class="keyword">for</span>(;i &lt; len;i++)&#123;</div><div class="line">    Sizzle(selector,contexts[i],results);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="setMatcher"><a href="#setMatcher" class="headerlink" title="setMatcher"></a>setMatcher</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setMatcher</span>(<span class="params">preFilter,selector,matcher,postFilter,postFinder,postSelector</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(postFilter &amp;&amp; !postFilter[expando])&#123;</div><div class="line">    postFilter = setMatcher(postFilter);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(postFinder &amp;&amp; !postFinder[expando])&#123;</div><div class="line">    postFinder = setMatcher(postFinder,postSelector);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> markFunction(<span class="function"><span class="keyword">function</span>(<span class="params">seed,results,context,xml</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> temp,i,elem,</div><div class="line">        preMap = [],</div><div class="line">        postMap = [],</div><div class="line">        preexisting = results.length,</div><div class="line">        elems = seed || multipleContexts(selector || <span class="string">"*"</span>,</div><div class="line">                                         context.nodeType ? [context] : context,[]),</div><div class="line">        matcherIn = preFilter &amp;&amp; (seed || !selector) ? </div><div class="line">        condense(elems,preMap,preFilter,context,xml) : elems,</div><div class="line">        <span class="comment">//三元运算符用成这样也是无敌了</span></div><div class="line">        matcherOut = matcher ? postFinder || (seed ? preFilter : preexisting || postFilter) ? [] : results : matcherIn;</div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">if</span>(matcher)&#123;</div><div class="line">      matcher(matchIn,matchOut,context,xml);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">if</span>(postFilter)&#123;</div><div class="line">      temp = condense(matcherOut,postMap);</div><div class="line">      postFilter(temp,[],context,xml);</div><div class="line">      <span class="comment">//</span></div><div class="line">      i = temp.length;</div><div class="line">      <span class="keyword">while</span>(i--)&#123;</div><div class="line">        <span class="keyword">if</span>((elem = temp[i]))&#123;</div><div class="line">          matcherOut[postMap[i]] = !(matchIn[postMap[i]] = elem);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(seed)&#123;</div><div class="line">      <span class="keyword">if</span>(postFinder || preFilter)&#123;</div><div class="line">        <span class="keyword">if</span>(postFinder)&#123;</div><div class="line">          temp = [];</div><div class="line">          i = matcherOut.length;</div><div class="line">          <span class="keyword">while</span>(i--)&#123;</div><div class="line">            <span class="keyword">if</span>((elem = matcherOut[i]))&#123;</div><div class="line">              temp.push((matcherIn[i] = elem));</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">          postFinder(<span class="literal">null</span>,(matcherOut = []),temp,xml);</div><div class="line">        &#125;</div><div class="line">        i = matcherOut.length;</div><div class="line">        <span class="keyword">while</span>(i--)&#123;</div><div class="line">          <span class="keyword">if</span>((elem = matcherOut[i]) &amp;&amp; </div><div class="line">            (temp = postFinder ? indexOf(seed,elem) : preMap[i]) &gt; <span class="number">-1</span>)&#123;</div><div class="line">              seed[temp] = !(results[temp] = elem);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">if</span>(matcherOut === results)&#123;</div><div class="line">        matcherOut = condense(matcherOut.splice(preexisting,matcherOut.length));</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span>&#123;</div><div class="line">        matcherOut = condense(matcherOut);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>(postFinder)&#123;</div><div class="line">        postFinder(<span class="literal">null</span>,results,matcherOut,xml);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span>&#123;</div><div class="line">        push.apply(results,matcherOut);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h5 id="siblingCheck"><a href="#siblingCheck" class="headerlink" title="siblingCheck"></a>siblingCheck</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//兄弟元素判断?</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">siblingCheck</span>(<span class="params"> a, b </span>)</span>&#123;</div><div class="line">  <span class="comment">//只传一个参数 cur,diff都是undefined</span></div><div class="line">  <span class="comment">//如果b是六大false(0,"",null,undefined,NaN,false)cur=b 否则cur=a;</span></div><div class="line">  <span class="comment">//diff同理 根据短路原则哪false哪赋值</span></div><div class="line">  <span class="comment">//正常情况下cur = a , diff = a.sourceIndex - b.sourceIndex</span></div><div class="line">  <span class="comment">//sourceIndex:</span></div><div class="line">  <span class="keyword">var</span> cur = b &amp;&amp; a,</div><div class="line">      diff = cur &amp;&amp; </div><div class="line">             a.nodeType === <span class="number">1</span> &amp;&amp; </div><div class="line">             b.nodeType ===<span class="number">1</span> &amp;&amp; </div><div class="line">             a.sourceIndex - b.sourceIndex;</div><div class="line">  <span class="keyword">if</span>(diff)&#123;</div><div class="line">    <span class="keyword">return</span> diff;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//如果a,b为兄弟元素则返回-1</span></div><div class="line">  <span class="keyword">if</span>(cur)&#123;</div><div class="line">    <span class="keyword">while</span>( (cur = cur.nextSibling) )&#123;</div><div class="line">      <span class="keyword">if</span>( cur === b )&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> a ? <span class="number">1</span> : <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="matcherFromTokens"><a href="#matcherFromTokens" class="headerlink" title="matcherFromTokens"></a>matcherFromTokens</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//不写了</span></div></pre></td></tr></table></figure>
+<h5 id="matcherFromGroupMatchers"><a href="#matcherFromGroupMatchers" class="headerlink" title="matcherFromGroupMatchers"></a>matcherFromGroupMatchers</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//不写了</span></div></pre></td></tr></table></figure>
+<h4 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h4><h5 id="unloadHandeler"><a href="#unloadHandeler" class="headerlink" title="unloadHandeler"></a>unloadHandeler</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> unloadHandeler = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  setDocument();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="disabledAncestor"><a href="#disabledAncestor" class="headerlink" title="disabledAncestor"></a>disabledAncestor</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> disabledAncestor = addCombinator(</div><div class="line">  <span class="function"><span class="keyword">function</span>(<span class="params"> elem </span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> elem.disabled === <span class="literal">true</span> &amp;&amp; (<span class="string">"form"</span> <span class="keyword">in</span> elem || <span class="string">"label"</span> <span class="keyword">in</span> elem );</div><div class="line">  &#125;,</div><div class="line">  &#123; <span class="attr">dir</span>: <span class="string">"parentNode"</span>, <span class="attr">next</span>: <span class="string">"legend"</span> &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<h5 id="NodeList转数组"><a href="#NodeList转数组" class="headerlink" title="NodeList转数组"></a>NodeList转数组</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">  push.apply(</div><div class="line">    (arr = slice.call( preferredDoc.childNodes )),</div><div class="line">    preferredDoc.childNodes</div><div class="line">  );</div><div class="line">  arr[ preferredDoc.childNodes.length ].nodeType;</div><div class="line">&#125; </div><div class="line"><span class="keyword">catch</span>( e )&#123;</div><div class="line">  push = &#123; <span class="attr">apply</span>: arr.length ? </div><div class="line">          <span class="function"><span class="keyword">function</span>(<span class="params"> target, els </span>)</span>&#123;</div><div class="line">            push_native.apply( target, slice,.call(els) );</div><div class="line">          &#125;:</div><div class="line">          <span class="comment">//兼容IE9以下</span></div><div class="line">          <span class="function"><span class="keyword">function</span>(<span class="params"> target, els </span>)</span>&#123;</div><div class="line">            <span class="keyword">var</span> j = target.length,</div><div class="line">                i = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span>( (target[j++] = els[i++]) )&#123;&#125;</div><div class="line">            target.length = j<span class="number">-1</span>;</div><div class="line">          &#125;</div><div class="line">         &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	<div>
+		
+		﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	</div>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jquery/" rel="tag"># jquery</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/24/jQuery源码-原型方法/" rel="next" title="jQuery源码-原型方法">
+                <i class="fa fa-chevron-left"></i> jQuery源码-原型方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery源码-Sizzle正文"><span class="nav-number">1.</span> <span class="nav-text">jQuery源码-Sizzle正文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量声明"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">变量声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则表达式"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sizzle主函数"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">Sizzle主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sizzle补充函数"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">Sizzle补充函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-matches"><span class="nav-number">1.0.0.4.1.</span> <span class="nav-text">Sizzle.matches</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-matchesSelector"><span class="nav-number">1.0.0.4.2.</span> <span class="nav-text">Sizzle.matchesSelector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-contains"><span class="nav-number">1.0.0.4.3.</span> <span class="nav-text">Sizzle.contains</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-attr"><span class="nav-number">1.0.0.4.4.</span> <span class="nav-text">Sizzle.attr</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-escape"><span class="nav-number">1.0.0.4.5.</span> <span class="nav-text">Sizzle.escape</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-error"><span class="nav-number">1.0.0.4.6.</span> <span class="nav-text">Sizzle.error</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sizzle-uniqueSort"><span class="nav-number">1.0.0.4.7.</span> <span class="nav-text">Sizzle.uniqueSort</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sizzle内部函数"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">Sizzle内部函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#addCombinator"><span class="nav-number">1.0.0.5.1.</span> <span class="nav-text">addCombinator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#addHandle"><span class="nav-number">1.0.0.5.2.</span> <span class="nav-text">addHandle</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#assert"><span class="nav-number">1.0.0.5.3.</span> <span class="nav-text">assert</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#condense"><span class="nav-number">1.0.0.5.4.</span> <span class="nav-text">condense</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#createInputPseudo"><span class="nav-number">1.0.0.5.5.</span> <span class="nav-text">createInputPseudo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#createButtonPseudo"><span class="nav-number">1.0.0.5.6.</span> <span class="nav-text">createButtonPseudo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#createDisabledPseudo"><span class="nav-number">1.0.0.5.7.</span> <span class="nav-text">createDisabledPseudo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#createPositionalPseudo"><span class="nav-number">1.0.0.5.8.</span> <span class="nav-text">createPositionalPseudo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#testContext"><span class="nav-number">1.0.0.5.9.</span> <span class="nav-text">testContext</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#toSelector"><span class="nav-number">1.0.0.5.10.</span> <span class="nav-text">toSelector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#markFunction"><span class="nav-number">1.0.0.5.11.</span> <span class="nav-text">markFunction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#multipleContexts"><span class="nav-number">1.0.0.5.12.</span> <span class="nav-text">multipleContexts</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setMatcher"><span class="nav-number">1.0.0.5.13.</span> <span class="nav-text">setMatcher</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#siblingCheck"><span class="nav-number">1.0.0.5.14.</span> <span class="nav-text">siblingCheck</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#matcherFromTokens"><span class="nav-number">1.0.0.5.15.</span> <span class="nav-text">matcherFromTokens</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#matcherFromGroupMatchers"><span class="nav-number">1.0.0.5.16.</span> <span class="nav-text">matcherFromGroupMatchers</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他函数"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">其他函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#unloadHandeler"><span class="nav-number">1.0.0.6.1.</span> <span class="nav-text">unloadHandeler</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#disabledAncestor"><span class="nav-number">1.0.0.6.2.</span> <span class="nav-text">disabledAncestor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NodeList转数组"><span class="nav-number">1.0.0.6.3.</span> <span class="nav-text">NodeList转数组</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共29.9k字</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
