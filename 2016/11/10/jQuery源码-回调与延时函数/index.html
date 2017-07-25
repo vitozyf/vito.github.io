@@ -1,0 +1,861 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jquery," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery源码-Callbacks()变量正则环视   名字 语法     右肯定 (?=…)   右否定 (?!…)   左肯定 (?&amp;lt;=…)   左否定 (?&amp;lt;!…)        rnothtmlwhite12//全局匹配空格var rnothtmlwhite = /[^\x20\t\r\n\f]+/g;  回调函数Callbacks1234567891011121314151">
+<meta name="keywords" content="jquery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery源码-回调与延时函数">
+<meta property="og:url" content="http://yoursite.com/2016/11/10/jQuery源码-回调与延时函数/index.html">
+<meta property="og:site_name" content="Vito的小栈">
+<meta property="og:description" content="jQuery源码-Callbacks()变量正则环视   名字 语法     右肯定 (?=…)   右否定 (?!…)   左肯定 (?&amp;lt;=…)   左否定 (?&amp;lt;!…)        rnothtmlwhite12//全局匹配空格var rnothtmlwhite = /[^\x20\t\r\n\f]+/g;  回调函数Callbacks1234567891011121314151">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-25T02:15:48.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery源码-回调与延时函数">
+<meta name="twitter:description" content="jQuery源码-Callbacks()变量正则环视   名字 语法     右肯定 (?=…)   右否定 (?!…)   左肯定 (?&amp;lt;=…)   左否定 (?&amp;lt;!…)        rnothtmlwhite12//全局匹配空格var rnothtmlwhite = /[^\x20\t\r\n\f]+/g;  回调函数Callbacks1234567891011121314151">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/10/jQuery源码-回调与延时函数/"/>
+
+
+
+
+
+  <title> jQuery源码-回调与延时函数 | Vito的小栈 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito的小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photo" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/10/jQuery源码-回调与延时函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito的小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery源码-回调与延时函数
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-10T22:35:28+08:00">
+                2016-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,449
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="jQuery源码-Callbacks"><a href="#jQuery源码-Callbacks" class="headerlink" title="jQuery源码-Callbacks()"></a>jQuery源码-Callbacks()</h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h2 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h2><h4 id="环视"><a href="#环视" class="headerlink" title="环视"></a>环视</h4><table>
+<thead>
+<tr>
+<th>名字</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>右肯定</td>
+<td>(?=…)</td>
+</tr>
+<tr>
+<td>右否定</td>
+<td>(?!…)</td>
+</tr>
+<tr>
+<td>左肯定</td>
+<td>(?&lt;=…)</td>
+</tr>
+<tr>
+<td>左否定</td>
+<td>(?&lt;!…)</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="rnothtmlwhite"><a href="#rnothtmlwhite" class="headerlink" title="rnothtmlwhite"></a>rnothtmlwhite</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//全局匹配空格</span></div><div class="line"><span class="keyword">var</span> rnothtmlwhite = <span class="regexp">/[^\x20\t\r\n\f]+/g</span>;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><h4 id="Callbacks"><a href="#Callbacks" class="headerlink" title="Callbacks"></a>Callbacks</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//可选参数列表</span></div><div class="line"><span class="comment">//once : 执行后清空列表 </span></div><div class="line"><span class="comment">//memory : add返回上次执行结果</span></div><div class="line"><span class="comment">//unique : 不重复添加同一个回调函数</span></div><div class="line"><span class="comment">//stopOnFalse : 当一个回调返回false中断执行</span></div><div class="line">jQuery.Callbacks = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>)</span>&#123;</div><div class="line">  <span class="comment">//将传进来的参数转换为对象</span></div><div class="line">  options = <span class="keyword">typeof</span> options === <span class="string">"string"</span> ? </div><div class="line">    createOptions(options) : jQuery.extend(&#123;&#125;,options);</div><div class="line">  </div><div class="line">      <span class="comment">//回调函数正在执行</span></div><div class="line">  <span class="keyword">var</span> firing,</div><div class="line">      <span class="comment">//最后执行的值 为memory保存</span></div><div class="line">      memory,</div><div class="line">      <span class="comment">//循环执行的结束位置</span></div><div class="line">      fired,</div><div class="line">      <span class="comment">//保存once参数</span></div><div class="line">      locked,</div><div class="line">      <span class="comment">//执行队列</span></div><div class="line">      list = [],</div><div class="line">      <span class="comment">//给memory用</span></div><div class="line">      queue = [],</div><div class="line">      <span class="comment">//执行队列长度</span></div><div class="line">      firingIndex = <span class="number">-1</span>,</div><div class="line">      </div><div class="line">      <span class="comment">//执行函数</span></div><div class="line">      fire = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="comment">//once参数</span></div><div class="line">        locked = options.once;</div><div class="line">        </div><div class="line">        <span class="comment">//执行完毕和执行中设为true</span></div><div class="line">        fired = firing = <span class="literal">true</span>;</div><div class="line">        <span class="comment">//每次执行将firingIndex重置-1</span></div><div class="line">        <span class="comment">//firingIndex有可能先执行memory的函数</span></div><div class="line">        <span class="keyword">for</span>(;queue.length;firingIndex = <span class="number">-1</span>)&#123;</div><div class="line">          <span class="comment">//执行队列首元素弹出给memory记录</span></div><div class="line">          <span class="comment">//这里同时相当于queue.length--</span></div><div class="line">          <span class="comment">//如果是add方法调用 queue.length就变成0了</span></div><div class="line">          memory = queue.shift();</div><div class="line">          <span class="comment">//如果是add调用的fire方法 firingIndex === list.length</span></div><div class="line">          <span class="keyword">while</span>(++firingIndex &lt; list.length)&#123;</div><div class="line">            <span class="comment">//检测同时执行回调函数</span></div><div class="line">            <span class="keyword">if</span>(list[firingIndex].apply(memory[<span class="number">0</span>],memory[<span class="number">1</span>]) === <span class="literal">false</span> &amp;&amp; </div><div class="line">               <span class="comment">//若设置了stopOnFalse属性 </span></div><div class="line">               options.stopOnFalse)&#123;</div><div class="line">              <span class="comment">//跳出循环memory设为false防止add方法返回值</span></div><div class="line">              firingIndex = list.length;</div><div class="line">              memory = <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果没有传memory参数 把之前shift出来的元素删除</span></div><div class="line">        <span class="keyword">if</span>(!options.memory)&#123;</div><div class="line">          memory = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">//执行完了 执行中设为false</span></div><div class="line">        firing = <span class="literal">false</span>;</div><div class="line">        </div><div class="line">        <span class="comment">//如果传进once参数 队列清空</span></div><div class="line">        <span class="keyword">if</span>(locked)&#123;</div><div class="line">          <span class="comment">//"once memory"清空队列</span></div><div class="line">          <span class="keyword">if</span>(memory)&#123;</div><div class="line">            list = [];</div><div class="line">          &#125;</div><div class="line">          <span class="comment">//"once"</span></div><div class="line">          <span class="keyword">else</span>&#123;</div><div class="line">            <span class="comment">//禁止add()</span></div><div class="line">            list = <span class="string">""</span>;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      </div><div class="line">      <span class="comment">//保存方法的对象</span></div><div class="line">      self = &#123;</div><div class="line">        <span class="comment">//添加执行函数</span></div><div class="line">        add: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="comment">//once情况下</span></div><div class="line">          <span class="keyword">if</span>(list)&#123;</div><div class="line">            <span class="comment">//有memory参数且队列不在执行中</span></div><div class="line">            <span class="keyword">if</span>(memory &amp;&amp; !firing)&#123;</div><div class="line">              <span class="comment">//把执行索引指向最后一个函数 即memory函数</span></div><div class="line">              firingIndex = list.length - <span class="number">1</span>;</div><div class="line">              queue.push(memory);</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//闭包</span></div><div class="line">            (<span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">args</span>)</span>&#123;</div><div class="line">              jQuery.each(args,<span class="function"><span class="keyword">function</span>(<span class="params">_,arg</span>)</span>&#123;</div><div class="line">                <span class="comment">//外部函数add的参数为函数时</span></div><div class="line">                <span class="keyword">if</span>(jQuery.isFunction(arg))&#123;</div><div class="line">                  <span class="comment">//这个是判断unique</span></div><div class="line">                  <span class="keyword">if</span>(!options.unique || !self.has(arg))&#123;</div><div class="line">                    list.push(arg);</div><div class="line">                  &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//arg是类数组时</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(arg &amp;&amp; arg.length &amp;&amp; </div><div class="line">                        jQuery.type(arg) !== <span class="string">"string"</span>)&#123;</div><div class="line">                  <span class="comment">//递归添加执行函数</span></div><div class="line">                  add(arg);</div><div class="line">                &#125;</div><div class="line">              &#125;);</div><div class="line">            &#125;)(<span class="built_in">arguments</span>);</div><div class="line">            <span class="comment">//如果有memory参数 就要返回一个值</span></div><div class="line">            <span class="keyword">if</span>(memory &amp;&amp; !firing)&#123;</div><div class="line">              fire();</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//队列中移除一个回调函数</span></div><div class="line">        remove: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          jQuery.each(<span class="built_in">arguments</span>,<span class="function"><span class="keyword">function</span>(<span class="params">_,arg</span>)</span>&#123;</div><div class="line">            <span class="keyword">var</span> index;</div><div class="line">            <span class="comment">//arg在list中 索引位置为index</span></div><div class="line">            <span class="keyword">while</span>((index = jQuery.inArray(arg,list,index)) &gt; <span class="number">-1</span>)&#123;</div><div class="line">              <span class="comment">//删除该arg</span></div><div class="line">              list.splice(index,<span class="number">1</span>);</div><div class="line">              </div><div class="line">              <span class="comment">//</span></div><div class="line">              <span class="keyword">if</span>(index &lt;= firingIndex)&#123;</div><div class="line">                firingIndex--;</div><div class="line">              &#125;</div><div class="line">            &#125;</div><div class="line">          &#125;);</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//队列中是否有该方法</span></div><div class="line">        <span class="comment">//不传参查询队列中是否有方法</span></div><div class="line">        has: <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> fn ? </div><div class="line">            jQuery.inArray(fn,list) &gt; <span class="number">-1</span> : list.length &gt; <span class="number">0</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//清空队列</span></div><div class="line">        empty: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">if</span>(list)&#123;</div><div class="line">            list = [];</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//停止执行并清空队列</span></div><div class="line">        disable: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          locked = queue = [];</div><div class="line">          list = memory = <span class="string">""</span>;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//检测队列是否为空</span></div><div class="line">        disabled: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> !list;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//锁定队列</span></div><div class="line">        lock: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          locked = queue = [];</div><div class="line">          <span class="comment">//不在执行中就清空队列和memory</span></div><div class="line">          <span class="keyword">if</span>(!memory &amp;&amp; !firing)&#123;</div><div class="line">            list = memory = <span class="string">""</span>;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//查询是否被锁定</span></div><div class="line">        locked: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> !!locked;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//</span></div><div class="line">        fireWith: <span class="function"><span class="keyword">function</span>(<span class="params">context,args</span>)</span>&#123;</div><div class="line">          <span class="comment">//没有被锁定时</span></div><div class="line">          <span class="keyword">if</span>(!locked)&#123;</div><div class="line">            args = args || [];</div><div class="line">            args = [context,args.slice ? args.slice() : args];</div><div class="line">            <span class="comment">//插入队列</span></div><div class="line">            queue.push(args);</div><div class="line">            <span class="comment">//执行</span></div><div class="line">            <span class="keyword">if</span>(!firing)&#123;</div><div class="line">              fire();</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//执行队列</span></div><div class="line">        fire: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          self.fireWith(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//是否执行完毕</span></div><div class="line">        fired: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> !!fired;</div><div class="line">        &#125;</div><div class="line">      &#125;;</div><div class="line">  <span class="comment">//返回callback对象</span></div><div class="line">  <span class="keyword">return</span> self;   </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jQuery.extend(&#123;...&#125;);</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Deferred"><a href="#Deferred" class="headerlink" title="Deferred"></a>Deferred</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div></pre></td><td class="code"><pre><div class="line">Deferred: <span class="function"><span class="keyword">function</span>(<span class="params">fnc</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> tuples = [</div><div class="line">    <span class="comment">//进度回调列表</span></div><div class="line">    [<span class="string">"notify"</span>,<span class="string">"progress"</span>,</div><div class="line">     jQuery.Callbacks(<span class="string">"memory"</span>),</div><div class="line">     jQuery.Callbacks(<span class="string">"memory"</span>),<span class="number">2</span>],</div><div class="line">    <span class="comment">//成功回调列表 </span></div><div class="line">    [<span class="string">"resolve"</span>,<span class="string">"done"</span>,</div><div class="line">     jQuery.Callbacks(<span class="string">"once memory"</span>),</div><div class="line">     jQuery.Callbacks(<span class="string">"once memory"</span>),<span class="number">0</span>,<span class="string">"resolved"</span>],</div><div class="line">    <span class="comment">//失败回调列表</span></div><div class="line">    [<span class="string">"reject"</span>,<span class="string">"fail"</span>,</div><div class="line">     jQuery.Callbacks(<span class="string">"once memory"</span>),</div><div class="line">     jQuery.Callbacks(<span class="string">"once memory"</span>),<span class="number">1</span>,<span class="string">"rejected"</span>]</div><div class="line">  ],</div><div class="line">      state = <span class="string">"pending"</span>,</div><div class="line">      promise = &#123;</div><div class="line">        <span class="attr">state</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> state;</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">always</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          deferred.done(<span class="built_in">arguments</span>).fail(<span class="built_in">arguments</span>);</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line">        <span class="string">"catch"</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> promise.then(<span class="literal">null</span>,fn);</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">//</span></div><div class="line">        pipe: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">var</span> fns = <span class="built_in">arguments</span>;</div><div class="line"></div><div class="line">          <span class="keyword">return</span> jQuery.Deferred(<span class="function"><span class="keyword">function</span>(<span class="params">newDefer</span>)</span>&#123;</div><div class="line">            jQuery.each(tuples,<span class="function"><span class="keyword">function</span>(<span class="params">i,tuple</span>)</span>&#123;</div><div class="line">              <span class="comment">//</span></div><div class="line">              <span class="keyword">var</span> fn = jQuery.isFunction(fns[tuple[<span class="number">4</span>]]) &amp;&amp; fns[tuple[<span class="number">4</span>]];</div><div class="line"></div><div class="line">              <span class="comment">//</span></div><div class="line">              deferred[tuple[<span class="number">1</span>]](<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                <span class="keyword">var</span> returned = fn &amp;&amp; fn.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">                <span class="keyword">if</span>(returned &amp;&amp; jQuery.isFunction(returned.promise))&#123;</div><div class="line">                  returned.promise()</div><div class="line">                    .progress(newDefer.notify)</div><div class="line">                    .done(newDefer.resolve)</div><div class="line">                    .fail(newDefer.reject);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                  newDefer[tuple[<span class="number">0</span>] + <span class="string">"With"</span> ](<span class="keyword">this</span>,fn ? [returned] : <span class="built_in">arguments</span>);</div><div class="line">                &#125;</div><div class="line">              &#125;);</div><div class="line">            &#125;);</div><div class="line">            fns = <span class="literal">null</span>;</div><div class="line">          &#125;).promise();</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">then</span>: <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled,onRejected,onProgress</span>)</span>&#123;</div><div class="line">          <span class="keyword">var</span> maxDepth = <span class="number">0</span>;</div><div class="line">          <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">depth,deferred,handler,special</span>)</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">              <span class="keyword">var</span> that = <span class="keyword">this</span>,</div><div class="line">                  args = <span class="built_in">arguments</span>,</div><div class="line">                  mightThrow = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                    <span class="keyword">var</span> returned,then;</div><div class="line">                    <span class="keyword">if</span>(depth &lt; maxDepth)&#123;</div><div class="line">                      <span class="keyword">return</span>;</div><div class="line">                    &#125;</div><div class="line">                    </div><div class="line">                    <span class="comment">//</span></div><div class="line">                    returned = handler.apply(that,args);</div><div class="line">                    </div><div class="line">                    <span class="comment">//</span></div><div class="line">                    <span class="keyword">if</span>(returned === deferred.promise())&#123;</div><div class="line">                      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"Thenable self-resolution"</span>);</div><div class="line">                    &#125;</div><div class="line">                    </div><div class="line">                    <span class="comment">//</span></div><div class="line">                    then = returned &amp;&amp; </div><div class="line">                      (<span class="keyword">typeof</span> returned === <span class="string">"object"</span> || </div><div class="line">                       <span class="keyword">typeof</span> returned === <span class="string">"function"</span>) &amp;&amp; returned.then;</div><div class="line">                    </div><div class="line">                    <span class="comment">//</span></div><div class="line">                    <span class="keyword">if</span>(jQuery.isFuntion(then))&#123;</div><div class="line">                      <span class="comment">//</span></div><div class="line">                      <span class="keyword">if</span>(special)&#123;</div><div class="line">                        then.call(</div><div class="line">                          returned,</div><div class="line">                          resolve(maxDepth,deferred,Identity,special),</div><div class="line">                          resolve(maxDepth,deferred,Thrower,special)</div><div class="line">                        );</div><div class="line">                      &#125;</div><div class="line">                      <span class="comment">//</span></div><div class="line">                      <span class="keyword">else</span>&#123;</div><div class="line">                        <span class="comment">//</span></div><div class="line">                        maxDepth++;</div><div class="line">                        </div><div class="line">                        then.call(returned,</div><div class="line">                                 resolve(maxDepth,deferred,Identity,special),</div><div class="line">                                 resolve(maxDepth,deferred,Thrower,special),</div><div class="line">                                 resolve(maxDepth,deferred,Identity,</div><div class="line">                                         deferred.notifuWith)</div><div class="line">                                 );</div><div class="line">                      &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">//</span></div><div class="line">                    <span class="keyword">else</span>&#123;</div><div class="line">                      <span class="comment">//</span></div><div class="line">                      <span class="keyword">if</span>(handler !== Identity)&#123;</div><div class="line">                        that = <span class="literal">undefined</span>;</div><div class="line">                        args = [returned];</div><div class="line">                      &#125;</div><div class="line">                      (special || deferred.resolveWith)(that,args);</div><div class="line">                    &#125;</div><div class="line">                  &#125;,</div><div class="line">                  process = special ? </div><div class="line">                  mightThrow : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                    <span class="keyword">try</span>&#123;</div><div class="line">                      mightThrow();</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">catch</span>(e)&#123;</div><div class="line">                      <span class="keyword">if</span>(jQuery.Deferred.exceptionHook)&#123;</div><div class="line">                        jQuery.Deferred.exceptionHook(e,process.stackTrace);</div><div class="line">                      &#125;</div><div class="line">                      <span class="keyword">if</span>(depth + <span class="number">1</span> &gt;= maxDepth)&#123;</div><div class="line">                        <span class="comment">//</span></div><div class="line">                        <span class="keyword">if</span>(hanlder !== Thrower)&#123;</div><div class="line">                          that = <span class="literal">undefined</span>;</div><div class="line">                          args = [e];</div><div class="line">                        &#125;</div><div class="line">                        deferred.rejectWith(that,args);</div><div class="line">                      &#125;</div><div class="line">                    &#125;</div><div class="line">                  &#125;;</div><div class="line">              <span class="keyword">if</span>(depth)&#123;</div><div class="line">                process();</div><div class="line">              &#125;</div><div class="line">              <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">if</span>(jQuery.Deferred.getStackHook)&#123;</div><div class="line">                  process.stackTrace = jQuery.Deferred.getStackHook();</div><div class="line">                &#125;</div><div class="line">                <span class="built_in">window</span>.setTimeout(process);</div><div class="line">              &#125;</div><div class="line">            &#125;;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> jQuery.Deferred(<span class="function"><span class="keyword">function</span>(<span class="params">newDefer</span>)</span>&#123;</div><div class="line">            <span class="comment">//</span></div><div class="line">            tuple[<span class="number">0</span>][<span class="number">3</span>].add(</div><div class="line">              resolve(<span class="number">0</span>,</div><div class="line">                      newDefer,</div><div class="line">                      jQuery.isFunction(onProgress) ? </div><div class="line">                      onProgress : Identity,</div><div class="line">                      newDefer.notifyWith)</div><div class="line">            );</div><div class="line">            </div><div class="line">            <span class="comment">//</span></div><div class="line">            tuple[<span class="number">1</span>][<span class="number">3</span>].add(</div><div class="line">              resolve(<span class="number">0</span>,</div><div class="line">                      newDefer,</div><div class="line">                      jQuery.isFunction(onFulfilled) ? </div><div class="line">                      onFulfilled : Identity)</div><div class="line">            );</div><div class="line">            </div><div class="line">            <span class="comment">//</span></div><div class="line">            tuple[<span class="number">2</span>][<span class="number">3</span>].add(</div><div class="line">              resolve(<span class="number">0</span>,</div><div class="line">                      newDefer,</div><div class="line">                      jQuery.isFunction(onRejected) ? </div><div class="line">                      onRejected : Thrower)</div><div class="line">            );</div><div class="line">          &#125;).promise();</div><div class="line">        &#125;,</div><div class="line">        </div><div class="line">        <span class="comment">//</span></div><div class="line">        promise: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> obj != <span class="literal">null</span> ? jQuery.extend(obj,promise) : promise;</div><div class="line">        &#125;</div><div class="line">      &#125;,</div><div class="line">      deferred = &#123;&#125;;</div><div class="line">  jQuery.each(tuples,<span class="function"><span class="keyword">function</span>(<span class="params">i,tuple</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> list = tuple[<span class="number">2</span>],</div><div class="line">        stateString = tuple[<span class="number">5</span>];</div><div class="line">    </div><div class="line">    <span class="comment">//</span></div><div class="line">    promise[tuple[<span class="number">1</span>]] = list.add;</div><div class="line">    </div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">if</span>(stateString)&#123;</div><div class="line">      list.add(</div><div class="line">        <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          state = stateString;</div><div class="line">        &#125;,</div><div class="line">        tuples[<span class="number">3</span>-i][<span class="number">2</span>].disable,</div><div class="line">        tuples[<span class="number">0</span>][<span class="number">2</span>].lock</div><div class="line">      );</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//</span></div><div class="line">    list.add(tuple[<span class="number">3</span>].fire);</div><div class="line">    </div><div class="line">    <span class="comment">//</span></div><div class="line">    deferred[tuple[<span class="number">0</span>]] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      deferred[tuple[<span class="number">0</span>] + <span class="string">"With"</span>](<span class="keyword">this</span> === deferred ? <span class="literal">undefined</span> : <span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;;</div><div class="line">    deferred[tuple[<span class="number">0</span>] + <span class="string">"With"</span>] = list.fireWith;</div><div class="line">  &#125;);</div><div class="line">  <span class="comment">//</span></div><div class="line">  promise.promise(deferred);</div><div class="line">  </div><div class="line">  <span class="comment">//</span></div><div class="line">  <span class="keyword">if</span>(fnc)&#123;</div><div class="line">    func.call(deferred,deferred);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">//All done...然而并看不懂</span></div><div class="line">  <span class="keyword">return</span> deferred;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="when"><a href="#when" class="headerlink" title="when"></a>when</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">when: <span class="function"><span class="keyword">function</span>(<span class="params">singleValue</span>)</span>&#123;</div><div class="line">  <span class="comment">//</span></div><div class="line">  <span class="keyword">var</span> remaining = <span class="built_in">arguments</span>.length,</div><div class="line">      <span class="comment">//</span></div><div class="line">      i = remaining,</div><div class="line">      resolveContexts = <span class="built_in">Array</span>(i),</div><div class="line">      resolveValues = slice.call(<span class="built_in">arguments</span>),</div><div class="line">      <span class="comment">//</span></div><div class="line">      master = jQuery.Deferred(),</div><div class="line">      <span class="comment">//</span></div><div class="line">      updateFunc = <span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">          resolveContexts[i] = <span class="keyword">this</span>;</div><div class="line">          resolveValues[i] = <span class="built_in">arguments</span>.length &gt; <span class="number">1</span> ? slice.call(<span class="built_in">arguments</span>) : value;</div><div class="line">          <span class="keyword">if</span>(!(--remaining))&#123;</div><div class="line">            master.resolveWith(resolveContexts,resolveValues);</div><div class="line">          &#125;</div><div class="line">        &#125;;</div><div class="line">      &#125;;</div><div class="line">  <span class="keyword">if</span>(remaining &lt;= <span class="number">1</span>)&#123;</div><div class="line">    adoptValue(singleValue,master.done(updateFunc(i)).resolve,master.reject);</div><div class="line">    <span class="keyword">if</span>(master.state() === <span class="string">"pending"</span> || </div><div class="line">       jQuery.isFunction(resolveValues[i] &amp;&amp; resolveValues[i].then))&#123;</div><div class="line">      <span class="keyword">return</span> master.then();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">while</span>(i--)&#123;</div><div class="line">    adoptValue(resolveValues[i],updateFunc(i),master.reject);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> master.promise();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="jQuery-fn-extend"><a href="#jQuery-fn-extend" class="headerlink" title="jQuery.fn.extend"></a>jQuery.fn.extend</h2><hr>
+<h4 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">promise: <span class="function"><span class="keyword">function</span>(<span class="params">type,obj</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> tmp,</div><div class="line">      count = <span class="number">1</span>,</div><div class="line">      defer = jQuery.Deferred(),</div><div class="line">      elements = <span class="keyword">this</span>,</div><div class="line">      i = <span class="keyword">this</span>.length,</div><div class="line">      resolve = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(--count))&#123;</div><div class="line">          defer.resolveWith(elements,[elements]);</div><div class="line">        &#125;</div><div class="line">      &#125;;</div><div class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> type !== <span class="string">"string"</span>)&#123;</div><div class="line">    obj = type;</div><div class="line">    type = <span class="string">"undefined"</span>;</div><div class="line">  &#125;</div><div class="line">  type = type || <span class="string">"fx"</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">while</span>(i--)&#123;</div><div class="line">    tmp = dataPriv.get(elements[i],type + <span class="string">"dequeueHooks"</span>);</div><div class="line">    <span class="keyword">if</span>(tmp &amp;&amp; tmp.empty)&#123;</div><div class="line">      count++;</div><div class="line">      tmp.empty.add(resolve);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  resolve();</div><div class="line">  <span class="keyword">return</span> defer.promise(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="辅助方法"><a href="#辅助方法" class="headerlink" title="辅助方法"></a>辅助方法</h2><h4 id="adoptValue"><a href="#adoptValue" class="headerlink" title="adoptValue"></a>adoptValue</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">adoptValue</span>(<span class="params">value,resolve,rejuect</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> method;</div><div class="line">  </div><div class="line">  <span class="keyword">try</span>&#123;</div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">if</span>(value &amp;&amp; jQuery.isFunction((method = value.promise)))&#123;</div><div class="line">      method.call(value).done(resolve).fail(reject);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(value &amp;&amp; jQuery.isFunction((method = value.then)))&#123;</div><div class="line">      method.call(value,resolve,reject);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">      resolve.call(<span class="literal">undefined</span>,value);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">catch</span>(value)&#123;</div><div class="line">    reject.call(<span class="literal">undefined</span>,value);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="createOptions"><a href="#createOptions" class="headerlink" title="createOptions"></a>createOptions</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//缓存函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createOptions</span>(<span class="params">options</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> object = &#123;&#125;;</div><div class="line">  jQuery.each(options.match(rnothtmlwhite) || [],<span class="function"><span class="keyword">function</span>(<span class="params">_,flag</span>)</span>&#123;</div><div class="line">    object[flag] = <span class="literal">true</span>;</div><div class="line">  &#125;);</div><div class="line">  <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Identity</span>(<span class="params">v</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> v;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="Thrower"><a href="#Thrower" class="headerlink" title="Thrower"></a>Thrower</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thrower</span>(<span class="params">ex</span>)</span>&#123;</div><div class="line">  <span class="keyword">throw</span> ex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="etc"><a href="#etc" class="headerlink" title="etc"></a>etc</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	<div>
+		
+		﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	</div>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jquery/" rel="tag"># jquery</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/02/jQuery源码-jQuery核心函数/" rel="next" title="jQuery源码-jQuery核心函数">
+                <i class="fa fa-chevron-left"></i> jQuery源码-jQuery核心函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery源码-Callbacks"><span class="nav-number">1.</span> <span class="nav-text">jQuery源码-Callbacks()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则"><span class="nav-number">1.2.</span> <span class="nav-text">正则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环视"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">环视</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rnothtmlwhite"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">rnothtmlwhite</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回调函数"><span class="nav-number">1.3.</span> <span class="nav-text">回调函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Callbacks"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Callbacks</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-extend"><span class="nav-number">1.4.</span> <span class="nav-text">jQuery.extend</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deferred"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">Deferred</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#when"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">when</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-fn-extend"><span class="nav-number">1.5.</span> <span class="nav-text">jQuery.fn.extend</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#promise"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">promise</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助方法"><span class="nav-number">1.6.</span> <span class="nav-text">辅助方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#adoptValue"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">adoptValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#createOptions"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">createOptions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Identity"><span class="nav-number">1.6.0.3.</span> <span class="nav-text">Identity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Thrower"><span class="nav-number">1.6.0.4.</span> <span class="nav-text">Thrower</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#etc"><span class="nav-number">1.6.0.5.</span> <span class="nav-text">etc</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共33.5k字</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
