@@ -1,0 +1,866 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="js,vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="独立构建vs运行时构建 在按照vue1.0的配置配置好webpack后，会出现Failed to mount component: template or render function not defined. (found in root instance)的错误，这里涉及到vue2.0与vue1.0的第一个不同的地方。具体区别独立构建 vs 运行时构建。解决方法为在webpack配置文件中添">
+<meta name="keywords" content="js,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.x踩坑与总结">
+<meta property="og:url" content="http://yoursite.com/2017/01/03/Vue2-x踩坑与总结/index.html">
+<meta property="og:site_name" content="Vito的小栈">
+<meta property="og:description" content="独立构建vs运行时构建 在按照vue1.0的配置配置好webpack后，会出现Failed to mount component: template or render function not defined. (found in root instance)的错误，这里涉及到vue2.0与vue1.0的第一个不同的地方。具体区别独立构建 vs 运行时构建。解决方法为在webpack配置文件中添">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-31T13:28:16.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue2.x踩坑与总结">
+<meta name="twitter:description" content="独立构建vs运行时构建 在按照vue1.0的配置配置好webpack后，会出现Failed to mount component: template or render function not defined. (found in root instance)的错误，这里涉及到vue2.0与vue1.0的第一个不同的地方。具体区别独立构建 vs 运行时构建。解决方法为在webpack配置文件中添">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/03/Vue2-x踩坑与总结/"/>
+
+
+
+
+
+  <title> Vue2.x踩坑与总结 | Vito的小栈 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vito的小栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">业精于勤荒于嬉，行成于思毁于随。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photo">
+          <a href="/photo" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/03/Vue2-x踩坑与总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vito.zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/github.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vito的小栈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Vue2.x踩坑与总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T21:17:43+08:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frame/" itemprop="url" rel="index">
+                    <span itemprop="name">frame</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frame/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,529
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="独立构建vs运行时构建"><a href="#独立构建vs运行时构建" class="headerlink" title="独立构建vs运行时构建"></a>独立构建vs运行时构建</h2><ul>
+<li>在按照vue1.0的配置配置好webpack后，会出现<code>Failed to mount component: template or render function not defined. (found in root instance)</code>的错误，这里涉及到vue2.0与vue1.0的第一个不同的地方。具体区别<a href="https://vuefe.cn/v2/guide/installation.html#" target="_blank" rel="external">独立构建 vs 运行时构建</a>。解决方法为在webpack配置文件中添加如下配置项：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">resolve: &#123;</div><div class="line">  alias: &#123;</div><div class="line">    &apos;vue$&apos;: &apos;vue/dist/vue.common.js&apos;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="挂载点的选择"><a href="#挂载点的选择" class="headerlink" title="挂载点的选择"></a>挂载点的选择</h2><p>在原来的vue1.0的项目中我使用<code>body</code>元素作为挂载点，但是在vue2.0中，如果使用<code>body</code>或者<code>html</code>作为挂载点，则会报以下警告：<code>Do not mount Vue to &lt;html&gt; or &lt;body&gt; - mount to normal elements instead.</code></p>
+<font color="red">在vue1.0中允许开发者以<code>body</code>或者<code>html</code>作为根实体的挂载点，但是到了2.0后，只能通过<strong>独立的节点挂载</strong>，例如：div等，否则报警告</font>
+
+
+
+<h2 id="动态组件渲染（跟1-x类似）"><a href="#动态组件渲染（跟1-x类似）" class="headerlink" title="动态组件渲染（跟1.x类似）"></a>动态组件渲染（跟1.x类似）</h2><p>多个组件可以使用同一个挂载点，然后动态地在它们之间切换。<strong>使用保留的 <component> 元素</component></strong>，动态地绑定到它的 is 特性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 动态组件由 vm 实例的属性值 `componentId` 控制 --&gt;</div><div class="line">&lt;component :is=&quot;componentId&quot;&gt;&lt;/component&gt;</div><div class="line">&lt;!-- 也能够渲染注册过的组件或 prop 传入的组件 --&gt;</div><div class="line">&lt;component :is=&quot;$options.components.child&quot;&gt;&lt;/component&gt;</div></pre></td></tr></table></figure>
+<h3 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a><code>keep-alive</code></h3><p>如果把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。为此可以添加一个 <code>keep-alive</code> 指令参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;keep-alive&gt;</div><div class="line">  &lt;component :is=&quot;currentView&quot;&gt;</div><div class="line">    &lt;!-- 非活动组件将被缓存！ --&gt;</div><div class="line">  &lt;/component&gt;</div><div class="line">&lt;/keep-alive&gt;</div></pre></td></tr></table></figure>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><p>有时候需要直接在父组件中访问子组件实例，或者直接操作DOM元素，此时需要使用<code>ref</code>。</p>
+<p><code>ref</code>被用来给元素或子元素注册引用信息。引用信息会根据父组件的<code>$refs</code>对象进行注册。如果在普通的DOM元素上使用，引用信息就是元素，如果用在子组件上，引用信息就是组件实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- vm.$refs.p will be the DOM node --&gt;</div><div class="line">&lt;p ref=&quot;p&quot;&gt;hello&lt;/p&gt;</div><div class="line">&lt;!-- vm.$refs.child will be the child comp instance --&gt;</div><div class="line">&lt;child-comp ref=&quot;child&quot;&gt;&lt;/child-comp&gt;</div></pre></td></tr></table></figure>
+<p>当 <code>v-for</code> 用于元素或组件的时候，引用信息将是包含DOM节点或组件实例数组。</p>
+<p>关于ref注册时间的重要说明: 因为ref本身是作为渲染结果被创建的，在初始渲染的时候你不能访问它们 - 它们还不存在！<strong>$refs 也不是响应式的</strong>，因此你不应该试图用它在模版中做数据绑定。</p>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>在vue自定义事件使用<code>$on</code>与<code>$emit</code>，前者用于触发监听，后者用于触发，监听可以有两种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!--使用v-on在html中监听--&gt;</div><div class="line">&lt;my-component v-on:test=&quot;callbackFun&quot;&gt;&lt;/my-component&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  //直接用$on监听</div><div class="line">  vm.$on(&apos;text&apos;,function()&#123;&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h2 id="组件命名的约定"><a href="#组件命名的约定" class="headerlink" title="组件命名的约定"></a>组件命名的约定</h2><p>当注册组件（或者 props）时，可以使用 kebab-case ，camelCase ，或 TitleCase</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 在组件定义中</div><div class="line">components: &#123;</div><div class="line">  // 使用 kebab-case 形式注册</div><div class="line">  &apos;kebab-cased-component&apos;: &#123; /* ... */ &#125;,</div><div class="line">  // register using camelCase</div><div class="line">  &apos;camelCasedComponent&apos;: &#123; /* ... */ &#125;,</div><div class="line">  // register using TitleCase</div><div class="line">  &apos;TitleCasedComponent&apos;: &#123; /* ... */ &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 HTML 模版中，只能使用 kebab-case 形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 在HTML模版中始终使用 kebab-case --&gt;</div><div class="line">&lt;kebab-cased-component&gt;&lt;/kebab-cased-component&gt;</div><div class="line">&lt;camel-cased-component&gt;&lt;/camel-cased-component&gt;</div><div class="line">&lt;title-cased-component&gt;&lt;/title-cased-component&gt;</div></pre></td></tr></table></figure>
+<p>当使用<strong>字符串模式</strong>时可以使用 camelCase 、 TitleCase 或者 kebab-case 来引用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 在字符串模版中可以用任何你喜欢的方式! --&gt;</div><div class="line">&lt;my-component&gt;&lt;/my-component&gt;</div><div class="line">&lt;myComponent&gt;&lt;/myComponent&gt;</div><div class="line">&lt;MyComponent&gt;&lt;/MyComponent&gt;</div></pre></td></tr></table></figure>
+<h2 id="子组件中使用this"><a href="#子组件中使用this" class="headerlink" title="子组件中使用this"></a>子组件中使用<code>this</code></h2><p>有时候子组件简单，可以在父组件中直接注册，此时在子组件内使用<code>this</code>就是子组件实例并不是父组件，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">export default&#123;</div><div class="line">    data()&#123;</div><div class="line">        return&#123;</div><div class="line">            parentMsg:&apos;hello!&apos;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    components:&#123;</div><div class="line">        child:&#123;</div><div class="line">            props:[&apos;inputMessage&apos;],</div><div class="line">            template:&apos;&lt;span&gt;&#123;&#123;inputMessage&#125;&#125;&lt;/span&gt;&apos;</div><div class="line">        &#125;,</div><div class="line">        &apos;child-secound&apos;:&#123;</div><div class="line">            props:[&apos;inputMessage&apos;],</div><div class="line">            template:&apos;&lt;span&gt;&#123;&#123;upperCase&#125;&#125;&lt;/span&gt;&apos;,</div><div class="line">            computed:&#123;</div><div class="line">                upperCase()&#123;</div><div class="line">                    return this.inputMessage.toUpperCase();</div><div class="line">                &#125;</div><div class="line">            &#125;    </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="key的使用"><a href="#key的使用" class="headerlink" title="key的使用"></a><code>key</code>的使用</h2><p>一般情况下，vue在渲染完成后，如果数据发生变化，只会重新渲染数据，不会重新渲染整个元素，但是有时候我们需要元素被重新渲染，此时就需要使用<code>key</code>关键字，使用<code>v-bind</code>绑定<code>key</code>关键字，可以实现在数据发生变化时候重新渲染整个元素。<strong>注：</strong>同一父级元素下所有子元素如果都要在数据变化后重新渲染元素，则需要被绑定的<code>key</code></p>
+<h2 id="跳过css检测"><a href="#跳过css检测" class="headerlink" title="跳过css检测"></a>跳过css检测</h2><p>对于只使用js过度的元素使用<code>v-bind:css=&quot;false&quot;</code>跳过vue对css的检测。</p>
+<h2 id="render函数的使用"><a href="#render函数的使用" class="headerlink" title="render函数的使用"></a>render函数的使用</h2><p>createElement接受三个参数：</p>
+<ul>
+<li>{String | Object | Function}即一个HTML标签 | 组件选项 | 一个函数，必须返回上述其中一个</li>
+<li>{Object}一个对应HTML标签属性的数据对象（可选）</li>
+<li>{String | Array}子节点（VNode）（可选）</li>
+</ul>
+<p>关于第三个参数的说明</p>
+<ul>
+<li>createElement第三个参数，如果是String，则类似于innerHTML，如果是Array，则可以写入一个执行函数，这个函数用于创建另一个DOM结构（而且这里如果想写入一个执行函数，必须是数组！！）</li>
+<li>每个createElement只能创建一个元素，所以如果是创建多个元素相互嵌套，需要多个createElement函数相互嵌套，最后再render，这个跟原生js创建DOM元素类似</li>
+<li>如果需要同时渲染多个元素，则需要在第三个参数的数组中，分别写入需要渲染的元素，此时Vue会按照数组中<strong>顺序</strong>进行渲染</li>
+</ul>
+<p>完整数据对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  // 和`v-bind:class`一样的 API</div><div class="line">  &apos;class&apos;: &#123;</div><div class="line">    foo: true,</div><div class="line">    bar: false</div><div class="line">  &#125;,</div><div class="line">  // 和`v-bind:style`一样的 API</div><div class="line">  style: &#123;</div><div class="line">    color: &apos;red&apos;,</div><div class="line">    fontSize: &apos;14px&apos;</div><div class="line">  &#125;,</div><div class="line">  // 正常的 HTML 特性</div><div class="line">  attrs: &#123;</div><div class="line">    id: &apos;foo&apos;</div><div class="line">  &#125;,</div><div class="line">  // 组件 props</div><div class="line">  props: &#123;</div><div class="line">    myProp: &apos;bar&apos;</div><div class="line">  &#125;,</div><div class="line">  // DOM 属性</div><div class="line">  domProps: &#123;</div><div class="line">    innerHTML: &apos;baz&apos;</div><div class="line">  &#125;,</div><div class="line">  // 事件监听器基于 &quot;on&quot;</div><div class="line">  // 所以不再支持如 v-on:keyup.enter 修饰器</div><div class="line">  // 需要手动匹配 keyCode。</div><div class="line">  on: &#123;</div><div class="line">    click: this.clickHandler</div><div class="line">  &#125;,</div><div class="line">  // 仅对于组件，用于监听原生事件，而不是组件使用 vm.$emit 触发的事件。</div><div class="line">  nativeOn: &#123;</div><div class="line">    click: this.nativeClickHandler</div><div class="line">  &#125;,</div><div class="line">  // 自定义指令. 注意事项：不能对绑定的旧值设值</div><div class="line">  // Vue 会为您持续追踨</div><div class="line">  directives: [</div><div class="line">    &#123;</div><div class="line">      name: &apos;my-custom-directive&apos;,</div><div class="line">      value: &apos;2&apos;</div><div class="line">      expression: &apos;1 + 1&apos;,</div><div class="line">      arg: &apos;foo&apos;,</div><div class="line">      modifiers: &#123;</div><div class="line">        bar: true</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  // Scoped slots in the form of</div><div class="line">  // &#123; name: props =&gt; VNode | Array&lt;VNode&gt; &#125;</div><div class="line">  scopedSlots: &#123;</div><div class="line">    default: props =&gt; h(&apos;span&apos;, props.text)</div><div class="line">  &#125;,</div><div class="line">  // 如果子组件有定义 slot 的名称</div><div class="line">  slot: &apos;name-of-slot&apos;</div><div class="line">  // 其他特殊顶层属性</div><div class="line">  key: &apos;myKey&apos;,</div><div class="line">  ref: &apos;myRef&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	<div>
+		
+		﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	</div>
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/10/jQuery源码-回调与延时函数/" rel="next" title="jQuery源码-回调与延时函数">
+                <i class="fa fa-chevron-left"></i> jQuery源码-回调与延时函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/github.jpg"
+               alt="Vito.zhang" />
+          <p class="site-author-name" itemprop="name">Vito.zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#独立构建vs运行时构建"><span class="nav-number">1.</span> <span class="nav-text">独立构建vs运行时构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载点的选择"><span class="nav-number">2.</span> <span class="nav-text">挂载点的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态组件渲染（跟1-x类似）"><span class="nav-number">3.</span> <span class="nav-text">动态组件渲染（跟1.x类似）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#keep-alive"><span class="nav-number">3.1.</span> <span class="nav-text">keep-alive</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number">4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义事件"><span class="nav-number">5.</span> <span class="nav-text">自定义事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件命名的约定"><span class="nav-number">6.</span> <span class="nav-text">组件命名的约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子组件中使用this"><span class="nav-number">7.</span> <span class="nav-text">子组件中使用this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key的使用"><span class="nav-number">8.</span> <span class="nav-text">key的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳过css检测"><span class="nav-number">9.</span> <span class="nav-text">跳过css检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#render函数的使用"><span class="nav-number">10.</span> <span class="nav-text">render函数的使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vito.zhang</span>
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共37.6k字</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
