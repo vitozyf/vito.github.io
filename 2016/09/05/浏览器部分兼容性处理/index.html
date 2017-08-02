@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="性能优化,兼容," />
+  <meta name="keywords" content="兼容,性能优化," />
 
 
 
@@ -88,7 +88,7 @@
 
 
 <meta name="description" content="H5新标签兼容 在不支持HTML5新标签的浏览器里，会将这些新的标签解析成行内元素(inline)对待，所以我们只需要将其转换成块元素(block)即可使用，  但是在IE9版本以下，并不能正常解析这些新标签，但是却可以识别通过document.createElement(‘tagName’)创建的自定义标签，  于是我们的解决方案就是将HTML5的新标签全部通过document.createEl">
-<meta name="keywords" content="性能优化,兼容">
+<meta name="keywords" content="兼容,性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浏览器部分兼容性处理">
 <meta property="og:url" content="http://yoursite.com/2016/09/05/浏览器部分兼容性处理/index.html">
@@ -424,7 +424,7 @@
 <li><p>于是我们的解决方案就是将HTML5的新标签全部通过document.createElement(‘tagName’)来创建一遍，这样IE低版本也能正常解析HTML5新标签了，</p>
 </li>
 <li><p><strong>在实际开发中我们更多采用的是通过检测IE浏览器的版本来加载三方的一个JS库来解决兼容问题。html5shiv.js</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--[<span class="keyword">if</span> lte IE <span class="number">8</span>]&gt;</div><div class="line">  &lt;!--[if lte IE 8]&gt;	</div><div class="line">	&lt;script src='html5shiv.min.js'&gt;&lt;/script&gt;</div><div class="line">&lt;![endif]--&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--[<span class="keyword">if</span> lte IE <span class="number">8</span>]&gt;</div><div class="line">  <span class="xml"><span class="comment">&lt;!--[if lte IE 8]&gt;	</span></span></div><div class="line">	&lt;script src='html5shiv.min.js'&gt;&lt;/script&gt;</div><div class="line">&lt;![endif]--&gt;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="JS兼容"><a href="#JS兼容" class="headerlink" title="JS兼容"></a>JS兼容</h1><h2 id="节点相关"><a href="#节点相关" class="headerlink" title="节点相关"></a>节点相关</h2><h3 id="nextSibiling和childNodes的兼容性"><a href="#nextSibiling和childNodes的兼容性" class="headerlink" title="nextSibiling和childNodes的兼容性"></a>nextSibiling和childNodes的兼容性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">function getNextSibiling(ele) &#123;</div><div class="line">if (ele &amp;&amp; ele.nextElementSibling) &#123;</div><div class="line">    return ele.nextElementSibling;</div><div class="line">&#125;</div><div class="line">else &#123;</div><div class="line">    if (ele)</div><div class="line">    &#123;</div><div class="line">        ele=ele.nextSibling;         //接收下一个</div><div class="line">        while (ele.nodeType != 1)   //判断是否是一个标签,如果不是 那么以这个不是的为基础 再找下一个。</div><div class="line">        &#123;</div><div class="line">            ele = ele.nextSibling;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return ele;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -518,9 +518,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
-          
             <a href="/tags/兼容/" rel="tag"># 兼容</a>
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
           
         </div>
       
@@ -640,7 +640,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -747,7 +747,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共37.6k字</span>
+  <span class="post-count">博客全站共38.3k字</span>
 </div>
 
         
