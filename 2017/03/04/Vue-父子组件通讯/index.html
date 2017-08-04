@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="css,伪类,伪元素," />
+  <meta name="keywords" content="js,vue," />
 
 
 
@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="在一次项目中，有一次要用到::selection伪元素，然后开发同学问我，CSS中一个冒号和两个冒号有神马区别？ 这好像真的是个问题，或许很多前端同学对此都有疑惑，查了些资料，证实了下两个符号的区别，简而言之：单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。 W3C关于CSS3选择器的规范中有一段描述： 12A pseudo-element is made of two colon">
-<meta name="keywords" content="css,伪类,伪元素">
+<meta name="description" content="父子组件通讯 当部分重复的功能在每一个组建中都使用的时候，可以将该功能抽成一个子组件，包含这个子组件的组件则为父组件  父组件如何集成子组件 新建子组件(如subcomment.vue)  集成到父组件(参考:https://cn.vuejs.org/v2/guide/components.html)  在父组件中导入子组件 1import subCommon from &quot;../subcompon">
+<meta name="keywords" content="js,vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content=":before和::before的区别">
-<meta property="og:url" content="http://yoursite.com/2015/05/10/before和-before的区别/index.html">
+<meta property="og:title" content="Vue-父子组件通讯">
+<meta property="og:url" content="http://yoursite.com/2017/03/04/Vue-父子组件通讯/index.html">
 <meta property="og:site_name" content="Vito的小栈">
-<meta property="og:description" content="在一次项目中，有一次要用到::selection伪元素，然后开发同学问我，CSS中一个冒号和两个冒号有神马区别？ 这好像真的是个问题，或许很多前端同学对此都有疑惑，查了些资料，证实了下两个符号的区别，简而言之：单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。 W3C关于CSS3选择器的规范中有一段描述： 12A pseudo-element is made of two colon">
+<meta property="og:description" content="父子组件通讯 当部分重复的功能在每一个组建中都使用的时候，可以将该功能抽成一个子组件，包含这个子组件的组件则为父组件  父组件如何集成子组件 新建子组件(如subcomment.vue)  集成到父组件(参考:https://cn.vuejs.org/v2/guide/components.html)  在父组件中导入子组件 1import subCommon from &quot;../subcompon">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-21T04:43:01.078Z">
+<meta property="og:updated_time" content="2017-08-04T13:31:39.653Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content=":before和::before的区别">
-<meta name="twitter:description" content="在一次项目中，有一次要用到::selection伪元素，然后开发同学问我，CSS中一个冒号和两个冒号有神马区别？ 这好像真的是个问题，或许很多前端同学对此都有疑惑，查了些资料，证实了下两个符号的区别，简而言之：单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。 W3C关于CSS3选择器的规范中有一段描述： 12A pseudo-element is made of two colon">
+<meta name="twitter:title" content="Vue-父子组件通讯">
+<meta name="twitter:description" content="父子组件通讯 当部分重复的功能在每一个组建中都使用的时候，可以将该功能抽成一个子组件，包含这个子组件的组件则为父组件  父组件如何集成子组件 新建子组件(如subcomment.vue)  集成到父组件(参考:https://cn.vuejs.org/v2/guide/components.html)  在父组件中导入子组件 1import subCommon from &quot;../subcompon">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/05/10/before和-before的区别/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/04/Vue-父子组件通讯/"/>
 
 
 
 
 
-  <title> :before和::before的区别 | Vito的小栈 </title>
+  <title> Vue-父子组件通讯 | Vito的小栈 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -281,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/05/10/before和-before的区别/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/04/Vue-父子组件通讯/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vito.zhang">
@@ -302,7 +302,7 @@
             
             
               
-                :before和::before的区别
+                Vue-父子组件通讯
               
             
           </h1>
@@ -317,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-10T22:37:45+08:00">
-                2015-05-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-04T21:56:54+08:00">
+                2017-03-04
               </time>
             
 
@@ -340,8 +340,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/css/" itemprop="url" rel="index">
-                    <span itemprop="name">css</span>
+                  <a href="/categories/frame/" itemprop="url" rel="index">
+                    <span itemprop="name">frame</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frame/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
                   </a>
                 </span>
 
@@ -370,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  418
+                  299
                 </span>
               
 
@@ -386,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -405,13 +416,47 @@
       
 
       
-        <p>在一次项目中，有一次要用到::selection伪元素，然后开发同学问我，CSS中一个冒号和两个冒号有神马区别？</p>
-<p>这好像真的是个问题，或许很多前端同学对此都有疑惑，查了些资料，证实了下两个符号的区别，简而言之：<strong>单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素</strong>。</p>
-<p><a href="http://www.w3.org/TR/2005/WD-css3-selectors-20051215/#pseudo-elements" target="_blank" rel="external">W3C关于CSS3选择器的规范</a>中有一段描述：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">A pseudo-element is made of two colons (::) followed by the name of the pseudo-element.</div><div class="line">This :: notation is introduced by the current document in order to establish a discrimination between pseudo-classes and pseudo-elements. For compatibility with existing style sheets, user agents must also accept the previous one-colon notation for pseudo-elements introduced in CSS levels 1 and 2 (namely, :first-line, :first-letter, :before and :after). This compatibility is not allowed for the new pseudo-elements introduced in CSS level 3.</div></pre></td></tr></table></figure>
-<p>简单翻译一下，大意就是，伪元素由双冒号和伪元素名称组成。双冒号是在当前规范中引入的，用于区分伪类和伪元素。不过浏览器需要同时支持旧的已经存 在的伪元素写法，比如:first-line、:first-letter、:before、:after等，而新的在CSS3中引入的伪元素则<strong>不允许</strong>再支持旧的单冒号的写法。</p>
-<p>那么现在就可以完整的回答标题中的问题了，对于CSS2之前已有的伪元素，比如:before，单冒号和双冒号的写法::before<strong>作用是一样的</strong>。</p>
-<p>所以，如果你的网站<strong>只需要</strong>兼容webkit、firefox、opera等浏览器，建议对于伪元素采用双冒号的写法，如果不得不兼容IE浏览器，还是用CSS2的单冒号写法比较安全。</p>
+        <h2 id="父子组件通讯"><a href="#父子组件通讯" class="headerlink" title="父子组件通讯"></a>父子组件通讯</h2><ul>
+<li>当部分重复的功能在每一个组建中都使用的时候，可以将该功能抽成一个子组件，包含这个子组件的组件则为父组件</li>
+</ul>
+<h3 id="父组件如何集成子组件"><a href="#父组件如何集成子组件" class="headerlink" title="父组件如何集成子组件"></a>父组件如何集成子组件</h3><ol>
+<li><p>新建子组件(如subcomment.vue)</p>
+</li>
+<li><p>集成到父组件(参考:<code>https://cn.vuejs.org/v2/guide/components.html</code>)</p>
+<ol>
+<li><p>在父组件中导入子组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> subCommon <span class="keyword">from</span> <span class="string">"../subcomponents/comment.vue"</span>;</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>在父组件中注册子组件,属性为注册名，直接使用，值为引入进来的子组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">components</span>:&#123;</div><div class="line">              <span class="attr">subcomment</span>:subcomment </div><div class="line">             &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在我们父组件的template中使用子组件，就可以将子组件集成进来了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;subCommon :newsInfoId=<span class="string">"this.$route.params.id"</span>&gt;&lt;/subCommon&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="父组件如何把值传给子组件"><a href="#父组件如何把值传给子组件" class="headerlink" title="父组件如何把值传给子组件"></a>父组件如何把值传给子组件</h3><ul>
+<li><p>参考:<code>https://cn.vuejs.org/v2/guide/components.html#构成组件</code></p>
+</li>
+<li><p>子组件(接收方)</p>
+<ul>
+<li><p>在Vue对象中，通过props声明，声明它期待获得的数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">	<span class="attr">props</span>:[<span class="string">'commentId'</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>父组件(发送发)</p>
+<ul>
+<li><p>在使用子组件的时候，通过属性名称=值的方式，将值传给子组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;subcomment :commentId=<span class="string">"this.$route.params.newsId"</span>&gt;&lt;/subcomment&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>通过以上方式即可实现父组件向子组件传递数据</strong></p>
 
       
     </div>
@@ -450,11 +495,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css/" rel="tag"># css</a>
+            <a href="/tags/js/" rel="tag"># js</a>
           
-            <a href="/tags/伪类/" rel="tag"># 伪类</a>
-          
-            <a href="/tags/伪元素/" rel="tag"># 伪元素</a>
+            <a href="/tags/vue/" rel="tag"># vue</a>
           
         </div>
       
@@ -467,8 +510,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/02/Javascript垃圾回收方法/" rel="next" title="Javascript垃圾回收方法">
-                <i class="fa fa-chevron-left"></i> Javascript垃圾回收方法
+              <a href="/2017/03/02/vue-router嵌套路由，由二级跳转到一级，导致路由重叠/" rel="next" title="vue-router嵌套路由跳转重叠问题">
+                <i class="fa fa-chevron-left"></i> vue-router嵌套路由跳转重叠问题
               </a>
             
           </div>
@@ -476,10 +519,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/07/19/数组方法/" rel="prev" title="数组方法">
-                数组方法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -549,8 +588,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/github.jpg"
@@ -612,6 +660,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#父子组件通讯"><span class="nav-number">1.</span> <span class="nav-text">父子组件通讯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#父组件如何集成子组件"><span class="nav-number">1.1.</span> <span class="nav-text">父组件如何集成子组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#父组件如何把值传给子组件"><span class="nav-number">1.2.</span> <span class="nav-text">父组件如何把值传给子组件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
