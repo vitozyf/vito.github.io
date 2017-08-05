@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="Vito的小栈">
 <meta property="og:description" content="父子组件通讯 当部分重复的功能在每一个组建中都使用的时候，可以将该功能抽成一个子组件，包含这个子组件的组件则为父组件  父组件如何集成子组件 新建子组件(如subcomment.vue)  集成到父组件(参考:https://cn.vuejs.org/v2/guide/components.html)  在父组件中导入子组件 1import subCommon from &quot;../subcompon">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-04T13:31:39.653Z">
+<meta property="og:updated_time" content="2017-08-05T03:25:49.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue-父子组件通讯">
 <meta name="twitter:description" content="父子组件通讯 当部分重复的功能在每一个组建中都使用的时候，可以将该功能抽成一个子组件，包含这个子组件的组件则为父组件  父组件如何集成子组件 新建子组件(如subcomment.vue)  集成到父组件(参考:https://cn.vuejs.org/v2/guide/components.html)  在父组件中导入子组件 1import subCommon from &quot;../subcompon">
@@ -381,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  299
+                  798
                 </span>
               
 
@@ -397,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -456,7 +456,29 @@
 </li>
 </ul>
 <hr>
-<p><strong>通过以上方式即可实现父组件向子组件传递数据</strong></p>
+<p><strong>父组件利用props往子组件传输数据</strong></p>
+<ul>
+<li><p>父组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div&gt;</div><div class="line">  &lt;child v-bind:my-message="parentMsg"&gt;&lt;/child&gt;<span class="comment">//注意传递参数时要用—代替驼峰命名，HTML不区分大小写</span></div><div class="line">&lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>子组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'child'</span>, &#123;</div><div class="line">  <span class="comment">// camelCase in JavaScript</span></div><div class="line">  props:&#123;myMessage&#125;,</div><div class="line">  <span class="attr">template</span>: <span class="string">'&lt;span&gt;&#123;&#123; myMessage &#125;&#125;&lt;/span&gt;'</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如上所示，父组件在模板中引用子组件，通过v-bind传递参数myMessage，值为parentMsg，其可以为父组件中的动态属性，同时不用v-bind直接myMessage=”hello传递静态值给子组件，则传递的值就是hello字符串。在利用props实现传值的过程中理论上是要实现单向传递，即父组件改变相关参数的值，子组件也相应变化，但是子组件对参数的改变不应该影响父组件。<strong>但是当props中接收的是父组件传递的引用类型（对象或者是数组）时，在子组件中对数据改变时，父组件中的数据也会相应的改变，因为两者是指向的同一地址内存。</strong>如果不想子组件的改变影响父组件可以利用深拷贝，将接受的数据进行深拷贝后在子组件中使用，而不直接操作接受的数据。深拷贝可以直接利用ES6中的obj=Object。assign（{},myMessage）（在computed中定义），这样子组件的改动将不会影响到父组件。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>子组件向父组件传递参数利用事件机制</strong></p>
+<p>子组件通过this.$emit()派发事件，父组件利用v-on对事件进行监听，实现参数的传递</p>
+<ul>
+<li><p>子组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$emit(<span class="string">'changeCart'</span>,event.target)<span class="comment">/*向父组件派发事件，同时传递参数event.target,后面的参数的个数不限*/</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>父组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;v-cartcontrol :food=<span class="string">"food"</span> v-on:changeCart=<span class="string">"changeCart"</span>&gt;&lt;/v-cartcontrol&gt;</div></pre></td></tr></table></figure>
+<p><strong>同时当有组件嵌套时则需要利用该机制一层一层的触发到指定层，不然直接在顶层监听子组件的子组件的事件是监听不到的，需要先向父组件派发，父组件在向上层触发</strong></p>
+</li>
+</ul>
 
       
     </div>
@@ -720,7 +742,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共38.6k字</span>
+  <span class="post-count">博客全站共39.1k字</span>
 </div>
 
         
